@@ -4,8 +4,50 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#101116" />
-  <meta name="description" content="A cinematic little journey through an Indian baraat. Pick a phase, turn up the dhol, and see where the night takes you." />
-  <title>Shadi Ki Baraat — Music, Mayhem & Memories</title>
+  <meta name="description" content="Explore curated Hindi baraat playlists, groom entry songs, old Bollywood favourites and 7 phases of an Indian wedding procession. Find the music for every baraat moment." />
+  <title>Shadi Ki Baraat | Ad-Free Baraat Playlists & Wedding Songs</title>
+  <link rel="canonical" href="https://shadikibaraat.com/" />
+  
+  <!-- OpenGraph / Social Metadata -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Shadi Ki Baraat" />
+  <meta property="og:title" content="Shadi Ki Baraat | Ad-Free Baraat Playlists & Wedding Songs" />
+  <meta property="og:description" content="Explore curated Hindi baraat playlists, groom entry songs, old Bollywood favourites and 7 phases of an Indian wedding procession. Find the music for every baraat moment." />
+  <meta property="og:url" content="https://shadikibaraat.com/" />
+  <meta property="og:image" content="https://shadikibaraat.com/og/og-home.jpg" />
+  <meta property="og:image:alt" content="Shadi Ki Baraat Indian Wedding Procession" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Shadi Ki Baraat | Ad-Free Baraat Playlists & Wedding Songs" />
+  <meta name="twitter:description" content="Explore curated Hindi baraat playlists, groom entry songs, old Bollywood favourites and 7 phases of an Indian wedding procession." />
+  <meta name="twitter:image" content="https://shadikibaraat.com/og/og-home.jpg" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://shadikibaraat.com/#website",
+        "url": "https://shadikibaraat.com/",
+        "name": "Shadi Ki Baraat",
+        "description": "Ad-free Baraat playlists and curated Hindi wedding procession songs across seven phases.",
+        "publisher": {
+          "@id": "https://shadikibaraat.com/#organization"
+        }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://shadikibaraat.com/#organization",
+        "name": "Shadi Ki Baraat",
+        "url": "https://shadikibaraat.com/",
+        "logo": "https://shadikibaraat.com/assets/logo-white.png"
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700,900&display=swap" rel="stylesheet" />
@@ -167,7 +209,7 @@
     }
     @keyframes riseIn { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: translateY(0) } }
     .kicker { font-family: var(--ui); font-size: 11px; font-weight: 500; line-height: 1; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin: 0 0 8px; display: block; text-shadow: 0 1px 4px rgba(0,0,0,0.85); opacity: 0.95; }
-    h1 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.2vw, 36px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 8px; max-width: 440px; color: #ffffff; text-wrap: balance; text-shadow: 0 2px 10px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.9); }
+    h1, .story-headline { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.2vw, 36px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 8px; max-width: 440px; color: #ffffff; text-wrap: balance; text-shadow: 0 2px 10px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.9); }
     .story-body { font-family: var(--ui); font-weight: 400; font-size: 14px; line-height: 1.5; color: rgba(255, 255, 255, 0.92); margin: 0; max-width: 420px; text-shadow: 0 1px 6px rgba(0,0,0,0.85); }
 
     /* Clean Luxury Glass Music Player Capsule (No Noise Texture) */
@@ -1478,8 +1520,9 @@
     <!-- Left Dock: Sleek Story & Phase Display -->
     <div class="bottom-left-dock">
       <section class="story-block" aria-live="polite" aria-atomic="true">
+        <h1 class="sr-only">Your Baraat Playlist, From Groom Entry to Afterparty</h1>
         <p class="kicker" id="phaseKicker">PHASE 02 · DUSK · 6:30 PM</p>
-        <h1 id="phaseHeadline">Baraat nikli.</h1>
+        <p class="story-headline" id="phaseHeadline">Baraat nikli.</p>
         <p class="story-body" id="phaseBody">The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.</p>
       </section>
 
@@ -1532,6 +1575,7 @@
           <a href="index.html" class="dock-chip active">Baraat</a>
           <a href="playlists.html" class="dock-chip">Playlists</a>
           <a href="songs.html" class="dock-chip">Songs (140)</a>
+          <a href="baraat-meaning.html" class="dock-chip">Meaning</a>
           <a href="#baraatFooter" class="dock-chip" id="dockAboutChip">About</a>
         </nav>
         <button class="reset-pill-inline" id="quickResetBtn" type="button" title="Restart experience">↻ Start Over</button>
@@ -1706,9 +1750,12 @@
         </button>
       </div>
 
-      <p class="footer-statement">
-        Shadi Ki Baraat is an interactive digital archive celebrating the unhinged joy, brass bands, and generational chaos of Indian wedding processions. Crafted with 140 Bollywood anthems across seven real-time phases. All rights reserved. No actual uncles were harmed in the making of this timeline.
-      </p>
+      <div class="footer-seo-summary" style="margin-top:14px;">
+        <h2 style="font-family:var(--display);font-size:16px;font-weight:700;color:var(--gold);margin:0 0 8px;">Your Baraat Playlist, From Groom Entry to Afterparty</h2>
+        <p class="footer-statement">
+          Find the soundtrack for every moment of the baraat, from the <a href="baraat-entry-songs-for-groom.html" style="color:var(--gold);text-decoration:underline;">groom's entry</a> and dhol-led dancing to the DJ set and afterparty. Explore curated Hindi wedding songs through a playful, ad-free website interface. You can <a href="playlists.html" style="color:var(--gold);text-decoration:underline;">explore baraat playlists in Hindi</a> or <a href="songs.html" style="color:var(--gold);text-decoration:underline;">browse the baraat songs list</a>, discover <a href="old-hindi-baraat-songs.html" style="color:var(--gold);text-decoration:underline;">old Hindi and 90s baraat songs</a>, find <a href="baraat-songs-for-wedding-video.html" style="color:var(--gold);text-decoration:underline;">baraat songs for wedding videos</a>, and learn <a href="baraat-meaning.html" style="color:var(--gold);text-decoration:underline;">what is a baraat</a>.
+        </p>
+      </div>
     </div>
 
     <!-- Right Utility: Back to Top & Links -->
@@ -1716,9 +1763,13 @@
       <button type="button" class="footer-top-btn" id="footerBackToTop" aria-label="Return to Baraat stage">
         <span>Return to Baraat</span>
       </button>
-      <nav class="footer-nav-links" aria-label="Footer quick links">
-        <a href="songs.html" class="footer-nav-link">140 Songs</a>
+      <nav class="footer-nav-links" aria-label="Footer quick links" style="flex-wrap:wrap;max-width:320px;justify-content:flex-end;">
         <a href="playlists.html" class="footer-nav-link">7 Rotations</a>
+        <a href="songs.html" class="footer-nav-link">140 Songs</a>
+        <a href="baraat-entry-songs-for-groom.html" class="footer-nav-link">Groom Entry</a>
+        <a href="old-hindi-baraat-songs.html" class="footer-nav-link">Old Hindi</a>
+        <a href="baraat-songs-for-wedding-video.html" class="footer-nav-link">Wedding Video</a>
+        <a href="baraat-meaning.html" class="footer-nav-link">Baraat Meaning</a>
       </nav>
     </div>
   </div>
