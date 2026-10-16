@@ -3,5 +3,10 @@
   "compatibility_date": "2024-09-23",
   "assets": {
     "directory": "."
-  }
+  },
+  "routes": [
+    { "pattern": "shadikibaraat.com", "custom_domain": true },
+    { "pattern": "www.shadikibaraat.com", "custom_domain": true }
+  ],
+  "workers_dev": false
 }

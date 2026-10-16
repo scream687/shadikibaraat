@@ -97,9 +97,8 @@
       z-index: -3;
       pointer-events: none;
       background:
-        linear-gradient(180deg, rgba(5, 7, 10, 0.55) 0%, rgba(5, 7, 10, 0) 18%),
-        radial-gradient(ellipse 90% 75% at 0% 90%, rgba(4, 5, 8, 0.92) 0%, rgba(4, 5, 8, 0.65) 45%, rgba(4, 5, 8, 0.18) 72%, transparent 100%),
-        linear-gradient(0deg, rgba(4, 5, 8, 0.85) 0%, rgba(4, 5, 8, 0.35) 28%, transparent 55%);
+        linear-gradient(180deg, rgba(5, 7, 10, 0.42) 0%, rgba(5, 7, 10, 0) 16%),
+        linear-gradient(0deg, rgba(5, 7, 10, 0.48) 0%, rgba(5, 7, 10, 0.14) 22%, transparent 48%);
       transition: background 400ms ease;
     }
     .vignette { z-index: -2; pointer-events: none; box-shadow: inset 0 0 50px rgba(0,0,0,.15); }
@@ -167,9 +166,9 @@
       animation: riseIn .45s ease both;
     }
     @keyframes riseIn { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: translateY(0) } }
-    .kicker { font-family: var(--ui); font-size: 11px; font-weight: 400; line-height: 1; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin: 0 0 8px; display: block; text-shadow: none; opacity: 0.95; }
-    h1 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.2vw, 36px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 8px; max-width: 440px; color: #ffffff; text-wrap: balance; text-shadow: none; }
-    .story-body { font-family: var(--ui); font-weight: 400; font-size: 14px; line-height: 1.5; color: rgba(255, 255, 255, 0.9); margin: 0; max-width: 420px; text-shadow: none; }
+    .kicker { font-family: var(--ui); font-size: 11px; font-weight: 500; line-height: 1; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin: 0 0 8px; display: block; text-shadow: 0 1px 4px rgba(0,0,0,0.85); opacity: 0.95; }
+    h1 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.2vw, 36px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 8px; max-width: 440px; color: #ffffff; text-wrap: balance; text-shadow: 0 2px 10px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.9); }
+    .story-body { font-family: var(--ui); font-weight: 400; font-size: 14px; line-height: 1.5; color: rgba(255, 255, 255, 0.92); margin: 0; max-width: 420px; text-shadow: 0 1px 6px rgba(0,0,0,0.85); }
 
     /* Clean Luxury Glass Music Player Capsule (No Noise Texture) */
     .music-card {
@@ -694,8 +693,8 @@
         position: absolute;
         left: 16px;
         right: 16px;
-        max-width: min(380px, calc(100vw - 32px));
-        bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 84px);
+        max-width: min(400px, calc(100vw - 32px));
+        bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 124px);
         z-index: 10;
         display: flex !important;
         flex-direction: column;
@@ -714,22 +713,25 @@
       }
       .bottom-left-dock .kicker {
         font-size: 10px;
-        font-weight: 400;
+        font-weight: 500;
         letter-spacing: .16em;
         margin-bottom: 6px;
-        text-shadow: none !important;
+        color: var(--gold);
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
         opacity: 0.95;
       }
       .bottom-left-dock h1 {
         font-size: clamp(24px, 6.2vw, 30px);
         margin: 0 0 6px;
-        text-shadow: none !important;
+        color: #ffffff;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.95);
       }
       .bottom-left-dock .story-body {
         font-size: 13px;
         line-height: 1.45;
         margin: 0;
-        text-shadow: none !important;
+        color: rgba(255, 255, 255, 0.92);
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
       }
       .bottom-left-dock .music-card {
         display: none !important;
@@ -757,33 +759,90 @@
         box-sizing: border-box;
       }
 
-      .mobile-dots {
+      /* Mobile Timeline Scrubber matching Chai Tapri (Image 2) */
+      .mobile-timeline-bar {
+        align-self: stretch;
+        width: 100%;
+        max-width: 100%;
+        position: relative;
+        padding: 8px 14px 7px;
+        background: linear-gradient(90deg, rgba(48, 28, 22, 0.88) 0%, rgba(76, 36, 28, 0.85) 55%, rgba(98, 36, 26, 0.82) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(28px) saturate(160%);
+        -webkit-backdrop-filter: blur(28px) saturate(160%);
+        border-radius: 9999px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+        pointer-events: auto;
+        box-sizing: border-box;
+      }
+      .mobile-timeline-track {
+        position: relative;
+        width: 100%;
         display: flex;
         align-items: center;
-        gap: 6px;
-        padding: 5px 12px;
-        background: rgba(13, 15, 20, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border-radius: 9999px;
-        pointer-events: auto;
+        justify-content: space-between;
       }
-      .mobile-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.35);
+      .mobile-timeline-track::before {
+        content: '';
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        top: 6px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.22);
+        z-index: 0;
+      }
+      .mobile-timeline-stop {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        background: transparent;
         border: none;
         padding: 0;
         cursor: pointer;
-        transition: all .2s;
+        min-width: 34px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
       }
-      .mobile-dot.is-active {
-        width: 18px;
-        border-radius: 9999px;
-        background: var(--gold);
-        box-shadow: 0 0 10px rgba(229,176,97,0.5);
+      .mobile-timeline-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(30, 18, 14, 0.9);
+        border: 1.5px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        display: block;
+      }
+      .mobile-timeline-time {
+        font-family: var(--ui);
+        font-size: 10px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.65);
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
+        letter-spacing: -0.01em;
+        transition: color 0.18s;
+        white-space: nowrap;
+      }
+      .mobile-timeline-stop:hover .mobile-timeline-dot {
+        border-color: #ffffff;
+        transform: scale(1.15);
+      }
+      .mobile-timeline-stop.is-active .mobile-timeline-dot {
+        width: 12px;
+        height: 12px;
+        background: #ff6e30;
+        border: 2px solid #ffffff;
+        box-shadow: 0 0 0 3px rgba(255, 110, 48, 0.35), 0 0 14px rgba(255, 110, 48, 0.6);
+      }
+      .mobile-timeline-stop.is-active .mobile-timeline-time {
+        color: #ffffff;
+        font-weight: 700;
       }
 
       .mobile-bar {
@@ -1227,9 +1286,11 @@
       <button class="action-button" id="reportBtn" type="button"><span class="action-symbol">▤</span><span class="action-copy">Baraat report<small>Document the damage</small></span></button>
     </aside>
 
-    <!-- Mobile Low-Density Floating Dock (Deluxe Saloon Vibe) -->
+    <!-- Mobile Low-Density Floating Dock (Deluxe Saloon / Chai Tapri Vibe) -->
     <div class="mobile-dock" id="mobileDock">
-      <div class="mobile-dots" id="mobileDots" role="tablist" aria-label="Baraat phases"></div>
+      <div class="mobile-timeline-bar" id="mobileTimelineBar">
+        <div class="mobile-timeline-track" id="mobileDots" role="tablist" aria-label="Baraat phases"></div>
+      </div>
       <div class="mobile-bar" id="mobileBar">
         <!-- Mobile Spinning Vinyl Cover -->
         <div class="vinyl-wrap mobile-vinyl" id="mVinylWrap" title="Click to view full video">
@@ -1759,15 +1820,21 @@
         root.appendChild(button);
       }
 
-      // Mobile dot
+      // Mobile timeline stop matching Chai Tapri (Image 2)
       if (dotsRoot) {
-        const dot = document.createElement('button');
-        dot.type = 'button';
-        dot.className = 'mobile-dot' + (index === currentIndex ? ' is-active' : '');
-        dot.setAttribute('role', 'tab');
-        dot.setAttribute('aria-label', `Phase ${index + 1}: ${phase.title}`);
-        dot.addEventListener('click', () => setPhase(index));
-        dotsRoot.appendChild(dot);
+        const stopBtn = document.createElement('button');
+        stopBtn.type = 'button';
+        stopBtn.className = 'mobile-timeline-stop' + (index === currentIndex ? ' is-active' : '');
+        stopBtn.setAttribute('role', 'tab');
+        stopBtn.setAttribute('aria-selected', index === currentIndex ? 'true' : 'false');
+        stopBtn.setAttribute('aria-label', `${phase.title} at ${phase.time}`);
+        const shortTime = phase.time.replace(/\s*PM/i, 'p').replace(/\s*AM/i, 'a').replace(/:00/g, '').toLowerCase();
+        stopBtn.innerHTML = `
+          <span class="mobile-timeline-dot"></span>
+          <span class="mobile-timeline-time">${shortTime}</span>
+        `;
+        stopBtn.addEventListener('click', () => setPhase(index));
+        dotsRoot.appendChild(stopBtn);
       }
 
       // Mobile sheet item
@@ -1859,6 +1926,10 @@
 
     // Active state sync
     document.querySelectorAll('.phase-stop').forEach((btn, i) => {
+      btn.classList.toggle('is-active', i === index);
+      btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
+    });
+    document.querySelectorAll('.mobile-timeline-stop').forEach((btn, i) => {
       btn.classList.toggle('is-active', i === index);
       btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
     });
