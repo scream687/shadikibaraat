@@ -61,13 +61,13 @@
       color-scheme: dark;
     }
     * { box-sizing: border-box; }
-    html, body { width: 100%; min-height: 100%; margin: 0; background: #0d0e12; color: var(--cream); font-family: var(--ui); }
-    body { overflow: hidden; }
+    html, body { width: 100%; min-height: 100%; margin: 0; background: #0d0e12; color: var(--cream); font-family: var(--ui); scroll-behavior: smooth; }
+    body { overflow-x: hidden; overflow-y: auto; scroll-snap-type: y mandatory; }
     button, a { font: inherit; }
     button { color: inherit; }
     button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
     button { cursor: pointer; }
-    .app { width: 100%; height: 100svh; min-height: 600px; position: relative; isolation: isolate; overflow: hidden; background: #0c1017; }
+    .app { width: 100%; height: 100svh; min-height: 600px; position: relative; isolation: isolate; overflow: hidden; background: #0c1017; scroll-snap-align: start; scroll-snap-stop: always; }
     .scene-stack, .scene-image, .scene-wash, .vignette { position: absolute; inset: 0; width: 100%; height: 100%; }
     .scene-stack { z-index: -4; overflow: hidden; background: #0c1017; }
     @keyframes scene-in {
@@ -1152,6 +1152,265 @@
       .hero-logo-img { width: clamp(170px, 52vw, 220px); }
     }
 
+    /* ==========================================================================
+       PLAYFOLLY MONUMENTAL FOOTER (R09 REFERENCE)
+       ========================================================================== */
+    .playfolly-footer {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100svh;
+      box-sizing: border-box;
+      background: #140703;
+      color: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(28px, 4.5vw, 56px) clamp(20px, 4.5vw, 64px) 0;
+      isolation: isolate;
+    }
+
+    /* Dramatic Studio Lighting matching Playfolly warm amber & floor bounce */
+    .footer-backdrop {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .footer-ambient-radial {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 65% 42%, #e27329 0%, #aa4319 32%, #4d1808 68%, #140703 100%);
+      opacity: 0.96;
+    }
+    .footer-floor-glow {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+      background: linear-gradient(0deg, rgba(20, 7, 3, 0.98) 0%, rgba(20, 7, 3, 0.5) 45%, transparent 100%);
+    }
+    .footer-grain {
+      position: absolute;
+      inset: 0;
+      background-image: var(--noise-pattern);
+      background-repeat: repeat;
+      background-size: 128px 128px;
+      mix-blend-mode: overlay;
+      opacity: 0.55;
+    }
+
+    /* Central Hero Visual (Warm Baraat Procession Element) */
+    .footer-center-scene {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -46%);
+      width: min(780px, 86vw);
+      height: min(440px, 52vh);
+      z-index: 1;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .footer-center-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.75)) saturate(1.25) contrast(1.08);
+      mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black 50%, transparent 95%);
+      -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black 50%, transparent 95%);
+      opacity: 0.92;
+    }
+
+    /* Top Region: Controls & Narrative */
+    .footer-top-row {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 32px;
+      width: 100%;
+    }
+    .footer-identity-block {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-width: 440px;
+    }
+    .footer-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+    .footer-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 9999px;
+      background: #ffffff;
+      color: #120703;
+      font-family: var(--ui);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+      transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s, background-color 0.18s;
+      white-space: nowrap;
+      touch-action: manipulation;
+    }
+    .footer-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      background: #fbf5eb;
+    }
+    .footer-pill:active {
+      transform: translateY(0);
+    }
+    .footer-pill-secondary {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .footer-pill-secondary:hover {
+      background: rgba(255, 255, 255, 0.28);
+      border-color: #ffffff;
+    }
+    .footer-statement {
+      font-family: var(--ui);
+      font-size: 13px;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.88);
+      margin: 0;
+      text-wrap: pretty;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Right Utility: Back to Top & Links */
+    .footer-utility-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 14px;
+    }
+    .footer-top-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      font-family: var(--ui);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.18s, background 0.18s, border-color 0.18s;
+      white-space: nowrap;
+    }
+    .footer-top-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.25);
+      border-color: #ffffff;
+    }
+    .footer-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .footer-nav-link {
+      font-family: var(--ui);
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.18s;
+    }
+    .footer-nav-link:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    /* Bottom Monumental Display Typography (Matching Playfolly 'Play beautiful') */
+    .footer-bottom-strap {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      line-height: 0.82;
+      user-select: none;
+      pointer-events: none;
+    }
+    .footer-huge-title {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: clamp(52px, 14.5vw, 220px);
+      line-height: 0.84;
+      letter-spacing: -0.04em;
+      text-transform: none;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      white-space: nowrap;
+      display: block;
+      transform: translateY(4%);
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      .playfolly-footer {
+        padding: 24px 18px 0;
+      }
+      .footer-top-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      .footer-utility-block {
+        align-items: flex-start;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .footer-statement {
+        font-size: 12px;
+        line-height: 1.5;
+        max-width: 100%;
+      }
+      .footer-center-scene {
+        width: 95vw;
+        height: 38vh;
+        transform: translate(-50%, -42%);
+      }
+      .footer-huge-title {
+        font-size: clamp(44px, 13.8vw, 120px);
+        transform: translateY(2%);
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
     }
@@ -1266,6 +1525,7 @@
           <a href="index.html" class="dock-chip active">Baraat</a>
           <a href="playlists.html" class="dock-chip">Playlists</a>
           <a href="songs.html" class="dock-chip">Songs (140)</a>
+          <a href="#baraatFooter" class="dock-chip" id="dockAboutChip">About ↘</a>
         </nav>
         <button class="reset-pill-inline" id="quickResetBtn" type="button" title="Restart experience">↻ Start Over</button>
       </div>
@@ -1397,9 +1657,73 @@
       <button class="menu-row" id="menuPhases" type="button"><span>Explore the seven phases<small>From sehra bandi to “bas ek gaana aur”</small></span><span class="menu-arrow">↗</span></button>
       <button class="menu-row" id="menuReport" type="button"><span>Generate your Baraat Report<small>For the group chat and the family archive</small></span><span class="menu-arrow">↗</span></button>
       <button class="menu-row" id="resetBtn" type="button"><span>Start the baraat over<small>Everyone gets one last chance to behave</small></span><span class="menu-arrow">↻</span></button>
+      <a class="menu-row" href="#baraatFooter" id="menuAboutRow" style="text-decoration:none;display:flex;"><span>About & Colophon<small>Design, story, rights & credits</small></span><span class="menu-arrow">↘</span></a>
     </div>
   </dialog>
 </div>
+
+<!-- ==========================================================================
+     PLAYFOLLY MONUMENTAL FOOTER (R09 REFERENCE)
+     ========================================================================== -->
+<footer class="playfolly-footer" id="baraatFooter" role="contentinfo">
+  <!-- Dramatic Studio Lighting & Atmospheric Noise -->
+  <div class="footer-backdrop" aria-hidden="true">
+    <div class="footer-ambient-radial"></div>
+    <div class="footer-floor-glow"></div>
+    <div class="footer-grain"></div>
+  </div>
+
+  <!-- Central Hero Visual: Warm Baraat Procession Element -->
+  <div class="footer-center-scene" aria-hidden="true">
+    <img src="assets/07-baraat-wide.png" alt="Baraat celebration at night" class="footer-center-img" loading="lazy" />
+  </div>
+
+  <!-- Top Region: Controls & Narrative (Playfolly layout) -->
+  <div class="footer-top-row">
+    <div class="footer-identity-block">
+      <div class="footer-pill-row">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-pill" aria-label="Visit Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+          <span>@shadikibaraat</span>
+        </a>
+        <a href="mailto:hello@shadikibaraat.com?subject=Baraat%20Story" class="footer-pill" aria-label="Send an email to Shadi Ki Baraat">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          <span>Email us</span>
+        </a>
+        <button type="button" class="footer-pill footer-pill-secondary" id="footerReportBtn" aria-label="Generate official Baraat Report">
+          <span>▤ Baraat report</span>
+        </button>
+      </div>
+
+      <p class="footer-statement">
+        Shadi Ki Baraat is an interactive digital archive celebrating the unhinged joy, brass bands, and generational chaos of Indian wedding processions. Crafted with 140 Bollywood anthems across seven real-time phases. All rights reserved. No actual uncles were harmed in the making of this timeline.
+      </p>
+    </div>
+
+    <!-- Right Utility: Back to Top & Links -->
+    <div class="footer-utility-block">
+      <button type="button" class="footer-top-btn" id="footerBackToTop" aria-label="Return to Baraat stage">
+        <span>Return to Baraat</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+      </button>
+      <nav class="footer-nav-links" aria-label="Footer quick links">
+        <a href="songs.html" class="footer-nav-link">140 Songs ↗</a>
+        <a href="playlists.html" class="footer-nav-link">7 Rotations ↗</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Bottom Monumental Display Typography (Matching Playfolly 'Play beautiful') -->
+  <div class="footer-bottom-strap">
+    <h2 class="footer-huge-title">Shadi ki baraat</h2>
+  </div>
+</footer>
 <script>
 (() => {
   'use strict';
@@ -2270,6 +2594,35 @@
     }
     if (event.key === 'Escape') closeAllDrawers();
   });
+
+  // Playfolly Footer Interactions (R09)
+  const footerReportBtn = $('footerReportBtn');
+  if (footerReportBtn) {
+    footerReportBtn.addEventListener('click', () => openReport());
+  }
+  const footerBackToTop = $('footerBackToTop');
+  if (footerBackToTop) {
+    footerBackToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  const dockAboutChip = $('dockAboutChip');
+  if (dockAboutChip) {
+    dockAboutChip.addEventListener('click', (e) => {
+      e.preventDefault();
+      const footer = $('baraatFooter');
+      if (footer) footer.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+  const menuAboutRow = $('menuAboutRow');
+  if (menuAboutRow) {
+    menuAboutRow.addEventListener('click', (e) => {
+      e.preventDefault();
+      $('menuModal').close();
+      const footer = $('baraatFooter');
+      if (footer) footer.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
 })();
 </script>
 </body>
