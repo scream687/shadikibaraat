@@ -21,7 +21,8 @@ A responsive, single-page interactive website prototype inspired by cinematic In
 ## Project structure
 
 - `index.html` — page markup, CSS, interaction logic.
-- `assets/phase-*.webp` — optimized painterly phase art.
+- `assets/*-baraat-wide.png` — high-resolution original landscape phase scenes for desktop.
+- `assets/mobile-phase-*.webp` — tailored portrait phase art for mobile.
 
 ## Implementation notes
 

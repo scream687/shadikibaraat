@@ -593,7 +593,7 @@
 
   <!-- Backdrop -->
   <div class="backdrop-container" aria-hidden="true">
-    <img id="pageBackdrop" class="backdrop-img" src="assets/phase-nikli.webp" alt="" />
+    <img id="pageBackdrop" class="backdrop-img" src="assets/02-baraat-wide.png" alt="" />
     <div class="backdrop-wash"></div>
     <div class="saloon-vignette"></div>
     <div class="saloon-grain"></div>
@@ -703,13 +703,13 @@
       const allSongs = data.songs;
 
       const phaseImages = {
-        1: 'assets/phase-sehra.webp',
-        2: 'assets/phase-nikli.webp',
-        3: 'assets/phase-gali.webp',
-        4: 'assets/phase-uncle.webp',
-        5: 'assets/phase-dj.webp',
-        6: 'assets/phase-entry.webp',
-        7: 'assets/phase-last-song.webp'
+        1: 'assets/01-baraat-wide.png',
+        2: 'assets/02-baraat-wide.png',
+        3: 'assets/03-baraat-wide.png',
+        4: 'assets/04-baraat-wide.png',
+        5: 'assets/05-baraat-wide.png',
+        6: 'assets/06-baraat-wide.png',
+        7: 'assets/07-baraat-wide.png'
       };
 
       const phaseMobileImages = {
@@ -727,7 +727,7 @@
         if (isMobile && phaseMobileImages[phaseNum]) {
           return phaseMobileImages[phaseNum];
         }
-        return phaseImages[phaseNum] || (isMobile ? 'assets/mobile-phase-2.webp' : 'assets/phase-nikli.webp');
+        return phaseImages[phaseNum] || (isMobile ? 'assets/mobile-phase-2.webp' : 'assets/02-baraat-wide.png');
       }
 
       const phaseTimes = {
