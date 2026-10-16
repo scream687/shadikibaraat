@@ -5,9 +5,11 @@ interface Props {
 }
 
 const { currentPath = '' } = Astro.props;
+const isHome = currentPath === '/' || currentPath === '';
 ---
 
 <footer class="playfolly-footer" id="baraatFooter" aria-label="Footer and cultural archive">
+  <!-- Warm Ambient Backlight & Centered Procession Scene -->
   <div class="footer-backdrop" aria-hidden="true">
     <div class="footer-ambient-radial"></div>
     <div class="footer-center-scene">
@@ -18,83 +20,121 @@ const { currentPath = '' } = Astro.props;
         loading="lazy"
         decoding="async"
       />
-      <div class="footer-grain" aria-hidden="true"></div>
     </div>
   </div>
 
+  <!-- Top Region: Action Pills, SEO Narrative & Quick Directory -->
   <div class="footer-top-row">
-    <div class="footer-identity-block">
-      <div class="footer-brand">
-        <span class="footer-kicker">ARCHIVE & SOUNDTRACK</span>
-        <h2 class="footer-logo">शादी Ki बारात</h2>
-      </div>
+    <!-- Left Column: Action Pills & SEO Narrative -->
+    <div class="footer-left-col">
       <div class="footer-pill-row">
         <a
           href="https://instagram.com/shadikibaraat"
           target="_blank"
           rel="noopener noreferrer"
-          class="footer-pill"
+          class="footer-pill footer-pill-white"
           aria-label="Visit Shadi Ki Baraat on Instagram"
         >
+          <svg class="pill-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
           <span>@shadikibaraat</span>
         </a>
         <a
           href="mailto:hello@shadikibaraat.com?subject=Baraat%20Story"
-          class="footer-pill"
+          class="footer-pill footer-pill-white"
           aria-label="Send an email to Shadi Ki Baraat"
         >
+          <svg class="pill-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
           <span>Email us</span>
         </a>
-        <a href="/playlists" class="footer-pill footer-pill-secondary">
-          <span>7 Rotations</span>
-        </a>
-        <a href="/songs" class="footer-pill footer-pill-secondary">
-          <span>140 Songs</span>
-        </a>
+        <button
+          type="button"
+          class="footer-pill footer-pill-dark"
+          id="footerReportBtn"
+          aria-label="View Baraat Report"
+        >
+          <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+          <span>Baraat report</span>
+        </button>
       </div>
-      <div class="footer-seo-summary" style="margin-top: 8px;">
-        <h3 style="font-family: 'Satoshi', sans-serif; font-size: 15px; font-weight: 700; color: #ffb885; margin: 0 0 6px;">Your Baraat Playlist, From Groom Entry to Afterparty</h3>
+
+      <div class="footer-seo-summary">
+        <h3 class="footer-seo-heading">Your Baraat Playlist, From Groom Entry to Afterparty</h3>
         <p class="footer-statement">
-          Find the soundtrack for every moment of the baraat, from the <a href="/baraat-entry-songs-for-groom" style="color: #ffb885; text-decoration: underline;">groom's entry</a> and dhol-led dancing to the DJ set and afterparty. Explore curated Hindi wedding songs through a playful, ad-free website interface. You can <a href="/playlists" style="color: #ffb885; text-decoration: underline;">explore baraat playlists in Hindi</a> or <a href="/songs" style="color: #ffb885; text-decoration: underline;">browse the baraat songs list</a>, discover <a href="/old-hindi-baraat-songs" style="color: #ffb885; text-decoration: underline;">old Hindi and 90s baraat songs</a>, find <a href="/baraat-songs-for-wedding-video" style="color: #ffb885; text-decoration: underline;">baraat songs for wedding videos</a>, and learn <a href="/baraat-meaning" style="color: #ffb885; text-decoration: underline;">what is a baraat</a>.
+          Find the soundtrack for every moment of the baraat, from the <a href="/baraat-entry-songs-for-groom">groom's entry</a> and dhol-led dancing to the DJ set and afterparty. Explore curated Hindi wedding songs through a playful, ad-free website interface. You can <a href="/playlists">explore baraat playlists in Hindi</a> or <a href="/songs">browse the baraat songs list</a>, discover <a href="/old-hindi-baraat-songs">old Hindi and 90s baraat songs</a>, find <a href="/baraat-songs-for-wedding-video">baraat songs for wedding videos</a>, and learn <a href="/baraat-meaning">what is a baraat</a>.
         </p>
       </div>
     </div>
 
-    <div class="footer-utility-block">
-      <button
-        type="button"
-        class="footer-top-btn"
-        id="footer-scroll-top"
-        aria-label="Scroll back to top"
-      >
-        <span>Scroll to Top</span>
-      </button>
-      <nav class="footer-nav-links" aria-label="Footer quick links">
-        <a href="/" class="footer-nav-link">Interactive Stage</a>
-        <a href="/playlists" class="footer-nav-link">7 Rotations</a>
-        <a href="/songs" class="footer-nav-link">All 140 Songs</a>
-        <a href="/baraat-meaning" class="footer-nav-link">Baraat Meaning</a>
-        <a href="/baraat-entry-songs-for-groom" class="footer-nav-link">Groom Entry</a>
-        <a href="/old-hindi-baraat-songs" class="footer-nav-link">Old Hindi</a>
-        <a href="/baraat-songs-for-wedding-video" class="footer-nav-link">Wedding Video</a>
+    <!-- Right Column: Return Button & Structured Link Directory -->
+    <div class="footer-right-col">
+      <div class="footer-return-wrap">
+        <button
+          type="button"
+          class="footer-return-btn"
+          id="footerReturnBtn"
+          data-is-home={isHome ? "true" : "false"}
+          aria-label="Return to Baraat"
+        >
+          <span>Return to Baraat</span>
+        </button>
+      </div>
+
+      <nav class="footer-directory" aria-label="Footer quick links">
+        <div class="directory-row">
+          <a href="/playlists" class="directory-link">7 Rotations</a>
+          <a href="/songs" class="directory-link">140 Songs</a>
+          <a href="/baraat-entry-songs-for-groom" class="directory-link">Groom Entry</a>
+          <a href="/old-hindi-baraat-songs" class="directory-link">Old Hindi</a>
+        </div>
+        <div class="directory-row">
+          <a href="/baraat-songs-for-wedding-video" class="directory-link">Wedding Video</a>
+          <a href="/baraat-meaning" class="directory-link">Baraat Meaning</a>
+        </div>
       </nav>
     </div>
   </div>
 
+  <!-- Bottom Monumental Typography -->
   <div class="footer-bottom-strap">
     <h2 class="footer-huge-title">Shadi ki baraat</h2>
   </div>
 </footer>
 
 <script>
-  // Handle smooth scroll-to-top with Lenis fallback
-  const scrollBtn = document.getElementById('footer-scroll-top');
-  if (scrollBtn) {
-    scrollBtn.addEventListener('click', () => {
-      if ((window as any).__lenis) {
-        (window as any).__lenis.scrollTo(0, { duration: 1.2 });
+  // Handle Return to Baraat action
+  const returnBtn = document.getElementById('footerReturnBtn');
+  if (returnBtn) {
+    returnBtn.addEventListener('click', () => {
+      const isHome = returnBtn.getAttribute('data-is-home') === 'true' || window.location.pathname === '/';
+      if (isHome) {
+        if ((window as any).__lenis) {
+          (window as any).__lenis.scrollTo(0, { duration: 1.2 });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.location.href = '/';
+      }
+    });
+  }
+
+  // Handle Baraat Report action
+  const reportBtn = document.getElementById('footerReportBtn');
+  if (reportBtn) {
+    reportBtn.addEventListener('click', () => {
+      const reportModal = document.getElementById('reportModal') as any;
+      if (reportModal && typeof reportModal.showModal === 'function') {
+        reportModal.showModal();
+      } else {
+        window.location.href = '/#report';
       }
     });
   }
@@ -105,54 +145,56 @@ const { currentPath = '' } = Astro.props;
     position: relative;
     width: 100%;
     margin-top: 0;
-    padding: clamp(36px, 6vw, 64px) clamp(20px, 4vw, 48px) 0;
+    padding: clamp(40px, 6vw, 68px) clamp(24px, 5vw, 56px) 0;
     box-sizing: border-box;
-    background: #080302;
+    background: #140704;
     overflow: hidden;
     color: #ffffff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: clamp(380px, 58vh, 600px);
+    min-height: clamp(440px, 64vh, 660px);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
+  /* Backdrop: Ambient Radial Glow & Centered Celebration Artwork */
   .footer-backdrop {
     position: absolute;
     inset: 0;
     pointer-events: none;
+    overflow: hidden;
   }
 
   .footer-ambient-radial {
     position: absolute;
     left: 50%;
-    top: 40%;
-    width: 1200px;
-    height: 700px;
+    top: 44%;
+    width: 1300px;
+    height: 750px;
     transform: translate(-50%, -50%);
     background: radial-gradient(
       ellipse at center,
-      rgba(255, 120, 40, 0.28) 0%,
-      rgba(180, 40, 15, 0.15) 45%,
-      transparent 75%
+      rgba(255, 90, 0, 0.38) 0%,
+      rgba(212, 60, 16, 0.22) 42%,
+      rgba(20, 7, 4, 0.85) 75%
     );
-    filter: blur(50px);
+    filter: blur(48px);
   }
 
   .footer-center-scene {
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -46%);
-    width: min(780px, 86vw);
-    height: min(440px, 52vh);
+    top: 52%;
+    transform: translate(-50%, -48%);
+    width: min(840px, 86vw);
+    height: min(460px, 54vh);
     z-index: 1;
     pointer-events: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 88%);
-    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 88%);
+    mask-image: radial-gradient(ellipse 72% 64% at 50% 50%, black 28%, transparent 90%);
+    -webkit-mask-image: radial-gradient(ellipse 72% 64% at 50% 50%, black 28%, transparent 90%);
   }
 
   .footer-center-img {
@@ -162,55 +204,26 @@ const { currentPath = '' } = Astro.props;
     object-position: center 55%;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: high-quality;
-    opacity: 1;
+    opacity: 0.95;
   }
 
-  .footer-grain {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    background-image: var(--noise-pattern);
-    background-repeat: repeat;
-    background-size: 140px 140px;
-    mix-blend-mode: overlay;
-    opacity: 0.08;
-    z-index: 2;
-  }
-
+  /* Top Content Layout: 2 Columns Across Desktop */
   .footer-top-row {
     position: relative;
     z-index: 3;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 32px;
+    gap: 40px;
     width: 100%;
   }
 
-  .footer-identity-block {
+  /* Left Column: Action Pills & SEO Narrative */
+  .footer-left-col {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    max-width: 520px;
-  }
-
-  .footer-kicker {
-    font-family: 'Satoshi', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #ffb885;
-  }
-
-  .footer-logo {
-    font-family: var(--font-hindi);
-    font-size: clamp(28px, 4vw, 42px);
-    font-weight: 700;
-    color: #ffffff;
-    margin: 4px 0 0;
+    gap: 20px;
+    max-width: 460px;
   }
 
   .footer-pill-row {
@@ -226,51 +239,98 @@ const { currentPath = '' } = Astro.props;
     gap: 8px;
     padding: 9px 18px;
     border-radius: 9999px;
-    background: #ffffff;
-    color: #120703;
+    font-family: 'Satoshi', sans-serif;
     font-size: 13px;
     font-weight: 600;
     text-decoration: none;
-    border: none;
     cursor: pointer;
     white-space: nowrap;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    border: none;
+    transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
   }
 
   .footer-pill:hover {
     transform: translateY(-2px);
-    opacity: 0.95;
   }
 
-  .footer-pill-secondary {
+  .footer-pill-white {
+    background: #ffffff;
+    color: #120703;
+  }
+
+  .footer-pill-white:hover {
+    opacity: 0.94;
+  }
+
+  .footer-pill-dark {
     background: rgba(255, 255, 255, 0.16);
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+  }
+
+  .footer-pill-dark:hover {
+    background: rgba(255, 255, 255, 0.24);
+  }
+
+  .pill-icon {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .footer-seo-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .footer-seo-heading {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffb885;
+    margin: 0;
+    letter-spacing: -0.01em;
   }
 
   .footer-statement {
+    font-family: 'Satoshi', sans-serif;
     font-size: 13px;
     line-height: 1.55;
     color: rgba(255, 255, 255, 0.88);
     margin: 0;
   }
 
-  .footer-utility-block {
+  .footer-statement a {
+    color: #ffb885;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.18s ease;
+  }
+
+  .footer-statement a:hover {
+    color: #ffffff;
+  }
+
+  /* Right Column: Return to Baraat & Clean 2-Row Directory */
+  .footer-right-col {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 14px;
+    gap: 18px;
+    text-align: right;
   }
 
-  .footer-top-btn {
+  .footer-return-btn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 9px 18px;
+    padding: 10px 22px;
     border-radius: 9999px;
     background: rgba(255, 255, 255, 0.16);
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.32);
+    font-family: 'Satoshi', sans-serif;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
@@ -278,41 +338,50 @@ const { currentPath = '' } = Astro.props;
     transition: background 0.2s ease, transform 0.2s ease;
   }
 
-  .footer-top-btn:hover {
-    background: rgba(255, 255, 255, 0.24);
+  .footer-return-btn:hover {
+    background: rgba(255, 255, 255, 0.26);
     transform: translateY(-2px);
   }
 
-  .footer-nav-links {
+  .footer-directory {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .directory-row {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
     flex-wrap: wrap;
-    max-width: 340px;
     justify-content: flex-end;
   }
 
-  .footer-nav-link {
-    font-size: 12px;
+  .directory-link {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 13px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(255, 255, 255, 0.82);
     text-decoration: none;
-    transition: color 0.2s ease;
+    white-space: nowrap;
+    transition: color 0.18s ease;
   }
 
-  .footer-nav-link:hover {
+  .directory-link:hover {
     color: #ffffff;
     text-decoration: underline;
   }
 
+  /* Monumental Base Strap */
   .footer-bottom-strap {
     position: relative;
     z-index: 3;
     width: 100%;
-    margin: 24px 0 0;
+    margin: 28px 0 0;
     padding: 0;
     overflow: visible;
-    line-height: 1.0;
+    line-height: 0.95;
     user-select: none;
     pointer-events: none;
     display: flex;
@@ -323,7 +392,7 @@ const { currentPath = '' } = Astro.props;
   .footer-huge-title {
     font-family: 'Satoshi', var(--font-display);
     font-weight: 900;
-    font-size: clamp(40px, 12.8vw, 210px);
+    font-size: clamp(48px, 13.8vw, 220px);
     line-height: 0.95;
     letter-spacing: -0.04em;
     text-transform: none;
@@ -333,48 +402,56 @@ const { currentPath = '' } = Astro.props;
     white-space: nowrap;
     display: block;
     transform: none;
-    text-shadow: 0 4px 28px rgba(0, 0, 0, 0.45);
+    text-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
     width: 100%;
     text-align: center;
   }
 
-  @media (max-width: 768px) {
+  /* Mobile Responsive Refinements */
+  @media (max-width: 860px) {
     .playfolly-footer {
       padding: 32px 18px max(32px, env(safe-area-inset-bottom, 32px));
       min-height: auto;
-      overflow: hidden;
-      gap: 24px;
+      gap: 28px;
     }
+
     .footer-top-row {
       flex-direction: column;
       align-items: flex-start;
-      gap: 20px;
+      gap: 24px;
     }
-    .footer-utility-block {
-      align-items: center;
-      width: 100%;
-      flex-direction: row;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .footer-nav-links {
-      justify-content: flex-start;
+
+    .footer-left-col {
       max-width: 100%;
-      gap: 10px 16px;
     }
+
+    .footer-right-col {
+      align-items: flex-start;
+      text-align: left;
+      width: 100%;
+      gap: 16px;
+    }
+
+    .footer-directory {
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .directory-row {
+      justify-content: flex-start;
+      gap: 14px 18px;
+    }
+
     .footer-bottom-strap {
       margin-top: 20px;
-      overflow: visible;
-      line-height: 1.05;
     }
+
     .footer-huge-title {
       font-size: clamp(34px, 11vw, 68px);
       line-height: 1.05;
-      transform: none;
-      letter-spacing: -0.035em;
       padding-bottom: 8px;
+      letter-spacing: -0.03em;
     }
   }
 </style>
