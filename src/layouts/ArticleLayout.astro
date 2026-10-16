@@ -1,0 +1,516 @@
+---
+// src/layouts/ArticleLayout.astro
+import BaseLayout from './BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+import PlayfollyFooter from '../components/PlayfollyFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  badge?: string;
+  canonicalURL?: string;
+  ogImage?: string;
+  jsonLd?: Record<string, any>;
+  backdropSrc?: string;
+  enableVideoModal?: boolean;
+}
+
+const {
+  title,
+  description,
+  badge = 'CULTURAL GUIDE',
+  canonicalURL,
+  ogImage = '/og/og-home.png',
+  jsonLd,
+  backdropSrc = '/assets/02-baraat-wide.png',
+  enableVideoModal = true,
+} = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalURL={canonicalURL}
+  ogImage={ogImage}
+  jsonLd={jsonLd}
+>
+  <div class="backdrop-container" aria-hidden="true">
+    <img class="backdrop-img" src={backdropSrc} alt="" />
+    <div class="backdrop-wash"></div>
+    <div class="saloon-vignette"></div>
+  </div>
+
+  <div class="page-wrap">
+    <TopNav badge={badge} />
+    <main>
+      <slot />
+    </main>
+  </div>
+
+  {enableVideoModal && (
+    <dialog class="video-dialog" id="videoDialog">
+      <div class="dialog-head">
+        <div class="dialog-title" id="dialogSongTitle">Now Playing</div>
+        <button class="dialog-close" id="dialogCloseBtn" aria-label="Close modal">✕</button>
+      </div>
+      <div class="dialog-iframe-wrap">
+        <iframe
+          id="dialogIframe"
+          title="Baraat Video"
+          src="about:blank"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </dialog>
+  )}
+
+  <PlayfollyFooter />
+</BaseLayout>
+
+{enableVideoModal && (
+  <script>
+    const dialog = document.getElementById('videoDialog') as HTMLDialogElement | null;
+    const iframe = document.getElementById('dialogIframe') as HTMLIFrameElement | null;
+    const titleEl = document.getElementById('dialogSongTitle');
+    const closeBtn = document.getElementById('dialogCloseBtn');
+
+    if (dialog && iframe) {
+      document.querySelectorAll('.play-trigger-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const vid = btn.getAttribute('data-video');
+          const title = btn.getAttribute('data-title');
+          if (titleEl && title) titleEl.textContent = title;
+          if (vid) {
+            iframe.src = `https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&rel=0`;
+            dialog.showModal();
+          }
+        });
+      });
+
+      closeBtn?.addEventListener('click', () => {
+        iframe.src = 'about:blank';
+        dialog.close();
+      });
+
+      dialog.addEventListener('click', (e) => {
+        if (e.target === dialog) {
+          iframe.src = 'about:blank';
+          dialog.close();
+        }
+      });
+    }
+  </script>
+)}
+
+<style is:global>
+  .backdrop-container {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .backdrop-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    filter: saturate(1.2) brightness(0.65);
+    transform: scale(1.04);
+  }
+
+  .backdrop-wash {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 50% 25%,
+      rgba(13, 15, 21, 0.45) 0%,
+      rgba(13, 15, 21, 0.94) 85%
+    );
+  }
+
+  .saloon-vignette {
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.9);
+  }
+
+  .page-wrap {
+    width: min(100% - 32px, 880px);
+    margin: 0 auto;
+    padding: 24px 0 clamp(40px, 8vw, 80px);
+    position: relative;
+    z-index: 1;
+  }
+
+  .article-header {
+    margin-bottom: 44px;
+  }
+
+  .article-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .article-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4.6vw, 54px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    margin-bottom: 18px;
+    text-wrap: balance;
+  }
+
+  .article-lead {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--sand);
+    margin-bottom: 24px;
+  }
+
+  .article-lead a {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .content-body {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--sand);
+  }
+
+  .content-body h2 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 40px 0 16px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 8px;
+  }
+
+  .content-body h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--gold);
+    margin: 28px 0 10px;
+  }
+
+  .content-body p {
+    margin-bottom: 18px;
+  }
+
+  .content-body ul, .content-body ol {
+    margin: 0 0 24px 24px;
+  }
+
+  .content-body li {
+    margin-bottom: 10px;
+  }
+
+  .content-body a {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .callout-box {
+    background: rgba(229, 176, 97, 0.08);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 14px 14px 0;
+    padding: 24px;
+    margin: 32px 0;
+  }
+
+  .callout-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .curated-category {
+    margin-bottom: 50px;
+  }
+
+  .category-heading {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .category-desc {
+    font-size: 14px;
+    color: var(--sand-80);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .song-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .editorial-song-card {
+    background: rgba(18, 14, 12, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .editorial-song-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .song-thumb-box {
+    width: 68px;
+    height: 68px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    background: #000000;
+  }
+
+  .song-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .song-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .song-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .song-artist {
+    font-size: 12px;
+    color: var(--sand-80);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .song-vibe-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    background: rgba(229, 176, 97, 0.15);
+    color: var(--gold);
+  }
+
+  .play-trigger-btn {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.18s;
+  }
+
+  .play-trigger-btn:hover {
+    background: var(--gold);
+    color: #120703;
+    border-color: var(--gold);
+    transform: scale(1.08);
+  }
+
+  .editorial-pro-tips {
+    background: rgba(229, 176, 97, 0.08);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 14px 14px 0;
+    padding: 24px;
+    margin: 48px 0;
+  }
+
+  .tips-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .tips-copy {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--sand);
+  }
+
+  .tips-copy p + p {
+    margin-top: 12px;
+  }
+
+  .timeline-milestones {
+    display: grid;
+    gap: 16px;
+    margin: 24px 0 36px;
+  }
+
+  .milestone-card {
+    background: rgba(18, 14, 12, 0.72);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .milestone-time {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .milestone-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+  }
+
+  .milestone-desc {
+    font-size: 14px;
+    color: var(--sand-80);
+    line-height: 1.5;
+  }
+
+  .faq-section {
+    margin-top: 56px;
+    border-top: 1px solid var(--line);
+    padding-top: 40px;
+  }
+
+  .faq-heading {
+    font-size: 24px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 24px;
+  }
+
+  .faq-item {
+    margin-bottom: 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .faq-q {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .faq-a {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--sand);
+  }
+
+  /* Modal for Playback */
+  .video-dialog {
+    border: none;
+    border-radius: 16px;
+    background: #120703;
+    color: var(--cream);
+    width: min(92vw, 720px);
+    max-height: 90vh;
+    padding: 20px;
+    margin: auto;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+  }
+
+  .video-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+  }
+
+  .dialog-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .dialog-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .dialog-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .dialog-iframe-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .dialog-iframe-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+</style>

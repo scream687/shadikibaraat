@@ -1,0 +1,194 @@
+---
+// src/pages/baraat-songs-for-wedding-video.astro
+import ArticleLayout from '../layouts/ArticleLayout.astro';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Baraat Songs for Wedding Videos: Hindi Music Picks",
+      "description": "Expert music recommendations for wedding filmmakers and couples editing baraat highlights, reels, and cinematic teasers.",
+      "url": "https://shadikibaraat.com/baraat-songs-for-wedding-video",
+      "image": "https://shadikibaraat.com/og/og-home.jpg",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Shadi Ki Baraat",
+        "url": "https://shadikibaraat.com/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://shadikibaraat.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Songs",
+          "item": "https://shadikibaraat.com/songs"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Wedding Video Songs",
+          "item": "https://shadikibaraat.com/baraat-songs-for-wedding-video"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can I use commercial Bollywood songs in my YouTube wedding video?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Uploading commercial Bollywood music to YouTube will usually trigger a Content ID claim by music labels (like T-Series, Zee Music, or YRF). This rarely blocks personal wedding videos, but the label may place ads on your video or restrict mobile playback in certain territories."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best song for a 60-second baraat Instagram reel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For fast-paced 60-second reels, tracks with instant recognizable drops work best: 'Kala Chashma' for sunglasses-on swagger, 'London Thumakda' for street dancing, or 'Sauda Khara Khara' for peak energy."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<ArticleLayout
+  title="Baraat Songs for Wedding Videos: Hindi Music Picks | Shadi Ki Baraat"
+  description="Best Hindi baraat songs for wedding teaser videos, reels, and cinematic highlights. Curated music picks grouped by montage style plus copyright guidance."
+  badge="FILMMAKER & REEL PICKS"
+  jsonLd={jsonLd}
+>
+  <header class="article-header">
+    <p class="article-badge">Cinematic Soundtracks · Wedding Video Guide</p>
+    <h1 class="article-title">Baraat Songs for Wedding Videos</h1>
+    <p class="article-lead">
+      A memorable wedding teaser needs more than beautiful 120fps slow-motion shots; it requires a soundtrack that syncs with confetti pops, smoke canisters, and raw generational joy. Below are the best Hindi baraat songs categorized by video montage style, alongside crucial copyright guidance. To explore songs matched to each moment of the night, you can <a href="/playlists">find songs by baraat phase</a>.
+    </p>
+  </header>
+
+  <!-- Style 1: Cinematic Groom Entry Montage -->
+  <section class="curated-category">
+    <h2 class="category-heading">1. Cinematic Slow-Motion Groom Arrivals</h2>
+    <p class="category-desc">Grand orchestral arrangements and regal vocal lines for slow-motion stepping down from the vintage car or horse.</p>
+    
+    <div class="song-cards-grid">
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/2-7qUj3Ieeg/hqdefault.jpg" alt="Azeem-O-Shaan Shahenshah artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Azeem-O-Shaan Shahenshah</h3>
+          <p class="song-artist">Jodhaa Akbar · A.R. Rahman</p>
+          <span class="song-vibe-tag">Cinematic Brass</span>
+        </div>
+        <button class="play-trigger-btn" data-video="2-7qUj3Ieeg" data-title="Azeem-O-Shaan Shahenshah" aria-label="Play Azeem-O-Shaan Shahenshah">▶</button>
+      </article>
+
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/gve9u4vQWqI/hqdefault.jpg" alt="Mangalayam artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Mangalayam</h3>
+          <p class="song-artist">Saathiya · A.R. Rahman</p>
+          <span class="song-vibe-tag">Traditional Soul</span>
+        </div>
+        <button class="play-trigger-btn" data-video="gve9u4vQWqI" data-title="Mangalayam" aria-label="Play Mangalayam">▶</button>
+      </article>
+
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/lff_M5j72bU/hqdefault.jpg" alt="Jashn-E-Bahaara artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Jashn-E-Bahaara</h3>
+          <p class="song-artist">Javed Ali · Jodhaa Akbar</p>
+          <span class="song-vibe-tag">Romantic Grandeur</span>
+        </div>
+        <button class="play-trigger-btn" data-video="lff_M5j72bU" data-title="Jashn-E-Bahaara" aria-label="Play Jashn-E-Bahaara">▶</button>
+      </article>
+    </div>
+  </section>
+
+  <!-- Style 2: Street Dancing & Confetti Explosions -->
+  <section class="curated-category">
+    <h2 class="category-heading">2. High-Octane Dancing & Reel Drops</h2>
+    <p class="category-desc">Heavy percussions, fast tempo cuts, and bass drops perfect for quick-cut 30 to 60-second Instagram reels.</p>
+    
+    <div class="song-cards-grid">
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/udra3Mfw2oo/hqdefault.jpg" alt="London Thumakda artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">London Thumakda</h3>
+          <p class="song-artist">Queen · Amit Trivedi</p>
+          <span class="song-vibe-tag">Dhol Peak</span>
+        </div>
+        <button class="play-trigger-btn" data-video="udra3Mfw2oo" data-title="London Thumakda" aria-label="Play London Thumakda">▶</button>
+      </article>
+
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/k4yXQkG2s1E/hqdefault.jpg" alt="Kala Chashma artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Kala Chashma</h3>
+          <p class="song-artist">Baar Baar Dekho · Badshah</p>
+          <span class="song-vibe-tag">Viral Reel Drop</span>
+        </div>
+        <button class="play-trigger-btn" data-video="k4yXQkG2s1E" data-title="Kala Chashma" aria-label="Play Kala Chashma">▶</button>
+      </article>
+
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/LYEqeUr-158/hqdefault.jpg" alt="Sauda Khara Khara artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Sauda Khara Khara</h3>
+          <p class="song-artist">Good Newwz · Diljit Dosanjh</p>
+          <span class="song-vibe-tag">Dance-Floor Fire</span>
+        </div>
+        <button class="play-trigger-btn" data-video="LYEqeUr-158" data-title="Sauda Khara Khara" aria-label="Play Sauda Khara Khara">▶</button>
+      </article>
+    </div>
+  </section>
+
+  <!-- Music Licensing Guidance for Wedding Videographers -->
+  <section class="editorial-pro-tips">
+    <h3 class="tips-title">Important: Music Licensing & Copyright Guidance for Creators</h3>
+    <div class="tips-copy">
+      <p><strong>1. YouTube Content ID:</strong> If you upload a wedding video to YouTube containing commercial Bollywood songs, the automated Content ID system will identify the recording. In most cases, the music label allows the video to remain live, but places ads on it and claims the monetization rights.</p>
+      <p><strong>2. Instagram Reels vs. Long-form Edits:</strong> For Instagram and Facebook reels, selecting songs directly from the official Instagram In-App Music Library ensures your audio won't be muted or taken down due to platform licensing agreements.</p>
+      <p><strong>3. Commercial Filmmaker Deliverables:</strong> If you are a professional wedding cinematographer delivering files directly to clients on USB drives or private cloud links, client personal playback is protected. However, if using the film in your public studio portfolio, consider licensed indie tracks or instrumental covers to avoid takedowns. Explore our curated rotations to <a href="/playlists" style="color:var(--gold);text-decoration:underline;">find songs by baraat phase</a>.</p>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <h2 class="faq-heading">Frequently Asked Questions: Wedding Video Music</h2>
+    
+    <div class="faq-item">
+      <h3 class="faq-q">Can a couple upload their wedding film to YouTube without getting strikes?</h3>
+      <p class="faq-a">A copyright claim is not a copyright strike. Commercial Bollywood songs usually receive claims, meaning the copyright holder monetizes the views. The video remains viewable for family and friends in over 95% of cases.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-q">What audio quality should be used for video editing?</h3>
+      <p class="faq-a">Always source high-bitrate uncompressed audio (320kbps MP3 or 24-bit WAV) rather than low-quality web rips to ensure the low-end dhol frequencies sound punchy on home theater speakers.</p>
+    </div>
+  </section>
+</ArticleLayout>

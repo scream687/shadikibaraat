@@ -1,0 +1,380 @@
+---
+// src/components/PlayfollyFooter.astro
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '' } = Astro.props;
+---
+
+<footer class="playfolly-footer" id="baraatFooter" aria-label="Footer and cultural archive">
+  <div class="footer-backdrop" aria-hidden="true">
+    <div class="footer-ambient-radial"></div>
+    <div class="footer-center-scene">
+      <img
+        src="/assets/02-baraat-wide.png"
+        alt="Baraat celebration illustration"
+        class="footer-center-img"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="footer-grain" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <div class="footer-top-row">
+    <div class="footer-identity-block">
+      <div class="footer-brand">
+        <span class="footer-kicker">ARCHIVE & SOUNDTRACK</span>
+        <h2 class="footer-logo">शादी Ki बारात</h2>
+      </div>
+      <div class="footer-pill-row">
+        <a
+          href="https://instagram.com/shadikibaraat"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer-pill"
+          aria-label="Visit Shadi Ki Baraat on Instagram"
+        >
+          <span>@shadikibaraat</span>
+        </a>
+        <a
+          href="mailto:hello@shadikibaraat.com?subject=Baraat%20Story"
+          class="footer-pill"
+          aria-label="Send an email to Shadi Ki Baraat"
+        >
+          <span>Email us</span>
+        </a>
+        <a href="/playlists" class="footer-pill footer-pill-secondary">
+          <span>7 Rotations</span>
+        </a>
+        <a href="/songs" class="footer-pill footer-pill-secondary">
+          <span>140 Songs</span>
+        </a>
+      </div>
+      <div class="footer-seo-summary" style="margin-top: 8px;">
+        <h3 style="font-family: 'Satoshi', sans-serif; font-size: 15px; font-weight: 700; color: #ffb885; margin: 0 0 6px;">Your Baraat Playlist, From Groom Entry to Afterparty</h3>
+        <p class="footer-statement">
+          Find the soundtrack for every moment of the baraat, from the <a href="/baraat-entry-songs-for-groom" style="color: #ffb885; text-decoration: underline;">groom's entry</a> and dhol-led dancing to the DJ set and afterparty. Explore curated Hindi wedding songs through a playful, ad-free website interface. You can <a href="/playlists" style="color: #ffb885; text-decoration: underline;">explore baraat playlists in Hindi</a> or <a href="/songs" style="color: #ffb885; text-decoration: underline;">browse the baraat songs list</a>, discover <a href="/old-hindi-baraat-songs" style="color: #ffb885; text-decoration: underline;">old Hindi and 90s baraat songs</a>, find <a href="/baraat-songs-for-wedding-video" style="color: #ffb885; text-decoration: underline;">baraat songs for wedding videos</a>, and learn <a href="/baraat-meaning" style="color: #ffb885; text-decoration: underline;">what is a baraat</a>.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-utility-block">
+      <button
+        type="button"
+        class="footer-top-btn"
+        id="footer-scroll-top"
+        aria-label="Scroll back to top"
+      >
+        <span>Scroll to Top</span>
+      </button>
+      <nav class="footer-nav-links" aria-label="Footer quick links">
+        <a href="/" class="footer-nav-link">Interactive Stage</a>
+        <a href="/playlists" class="footer-nav-link">7 Rotations</a>
+        <a href="/songs" class="footer-nav-link">All 140 Songs</a>
+        <a href="/baraat-meaning" class="footer-nav-link">Baraat Meaning</a>
+        <a href="/baraat-entry-songs-for-groom" class="footer-nav-link">Groom Entry</a>
+        <a href="/old-hindi-baraat-songs" class="footer-nav-link">Old Hindi</a>
+        <a href="/baraat-songs-for-wedding-video" class="footer-nav-link">Wedding Video</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="footer-bottom-strap">
+    <h2 class="footer-huge-title">Shadi ki baraat</h2>
+  </div>
+</footer>
+
+<script>
+  // Handle smooth scroll-to-top with Lenis fallback
+  const scrollBtn = document.getElementById('footer-scroll-top');
+  if (scrollBtn) {
+    scrollBtn.addEventListener('click', () => {
+      if ((window as any).__lenis) {
+        (window as any).__lenis.scrollTo(0, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }
+</script>
+
+<style>
+  .playfolly-footer {
+    position: relative;
+    width: 100%;
+    margin-top: 0;
+    padding: clamp(36px, 6vw, 64px) clamp(20px, 4vw, 48px) 0;
+    box-sizing: border-box;
+    background: #080302;
+    overflow: hidden;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: clamp(380px, 58vh, 600px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .footer-backdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .footer-ambient-radial {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    width: 1200px;
+    height: 700px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 120, 40, 0.28) 0%,
+      rgba(180, 40, 15, 0.15) 45%,
+      transparent 75%
+    );
+    filter: blur(50px);
+  }
+
+  .footer-center-scene {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -46%);
+    width: min(780px, 86vw);
+    height: min(440px, 52vh);
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 88%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 88%);
+  }
+
+  .footer-center-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 55%;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: high-quality;
+    opacity: 1;
+  }
+
+  .footer-grain {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: var(--noise-pattern);
+    background-repeat: repeat;
+    background-size: 140px 140px;
+    mix-blend-mode: overlay;
+    opacity: 0.08;
+    z-index: 2;
+  }
+
+  .footer-top-row {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+    width: 100%;
+  }
+
+  .footer-identity-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 520px;
+  }
+
+  .footer-kicker {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #ffb885;
+  }
+
+  .footer-logo {
+    font-family: var(--font-hindi);
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 4px 0 0;
+  }
+
+  .footer-pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 9999px;
+    background: #ffffff;
+    color: #120703;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .footer-pill:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+
+  .footer-pill-secondary {
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+  }
+
+  .footer-statement {
+    font-size: 13px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.88);
+    margin: 0;
+  }
+
+  .footer-utility-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 14px;
+  }
+
+  .footer-top-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .footer-top-btn:hover {
+    background: rgba(255, 255, 255, 0.24);
+    transform: translateY(-2px);
+  }
+
+  .footer-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    max-width: 340px;
+    justify-content: flex-end;
+  }
+
+  .footer-nav-link {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-nav-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+
+  .footer-bottom-strap {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    margin: 24px 0 0;
+    padding: 0;
+    overflow: visible;
+    line-height: 1.0;
+    user-select: none;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .footer-huge-title {
+    font-family: 'Satoshi', var(--font-display);
+    font-weight: 900;
+    font-size: clamp(40px, 12.8vw, 210px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: none;
+    color: #ffffff;
+    margin: 0;
+    padding: 0 0 10px;
+    white-space: nowrap;
+    display: block;
+    transform: none;
+    text-shadow: 0 4px 28px rgba(0, 0, 0, 0.45);
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .playfolly-footer {
+      padding: 32px 18px max(32px, env(safe-area-inset-bottom, 32px));
+      min-height: auto;
+      overflow: hidden;
+      gap: 24px;
+    }
+    .footer-top-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .footer-utility-block {
+      align-items: center;
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-nav-links {
+      justify-content: flex-start;
+      max-width: 100%;
+      gap: 10px 16px;
+    }
+    .footer-bottom-strap {
+      margin-top: 20px;
+      overflow: visible;
+      line-height: 1.05;
+    }
+    .footer-huge-title {
+      font-size: clamp(34px, 11vw, 68px);
+      line-height: 1.05;
+      transform: none;
+      letter-spacing: -0.035em;
+      padding-bottom: 8px;
+    }
+  }
+</style>

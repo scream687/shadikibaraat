@@ -1,0 +1,91 @@
+---
+// src/components/TopNav.astro
+interface Props {
+  badge?: string;
+}
+
+const { badge = 'ARCHIVE' } = Astro.props;
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<nav class="top-nav" aria-label="Main Navigation">
+  <div class="nav-links">
+    <a href="/" class:list={['saloon-chip', { active: pathname === '/' }]}>Baraat</a>
+    <a href="/playlists" class:list={['saloon-chip', { active: pathname === '/playlists' }]}>Playlists</a>
+    <a href="/songs" class:list={['saloon-chip', { active: pathname === '/songs' }]}>Songs</a>
+    <a href="/baraat-meaning" class:list={['saloon-chip', { active: pathname === '/baraat-meaning' }]}>Meaning</a>
+    <a href="/baraat-entry-songs-for-groom" class:list={['saloon-chip', { active: pathname === '/baraat-entry-songs-for-groom' }]}>Groom Entry</a>
+  </div>
+  {badge && (
+    <div class="saloon-chip nav-badge">
+      {badge}
+    </div>
+  )}
+</nav>
+
+<style>
+  .top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: clamp(32px, 5vw, 48px);
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 10;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .saloon-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 18px;
+    border-radius: 9999px;
+    background: rgba(18, 9, 6, 0.75);
+    border: 1px solid rgba(245, 237, 224, 0.16);
+    color: var(--sand-80);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .saloon-chip:hover {
+    color: var(--sand);
+    border-color: rgba(212, 163, 89, 0.4);
+    background: rgba(30, 15, 10, 0.85);
+    transform: translateY(-1px);
+  }
+
+  .saloon-chip.active {
+    background: var(--gold);
+    color: #120703;
+    font-weight: 700;
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(212, 163, 89, 0.3);
+  }
+
+  .nav-badge {
+    background: transparent;
+    border-color: transparent;
+    color: var(--gold);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    font-weight: 600;
+  }
+
+  @media (max-width: 640px) {
+    .nav-badge {
+      display: none;
+    }
+  }
+</style>

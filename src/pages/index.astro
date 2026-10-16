@@ -1,0 +1,2510 @@
+---
+// src/pages/index.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PlayfollyFooter from '../components/PlayfollyFooter.astro';
+import songsData from '../data/songs.json';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://shadikibaraat.com/#website",
+      "url": "https://shadikibaraat.com/",
+      "name": "Shadi Ki Baraat",
+      "description": "Ad-free Baraat playlists and curated Hindi wedding procession songs across seven phases.",
+      "publisher": {
+        "@id": "https://shadikibaraat.com/#organization"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://shadikibaraat.com/#organization",
+      "name": "Shadi Ki Baraat",
+      "url": "https://shadikibaraat.com/",
+      "logo": "https://shadikibaraat.com/assets/logo-white.png"
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title="Shadi Ki Baraat | Ad-Free Baraat Playlists & Wedding Songs"
+  description="Explore curated Hindi baraat playlists, groom entry songs, old Bollywood favourites and 7 phases of an Indian wedding procession. Find the music for every baraat moment."
+  canonicalURL="https://shadikibaraat.com/"
+  ogImage="/og/og-home.jpg"
+  jsonLd={jsonLd}
+>
+  <link rel="preload" as="image" href="/assets/01-baraat-wide.png" slot="head" />
+  <link rel="preload" as="image" href="/assets/02-baraat-wide.png" fetchpriority="high" slot="head" />
+  <link rel="preload" as="image" href="/assets/03-baraat-wide.png" slot="head" />
+  <link rel="preload" as="image" href="/assets/04-baraat-wide.png" slot="head" />
+  <link rel="preload" as="image" href="/assets/05-baraat-wide.png" slot="head" />
+  <link rel="preload" as="image" href="/assets/06-baraat-wide.png" slot="head" />
+  <link rel="preload" as="image" href="/assets/07-baraat-wide.png" slot="head" />
+  <script is:inline src="https://www.youtube.com/iframe_api"></script>
+
+  <div class="app" id="app">
+    <!-- Scene Stack with 7 Procession Artworks -->
+    <div class="scene-stack" aria-hidden="true" id="sceneStack">
+      <img class="scene-image" id="scene-0" src="/assets/01-baraat-wide.png" alt="" style="object-position: center 36%;" />
+      <img class="scene-image is-active" id="scene-1" src="/assets/02-baraat-wide.png" alt="" fetchpriority="high" style="object-position: center 36%;" />
+      <img class="scene-image" id="scene-2" src="/assets/03-baraat-wide.png" alt="" style="object-position: center 36%;" />
+      <img class="scene-image" id="scene-3" src="/assets/04-baraat-wide.png" alt="" style="object-position: center 36%;" />
+      <img class="scene-image" id="scene-4" src="/assets/05-baraat-wide.png" alt="" style="object-position: center 36%;" />
+      <img class="scene-image" id="scene-5" src="/assets/06-baraat-wide.png" alt="" style="object-position: center 36%;" />
+      <img class="scene-image" id="scene-6" src="/assets/07-baraat-wide.png" alt="" style="object-position: center 36%;" />
+    </div>
+    <div class="scene-wash"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+
+    <!-- Deluxe Saloon Top Header -->
+    <header class="site-header">
+      <div class="header-time" id="headerTime">--:--</div>
+      <div class="live-pill" id="livePill" title="Live visitors enjoying the baraat">
+        <span class="live-dot"></span>
+        <span class="live-count" id="liveCount">148</span>
+        <span class="live-label">visitors</span>
+      </div>
+      <div class="header-actions">
+        <button class="icon-button" id="headerPlayBtn" type="button" aria-label="Play soundtrack" title="Play soundtrack">
+          <svg class="mini-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        </button>
+        <button class="icon-button" id="moodBtn" type="button" aria-pressed="false" aria-label="Toggle lights" title="Toggle lights">
+          <svg class="mini-icon" id="moodIcon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon-button" id="zenBtn" type="button" aria-label="Toggle scene view" title="Toggle scene view">
+          <svg class="mini-icon" viewBox="0 0 24 24" fill="none"><path d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-button" id="menuBtn" type="button" aria-label="Open menu" aria-haspopup="dialog" title="Open menu">
+          <svg class="mini-icon" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- Centered Brand Logo (Shadi Ki Baraat) -->
+      <div class="hero-logo-wrap">
+        <img src="/assets/logo-white.webp" alt="शादी Ki बारात" class="hero-logo-img" width="923" height="603" fetchpriority="high" />
+      </div>
+
+      <!-- Left Dock: Sleek Story & Phase Display -->
+      <div class="bottom-left-dock">
+        <section class="story-block" aria-live="polite" aria-atomic="true">
+          <h1 class="sr-only">Your Baraat Playlist, From Groom Entry to Afterparty</h1>
+          <p class="kicker" id="phaseKicker">PHASE 02 · DUSK · 6:30 PM</p>
+          <p class="story-headline" id="phaseHeadline">Baraat nikli.</p>
+          <p class="story-body" id="phaseBody">The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.</p>
+        </section>
+
+        <div class="music-card" id="musicCard">
+          <!-- Circular Spinning Album / Vinyl Cover -->
+          <div class="vinyl-wrap" id="vinylWrap" title="Click to watch full music video">
+            <div class="vinyl-disc" id="vinylDisc">
+              <img class="vinyl-cover" id="trackCoverImg" src="https://img.youtube.com/vi/jCEdTq3j-0U/hqdefault.jpg" alt="Album artwork" />
+            </div>
+            <div class="vinyl-spindle" aria-hidden="true"></div>
+          </div>
+
+          <!-- Track Meta & Progress Scrubber -->
+          <div class="player-center">
+            <div class="track-title" id="trackTitle">Gallan Goodiyaan</div>
+            <div class="track-artist" id="trackArtist">Shankar Mahadevan · Sukhwinder Singh</div>
+            
+            <div class="progress-wrap" id="progressWrap" role="slider" aria-label="Seek track" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="progress-track">
+                <div class="progress-fill" id="trackProgressBar"></div>
+                <div class="progress-handle" id="trackProgressHandle"></div>
+              </div>
+            </div>
+            <div class="time-display" id="trackTimeDisplay">0:00 / 0:00</div>
+          </div>
+
+          <!-- Playback Controls Cluster on Right -->
+          <div class="player-controls">
+            <button class="player-ctrl-btn" id="prevTrack" type="button" aria-label="Previous track" title="Previous track">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+            <button class="player-play-btn" id="playVideo" type="button" aria-label="Play / Pause soundtrack" title="Play / Pause soundtrack">
+              <svg id="playIconSvg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <button class="player-ctrl-btn" id="nextTrack" type="button" aria-label="Next track" title="Next track">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 6h2v12h-2zm-2 6L5.5 6v12z"/></svg>
+            </button>
+            <button class="player-watch-btn" id="watchYtBtn" type="button" aria-label="Watch video" title="Watch full music video">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.58 7.19a2.5 2.5 0 0 0-1.76-1.77C18.26 5 12 5 12 5s-6.26 0-7.82.42A2.5 2.5 0 0 0 2.42 7.19 26.07 26.07 0 0 0 2 12a26.07 26.07 0 0 0 .42 4.81 2.5 2.5 0 0 0 1.76 1.77C5.74 19 12 19 12 19s6.26 0 7.82-.42a2.5 2.5 0 0 0 1.76-1.77A26.07 26.07 0 0 0 22 12a26.07 26.07 0 0 0-.42-4.81zM9.75 15.02V8.98L15 12l-5.25 3.02z"/></svg>
+              <span>Watch</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop Bottom-Right Dock -->
+      <div class="bottom-right-dock">
+        <div class="bottom-right-subbar">
+          <nav class="dock-nav-chips" aria-label="Quick Navigation">
+            <a href="/" class="dock-chip active">Baraat</a>
+            <a href="/playlists" class="dock-chip">Playlists</a>
+            <a href="/songs" class="dock-chip">Songs (140)</a>
+            <a href="/baraat-meaning" class="dock-chip">Meaning</a>
+            <a href="#baraatFooter" class="dock-chip" id="dockAboutChip">About</a>
+          </nav>
+          <button class="reset-pill-inline" id="quickResetBtn" type="button" title="Restart experience">↻ Start Over</button>
+        </div>
+        <div class="timeline">
+          <div class="timeline-topline"><span>THE NIGHT, IN SEVEN STOPS</span><span>Pick a moment</span></div>
+          <div class="timeline-items" id="timelineItems" role="tablist" aria-label="Baraat phases"></div>
+        </div>
+      </div>
+
+      <!-- Mobile Low-Density Floating Dock -->
+      <div class="mobile-dock" id="mobileDock">
+        <div class="mobile-timeline-bar" id="mobileTimelineBar">
+          <div class="mobile-timeline-track" id="mobileDots" role="tablist" aria-label="Baraat phases"></div>
+        </div>
+        <div class="mobile-bar" id="mobileBar">
+          <!-- Mobile Spinning Vinyl Cover -->
+          <div class="vinyl-wrap mobile-vinyl" id="mVinylWrap" title="Click to view full video">
+            <div class="vinyl-disc" id="mVinylDisc">
+              <img class="vinyl-cover" id="mTrackCoverImg" src="https://img.youtube.com/vi/jCEdTq3j-0U/hqdefault.jpg" alt="Album Cover" />
+            </div>
+            <div class="vinyl-spindle" aria-hidden="true"></div>
+          </div>
+
+          <!-- Mobile Center Meta & Progress -->
+          <div class="mobile-player-center" id="mTrackInfo">
+            <div class="mobile-track-title" id="mTrackTitle">Gallan Goodiyaan</div>
+            <div class="mobile-phase-meta" id="mPhaseMeta">Shankar Mahadevan · Sukhwinder Singh</div>
+            <div class="progress-wrap mobile-progress" id="mProgressWrap" role="slider" aria-label="Seek track">
+              <div class="progress-track">
+                <div class="progress-fill" id="mTrackProgressBar"></div>
+              </div>
+            </div>
+            <div class="time-display mobile-time" id="mTrackTimeDisplay">0:00 / 0:00</div>
+          </div>
+
+          <!-- Mobile Controls on Right -->
+          <div class="mobile-player-controls">
+            <button class="mobile-ctrl-btn" id="mPrevTrack" type="button" aria-label="Previous track" title="Previous track">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+            <button class="mobile-play-btn" id="mPlayTrack" type="button" aria-label="Play song" title="Play song">
+              <svg id="mPlayIconSvg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <button class="mobile-ctrl-btn" id="mNextTrack" type="button" aria-label="Next track" title="Next track">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zm-2 6L5.5 6v12z"/></svg>
+            </button>
+            <button class="mobile-ctrl-btn" id="mWatchYtBtn" type="button" aria-label="Watch video" title="Watch full video">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.5 2.5 0 0 0-1.76-1.77C18.26 5 12 5 12 5s-6.26 0-7.82.42A2.5 2.5 0 0 0 2.42 7.19 26.07 26.07 0 0 0 2 12a26.07 26.07 0 0 0 .42 4.81 2.5 2.5 0 0 0 1.76 1.77C5.74 19 12 19 12 19s6.26 0 7.82-.42a2.5 2.5 0 0 0 1.76-1.77A26.07 26.07 0 0 0 22 12a26.07 26.07 0 0 0-.42-4.81zM9.75 15.02V8.98L15 12l-5.25 3.02z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hidden In-Browser Audio Player Frame -->
+      <div id="ytAudioWrap" style="position:fixed;bottom:0;left:0;width:1px;height:1px;opacity:0.001;pointer-events:none;z-index:-9999;" aria-hidden="true">
+        <div id="ytAudioFrame"></div>
+      </div>
+
+      <!-- Mobile Slide-Up Story Sheet -->
+      <div class="story-sheet-backdrop" id="sheetBackdrop"></div>
+      <div class="story-sheet" id="storySheet" aria-hidden="true">
+        <div class="sheet-handle-bar"><span class="sheet-handle"></span></div>
+        <div class="sheet-header">
+          <div class="sheet-phase-tag" id="sheetPhaseTag">DUSK · 6:30 PM</div>
+          <button class="sheet-close" id="sheetCloseBtn" type="button" aria-label="Close story sheet">×</button>
+        </div>
+        <h2 class="sheet-headline" id="sheetHeadline">Baraat nikli.</h2>
+        <p class="sheet-body" id="sheetBody">The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.</p>
+        
+        <div class="sheet-music-box">
+          <div class="sheet-song-row">
+            <div>
+              <strong id="sheetSongTitle">Gallan Goodiyaan</strong>
+              <span id="sheetSongArtist">Official video · T-Series</span>
+            </div>
+            <button class="sheet-yt-btn" id="sheetYtBtn" type="button">Watch Video</button>
+          </div>
+        </div>
+
+        <div class="sheet-timeline-label">SEVEN PHASES OF THE BARAAT</div>
+        <div class="sheet-timeline-list" id="sheetTimelineList"></div>
+
+        <div class="sheet-actions">
+          <button class="sheet-chaos-btn" id="sheetChaosBtn" type="button">+ Deploy Uncle / Boost Dhol (<span id="sheetChaosScore">18</span>% chaos)</button>
+        </div>
+      </div>
+    </main>
+
+    <div class="petal-layer" id="petalLayer" aria-hidden="true"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <dialog class="modal" id="videoModal" aria-labelledby="videoModalTitle">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="videoModalTitle">Gallan Goodiyaan</div>
+          <div class="modal-subtitle">The baraat soundtrack · YouTube</div>
+        </div>
+        <button class="close-button" data-close="videoModal" aria-label="Close music player" type="button">×</button>
+      </div>
+      <div class="video-frame">
+        <iframe id="youtubeFrame" title="Baraat soundtrack YouTube video" src="about:blank" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <div class="modal-foot">
+        <span>Playback starts only when you press play.</span>
+        <a class="plain-link" id="youtubeLink" href="https://www.youtube.com/watch?v=jCEdTq3j-0U" target="_blank" rel="noopener noreferrer">Open on YouTube</a>
+      </div>
+    </dialog>
+
+    <dialog class="modal" id="reportModal" aria-labelledby="reportModalTitle">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="reportModalTitle">Official Baraat Report</div>
+          <div class="modal-subtitle">Filed under: “it got out of hand”</div>
+        </div>
+        <button class="close-button" data-close="reportModal" aria-label="Close report" type="button">×</button>
+      </div>
+      <div class="report-body">
+        <div class="report-score"><span id="reportScore">18</span><small> / 100 chaos</small></div>
+        <div class="report-headline" id="reportHeadline">A respectable start. Suspiciously respectable.</div>
+        <p class="report-copy" id="reportCopy">The band has started, people are smiling, and the DJ still believes this will finish on time.</p>
+        <div class="report-stats">
+          <div class="report-stat"><strong id="reportUncles">0</strong><span>Uncles deployed</span></div>
+          <div class="report-stat"><strong id="reportDhol">0</strong><span>Dhol boosts</span></div>
+          <div class="report-stat"><strong id="reportDJ">0</strong><span>DJ upgrades</span></div>
+        </div>
+        <div class="report-actions">
+          <button class="action-primary" id="copyReport" type="button">Copy report</button>
+          <button class="action-secondary" id="downloadReport" type="button">Save as .txt</button>
+          <button class="action-secondary" id="shareReport" type="button">Share report</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal" id="menuModal" aria-labelledby="menuModalTitle" style="max-width:470px">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="menuModalTitle">A few baraat rules</div>
+          <div class="modal-subtitle">There are no actual rules.</div>
+        </div>
+        <button class="close-button" data-close="menuModal" aria-label="Close menu" type="button">×</button>
+      </div>
+      <div class="menu-body">
+        <a class="menu-row" href="/songs" style="text-decoration:none;display:flex;"><span>Explore all 140 songs<small>Complete Baraat Library across 7 phases</small></span></a>
+        <a class="menu-row" href="/playlists" style="text-decoration:none;display:flex;"><span>7 Phase Rotations & Playlists<small>From Sehra Bandi to Afterparty</small></span></a>
+        <a class="menu-row" href="/baraat-entry-songs-for-groom" style="text-decoration:none;display:flex;"><span>Groom Entry Songs<small>Regal, energetic, and modern selections</small></span></a>
+        <a class="menu-row" href="/old-hindi-baraat-songs" style="text-decoration:none;display:flex;"><span>Old Hindi Baraat Classics<small>Golden era & 90s procession anthems</small></span></a>
+        <a class="menu-row" href="/baraat-songs-for-wedding-video" style="text-decoration:none;display:flex;"><span>Wedding Video Baraat Tracks<small>Cinematic teasers and highlight songs</small></span></a>
+        <a class="menu-row" href="/baraat-meaning" style="text-decoration:none;display:flex;"><span>What is a Baraat?<small>Rituals, customs, and procession history</small></span></a>
+        <button class="menu-row" id="menuReport" type="button"><span>Generate your Baraat Report<small>For the group chat and the family archive</small></span></button>
+        <button class="menu-row" id="resetBtn" type="button"><span>Start the baraat over<small>Everyone gets one last chance to behave</small></span><span class="menu-arrow">↻</span></button>
+        <a class="menu-row" href="#baraatFooter" id="menuAboutRow" style="text-decoration:none;display:flex;"><span>About & Colophon<small>Design, story, rights & credits</small></span></a>
+      </div>
+    </dialog>
+  </div>
+
+  <!-- Reusable Monumental Footer with Lenis smooth scroll -->
+  <PlayfollyFooter currentPath="/" />
+</BaseLayout>
+
+<script is:inline define:vars={{ songsData }}>
+  window.BARAAT_DATA = songsData;
+</script>
+
+<script>
+(() => {
+  'use strict';
+  const phases = [
+    { time:'5:30 PM', title:'Sehra Bandi', hindi1:'सेहरा', hindi2:'बंदी', kicker:'PHASE 01 · EARLY EVENING · 5:30 PM', headline:'The groom is almost ready.', body:'A sehra is being adjusted for the fourth time. Someone is looking for the car keys. Phupaji has taken charge of the entire operation.', quip:'“Photo achhi aani chahiye.” Nobody is allowed to blink.', micro:'EVERYONE IS A MANAGER', image:'/assets/01-baraat-wide.png', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Ainvayi Ainvayi', artist:'Salim-Sulaiman · Sunidhi Chauhan', video:'uvf0bsywl4A', caption:'Warm-up acoustic beats and family banter before the chaos starts.', chaos:8, songs: [] },
+    { time:'6:30 PM', title:'Baraat Nikli', hindi1:'बारात', hindi2:'निकली', kicker:'PHASE 02 · DUSK · 6:30 PM', headline:'Baraat nikli.', body:'The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.', quip:'“Bas, ab seedha venue.” Famous last words.', micro:'THE PROCESSION BEGINS', image:'/assets/02-baraat-wide.png', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Gallan Goodiyaan', artist:'Shankar Mahadevan · Sukhwinder Singh · Yashita Sharma', video:'jCEdTq3j-0U', caption:'The official procession anthem; brass horns, rolling dhol, and unrestrained joy.', chaos:18, songs: [] },
+    { time:'7:30 PM', title:'Pehli Gali', hindi1:'पहली', hindi2:'गली', kicker:'PHASE 03 · TWILIGHT · 7:30 PM', headline:'The road is now the dance floor.', body:'The lane is narrow, the baraat is 400 metres wide, and a scooter has become an honorary member of the procession.', quip:'“Gaadi side mein karo!” yelled by the man blocking the road.', micro:'TRAFFIC HAS JOINED THE PARTY', image:'/assets/03-baraat-wide.png', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'London Thumakda', artist:'Labh Janjua · Sonu Kakkar · Neha Kakkar', video:'udra3Mfw2oo', caption:'Narrow street anthem; heavy percussions that bring every balcony to life.', chaos:35, songs: [] },
+    { time:'8:30 PM', title:'Uncle Era', hindi1:'अंकल का', hindi2:'जलवा', kicker:'PHASE 04 · PRIME TIME · 8:30 PM', headline:'The uncle has taken over.', body:'He removed his jacket. He loosened one button. He has made eye contact with the DJ. There is no stopping what comes next.', quip:'The knees are 52. The confidence is 19.', micro:'CAMERAS OUT. IMMEDIATELY.', image:'/assets/04-baraat-wide.png', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Kala Chashma', artist:'Amar Arshi · Badshah · Neha Kakkar', video:'k4yXQkG2s1E', caption:'High-voltage Punjabi groove for the uncle who just loosened his tie.', chaos:54, songs: [] },
+    { time:'9:30 PM', title:'DJ Ka Pralay', hindi1:'डीजे का', hindi2:'प्रलय', kicker:'PHASE 05 · NIGHT · 9:30 PM', headline:'The DJ has lost all restraint.', body:'The bass is negotiating with the power grid. Pink lights everywhere. Three cousins are doing the same move with three different levels of confidence.', quip:'“Volume aur badhao!” said from directly beside the speaker.', micro:'THE NEIGHBOURHOOD KNOWS', image:'/assets/05-baraat-wide.png', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Sauda Khara Khara', artist:'Diljit Dosanjh · Sukhbir', video:'LYEqeUr-158', caption:'Earth-shattering bass and synthesizers; volume levels decided by family consensus.', chaos:76, songs: [] },
+    { time:'10:30 PM', title:'Dulhe Ki Entry', hindi1:'दूल्हे की', hindi2:'एंट्री', kicker:'PHASE 06 · LATE NIGHT · 10:30 PM', headline:'Everybody remember the groom?', body:'Phones go up. The parasol is perfectly positioned. For twelve seconds the entire family coordinates like a world-class production crew.', quip:'One cousin is still asking for the Wi-Fi password.', micro:'ALL EYES ON THE DULHA', image:'/assets/06-baraat-wide.png', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Tenu Leke', artist:'Sonu Nigam · Mahalakshmi Iyer', video:'Cu3QpWEfqgg', caption:'Triumphant entry chorus as the parasol rises and phone flashlights turn on.', chaos:68, songs: [] },
+    { time:'12:00 AM', title:'Bas Ek Gaana Aur', hindi1:'बस एक गाना', hindi2:'और', kicker:'PHASE 07 · AFTER MIDNIGHT · 12:00 AM', headline:'The stove is still lit.', body:'The dhol is resting. The chai is not. A small group has discovered one more song, and the DJ has accepted the challenge personally.', quip:'“Last song pakka.” The eleventh last song.', micro:'THE NIGHT REFUSES TO END', image:'/assets/07-baraat-wide.png', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Choo Lo', artist:'The Local Train · Raman Negi', video:'sFMRqxCexDk', caption:'Mellow midnight acoustic chords for the chai stall crew who refuse to go home.', chaos:22, songs: [] }
+  ];
+
+  // Merge full 20 songs per phase from window.BARAAT_DATA
+  const bData = (window as any).BARAAT_DATA;
+  if (bData && Array.isArray(bData.phases)) {
+    phases.forEach((p, idx) => {
+      const bPhase = bData.phases[idx];
+      if (bPhase && Array.isArray(bPhase.songs) && bPhase.songs.length > 0) {
+        (p as any).songs = bPhase.songs;
+      }
+    });
+  }
+
+  const $ = (id: string) => document.getElementById(id);
+  const app = $('app');
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramPhase = parseInt(urlParams.get('phase') || '', 10);
+  let currentIndex = (!isNaN(paramPhase) && paramPhase >= 0 && paramPhase < phases.length) ? paramPhase : 1;
+  let currentSongInPhase = 0;
+
+  // Pre-decode all original master phase images immediately for absolute zero-delay switching
+  phases.forEach((p) => {
+    const dImg = new Image();
+    dImg.src = p.image;
+    if (dImg.decode) dImg.decode().catch(() => {});
+  });
+
+  function getFocalPosition(phase: any) {
+    if (!phase) return 'center 36%';
+    const isMobile = window.innerWidth <= 860;
+    return isMobile ? (phase.mobileFocal || '50% 30%') : (phase.desktopFocal || '50% 36%');
+  }
+
+  function syncSceneSources() {
+    phases.forEach((p, i) => {
+      const el = $(`scene-${i}`) as HTMLImageElement;
+      if (!el) return;
+      if (!el.src || !el.src.includes(p.image)) {
+        el.src = p.image;
+      }
+      if (el.style) el.style.objectPosition = getFocalPosition(p);
+    });
+  }
+
+  let chaos = phases[currentIndex].chaos;
+  let uncles = 0, dholBoosts = 0, djUpgrades = 0;
+  let lightsLow = false;
+  let toastTimer: any = null;
+  const youtubeUrl = (id: string) => `https://www.youtube.com/watch?v=${id}`;
+
+  let isPlaying = false;
+  let ytPlayer: any = null;
+  let audioCtx: any = null;
+  let synthTimer: any = null;
+  let synthStep = 0;
+  let silentAudio: HTMLAudioElement | null = null;
+
+  function initAudioCtx() {
+    if (!audioCtx) {
+      const AC = window.AudioContext || (window as any).webkitAudioContext;
+      if (AC) audioCtx = new AC();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    if (!silentAudio) {
+      try {
+        silentAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
+        silentAudio.loop = true;
+      } catch (e) {}
+    }
+  }
+
+  function playDholBeat(isBass = true, accent = false) {
+    if (!audioCtx) return;
+    try {
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      if (isBass) {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(accent ? 135 : 105, t);
+        osc.frequency.exponentialRampToValueAtTime(42, t + 0.22);
+        gain.gain.setValueAtTime(accent ? 0.7 : 0.5, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.24);
+      } else {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(accent ? 420 : 360, t);
+        osc.frequency.exponentialRampToValueAtTime(130, t + 0.1);
+        gain.gain.setValueAtTime(accent ? 0.3 : 0.18, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.11);
+      }
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(t);
+      osc.stop(t + 0.26);
+    } catch (e) {}
+  }
+
+  function startBaraatSynth() {
+    initAudioCtx();
+    if (synthTimer) clearInterval(synthTimer);
+    synthStep = 0;
+    const tempo = Math.max(140, 210 - Math.round(phases[currentIndex].chaos * 0.7));
+    synthTimer = setInterval(() => {
+      if (!isPlaying) {
+        clearInterval(synthTimer);
+        synthTimer = null;
+        return;
+      }
+      const s = synthStep % 8;
+      if (s === 0) playDholBeat(true, true);
+      else if (s === 2) playDholBeat(false, true);
+      else if (s === 3) playDholBeat(true, false);
+      else if (s === 5) playDholBeat(true, false);
+      else if (s === 6) playDholBeat(false, false);
+      synthStep++;
+    }, tempo);
+  }
+
+  function stopBaraatSynth() {
+    if (synthTimer) {
+      clearInterval(synthTimer);
+      synthTimer = null;
+    }
+  }
+
+  function getCurrentSong(): any {
+    const p: any = phases[currentIndex];
+    if (p && Array.isArray(p.songs) && p.songs.length > 0) {
+      if (currentSongInPhase < 0 || currentSongInPhase >= p.songs.length) {
+        currentSongInPhase = 0;
+      }
+      return p.songs[currentSongInPhase];
+    }
+    return {
+      titleHi: p.song,
+      titleEn: p.song,
+      artist: p.artist,
+      film: p.title,
+      duration: '4:00',
+      youtubeId: p.video,
+      thumbnail: p.image
+    };
+  }
+
+  function formatTime(sec: number) {
+    if (isNaN(sec) || sec < 0) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  }
+
+  let progressTimer: any = null;
+  function startProgressTracking() {
+    if (progressTimer) clearInterval(progressTimer);
+    progressTimer = setInterval(() => {
+      if (!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+      try {
+        const cur = ytPlayer.getCurrentTime() || 0;
+        const dur = ytPlayer.getDuration() || 0;
+        if (dur > 0) {
+          const pct = Math.min(100, Math.max(0, (cur / dur) * 100));
+          if ($('trackProgressBar')) $('trackProgressBar')!.style.width = pct + '%';
+          if ($('mTrackProgressBar')) $('mTrackProgressBar')!.style.width = pct + '%';
+          if ($('trackProgressHandle')) $('trackProgressHandle')!.style.left = pct + '%';
+          const timeStr = `${formatTime(cur)} / ${formatTime(dur)}`;
+          if ($('trackTimeDisplay')) $('trackTimeDisplay')!.textContent = timeStr;
+          if ($('mTrackTimeDisplay')) $('mTrackTimeDisplay')!.textContent = timeStr;
+        }
+      } catch (e) {}
+    }, 250);
+  }
+
+  function stopProgressTracking() {
+    if (progressTimer) clearInterval(progressTimer);
+    progressTimer = null;
+  }
+
+  function updateMusicUI(autoLoad = false) {
+    const p = phases[currentIndex];
+    const s = getCurrentSong();
+
+    const titleText = s.titleEn || s.titleHi || p.song;
+    const artistText = s.artist ? `${s.artist}${s.film ? ' · ' + s.film : ''}` : p.artist;
+
+    if ($('trackTitle')) $('trackTitle')!.textContent = titleText;
+    if ($('trackArtist')) $('trackArtist')!.textContent = artistText;
+
+    if ($('mTrackTitle')) $('mTrackTitle')!.textContent = titleText;
+    if ($('mPhaseMeta')) $('mPhaseMeta')!.textContent = artistText;
+
+    const coverUrl = s.thumbnail || (s.youtubeId ? `https://img.youtube.com/vi/${s.youtubeId}/hqdefault.jpg` : p.image);
+    if ($('trackCoverImg')) ($('trackCoverImg') as HTMLImageElement).src = coverUrl;
+    if ($('mTrackCoverImg')) ($('mTrackCoverImg') as HTMLImageElement).src = coverUrl;
+
+    if ($('trackProgressBar')) $('trackProgressBar')!.style.width = '0%';
+    if ($('mTrackProgressBar')) $('mTrackProgressBar')!.style.width = '0%';
+    if ($('trackProgressHandle')) $('trackProgressHandle')!.style.left = '0%';
+    const durStr = s.duration || '4:00';
+    if ($('trackTimeDisplay')) $('trackTimeDisplay')!.textContent = `0:00 / ${durStr}`;
+    if ($('mTrackTimeDisplay')) $('mTrackTimeDisplay')!.textContent = `0:00 / ${durStr}`;
+
+    if ($('sheetSongTitle')) $('sheetSongTitle')!.textContent = titleText;
+    if ($('sheetSongArtist')) $('sheetSongArtist')!.textContent = artistText;
+
+    if ($('videoModalTitle')) $('videoModalTitle')!.textContent = `${titleText} · ${s.film || p.title}`;
+    if ($('youtubeLink')) ($('youtubeLink') as HTMLAnchorElement).href = youtubeUrl(s.youtubeId);
+    if ($('videoModal') && ($('videoModal') as any).open && $('youtubeFrame')) {
+      ($('youtubeFrame') as HTMLIFrameElement).src = `https://www.youtube-nocookie.com/embed/${s.youtubeId}?autoplay=1&rel=0&modestbranding=1`;
+    }
+
+    if (autoLoad || isPlaying) {
+      if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+        try {
+          ytPlayer.loadVideoById(s.youtubeId);
+        } catch (e) {
+          startBaraatSynth();
+        }
+      } else {
+        startBaraatSynth();
+      }
+    }
+
+    updateMediaSession();
+  }
+
+  function nextSong(userInitiated = true) {
+    const p: any = phases[currentIndex];
+    const total = (p.songs && p.songs.length) ? p.songs.length : 1;
+    currentSongInPhase = (currentSongInPhase + 1) % total;
+    updateMusicUI(isPlaying);
+    const s = getCurrentSong();
+    showToast(`♪ ${s.titleEn || s.titleHi || p.song}`);
+  }
+
+  function prevSong(userInitiated = true) {
+    const p: any = phases[currentIndex];
+    const total = (p.songs && p.songs.length) ? p.songs.length : 1;
+    currentSongInPhase = (currentSongInPhase - 1 + total) % total;
+    updateMusicUI(isPlaying);
+    const s = getCurrentSong();
+    showToast(`♪ ${s.titleEn || s.titleHi || p.song}`);
+  }
+
+  function initYouTubePlayer() {
+    if (ytPlayer || !(window as any).YT || !(window as any).YT.Player) return;
+    try {
+      const s = getCurrentSong();
+      const YT = (window as any).YT;
+      ytPlayer = new YT.Player('ytAudioFrame', {
+        height: '100',
+        width: '100',
+        videoId: s.youtubeId,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          rel: 0,
+          modestbranding: 1,
+          playsinline: 1
+        },
+        events: {
+          onReady: () => {
+            if (isPlaying) {
+              try { ytPlayer.playVideo(); } catch (e) {}
+            }
+          },
+          onStateChange: (event: any) => {
+            if (event.data === YT.PlayerState.PLAYING) {
+              setPlaybackState(true);
+              stopBaraatSynth();
+            } else if (event.data === YT.PlayerState.PAUSED) {
+              setPlaybackState(false);
+            } else if (event.data === YT.PlayerState.ENDED) {
+              nextSong(false);
+            }
+          },
+          onError: () => {
+            if (isPlaying) startBaraatSynth();
+          }
+        }
+      });
+    } catch (e) {
+      console.warn('YT audio player init', e);
+    }
+  }
+
+  (window as any).onYouTubeIframeAPIReady = initYouTubePlayer;
+  if ((window as any).YT && (window as any).YT.Player) {
+    initYouTubePlayer();
+  }
+
+  function setPlaybackState(playing: boolean) {
+    isPlaying = playing;
+    const playPath = 'M8 5v14l11-7z';
+    const pausePath = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';
+    const path = playing ? pausePath : playPath;
+    if ($('playIconSvg')) $('playIconSvg')!.querySelector('path')!.setAttribute('d', path);
+    if ($('mPlayIconSvg')) $('mPlayIconSvg')!.querySelector('path')!.setAttribute('d', path);
+    if ($('vinylDisc')) $('vinylDisc')!.classList.toggle('is-spinning', playing);
+    if ($('mVinylDisc')) $('mVinylDisc')!.classList.toggle('is-spinning', playing);
+    if ($('headerPlayBtn')) $('headerPlayBtn')!.classList.toggle('is-playing', playing);
+    if (playing) {
+      startProgressTracking();
+    } else {
+      stopProgressTracking();
+    }
+  }
+
+  function toggleMusic() {
+    initAudioCtx();
+    isPlaying = !isPlaying;
+    setPlaybackState(isPlaying);
+
+    const s = getCurrentSong();
+    const p = phases[currentIndex] || {};
+    const songName = s.titleEn || s.titleHi || (p as any).song || 'Soundtrack';
+
+    if (isPlaying) {
+      if (silentAudio) {
+        try { silentAudio.play(); } catch (e) {}
+      }
+      let ytStarted = false;
+      if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        try {
+          ytPlayer.playVideo();
+          ytStarted = true;
+        } catch (e) {}
+      }
+      if (!ytStarted) startBaraatSynth();
+      updateMediaSession();
+      showToast(`Now playing: ${songName}`);
+    } else {
+      if (silentAudio) {
+        try { silentAudio.pause(); } catch (e) {}
+      }
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        try { ytPlayer.pauseVideo(); } catch (e) {}
+      }
+      stopBaraatSynth();
+      updateMediaSession();
+      showToast('Soundtrack paused');
+    }
+  }
+
+  function updateMediaSession() {
+    if ('mediaSession' in navigator) {
+      const p = phases[currentIndex];
+      const s = getCurrentSong();
+      try {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: s.titleEn || p.song,
+          artist: `${s.artist} · ${s.film || p.title}`,
+          album: `Shadi Ki Baraat · ${p.title}`,
+          artwork: [
+            { src: s.thumbnail || p.image, sizes: '512x512', type: 'image/jpeg' },
+            { src: p.image, sizes: '512x512', type: 'image/png' }
+          ]
+        });
+        navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
+        navigator.mediaSession.setActionHandler('play', () => { if (!isPlaying) toggleMusic(); });
+        navigator.mediaSession.setActionHandler('pause', () => { if (isPlaying) toggleMusic(); });
+        navigator.mediaSession.setActionHandler('previoustrack', () => prevSong(true));
+        navigator.mediaSession.setActionHandler('nexttrack', () => nextSong(true));
+      } catch (e) {}
+    }
+  }
+
+  function buildTimeline() {
+    const root = $('timelineItems');
+    const dotsRoot = $('mobileDots');
+    const sheetRoot = $('sheetTimelineList');
+    if (root) root.innerHTML = '';
+    if (dotsRoot) dotsRoot.innerHTML = '';
+    if (sheetRoot) sheetRoot.innerHTML = '';
+
+    phases.forEach((phase, index) => {
+      if (root) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'phase-stop' + (index === currentIndex ? ' is-active' : '');
+        button.setAttribute('role', 'tab');
+        button.setAttribute('aria-selected', index === currentIndex ? 'true' : 'false');
+        button.setAttribute('aria-controls', 'top');
+        button.setAttribute('aria-label', `${phase.time}, ${phase.title}`);
+        button.dataset.phase = String(index);
+        button.innerHTML = `<span class="stop-dot"></span><span class="phase-time">${phase.time}</span><span class="phase-name">${phase.title}</span>`;
+        button.addEventListener('click', () => setPhase(index));
+        root.appendChild(button);
+      }
+
+      if (dotsRoot) {
+        const stopBtn = document.createElement('button');
+        stopBtn.type = 'button';
+        stopBtn.className = 'mobile-timeline-stop' + (index === currentIndex ? ' is-active' : '');
+        stopBtn.setAttribute('role', 'tab');
+        stopBtn.setAttribute('aria-selected', index === currentIndex ? 'true' : 'false');
+        stopBtn.setAttribute('aria-label', `${phase.title} at ${phase.time}`);
+        const shortTime = phase.time.replace(/\s*PM/i, 'p').replace(/\s*AM/i, 'a').replace(/:00/g, '').toLowerCase();
+        stopBtn.innerHTML = `
+          <span class="mobile-timeline-dot"></span>
+          <span class="mobile-timeline-time">${shortTime}</span>
+        `;
+        stopBtn.addEventListener('click', () => setPhase(index));
+        dotsRoot.appendChild(stopBtn);
+      }
+
+      if (sheetRoot) {
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'sheet-phase-item' + (index === currentIndex ? ' is-active' : '');
+        item.innerHTML = `<span><strong>${phase.title}</strong> <small style="color:rgba(255,255,255,.45);margin-left:6px">${phase.time}</small></span><span style="color:var(--gold);font-size:12px;font-family:var(--hindi)">${phase.hindi1} ${phase.hindi2}</span>`;
+        item.addEventListener('click', () => {
+          setPhase(index);
+          closeSheet();
+        });
+        sheetRoot.appendChild(item);
+      }
+    });
+  }
+
+  let outgoingTimer: any = null;
+
+  function setPhase(index: number) {
+    if (index < 0 || index >= phases.length || index === currentIndex) return;
+    const oldIndex = currentIndex;
+    currentIndex = index;
+    const p = phases[index];
+
+    const oldEl = $(`scene-${oldIndex}`);
+    const newEl = $(`scene-${index}`);
+
+    if (oldEl) {
+      oldEl.classList.remove('is-active');
+      oldEl.classList.add('is-outgoing');
+    }
+
+    if (newEl) {
+      newEl.classList.remove('is-active', 'is-outgoing');
+      void newEl.offsetWidth;
+      newEl.classList.add('is-active');
+    }
+
+    phases.forEach((_, i) => {
+      if (i !== index && i !== oldIndex) {
+        const el = $(`scene-${i}`);
+        if (el) el.classList.remove('is-active', 'is-outgoing');
+      }
+    });
+
+    clearTimeout(outgoingTimer);
+    outgoingTimer = setTimeout(() => {
+      phases.forEach((_, i) => {
+        if (i !== currentIndex) {
+          const el = $(`scene-${i}`);
+          if (el) el.classList.remove('is-outgoing');
+        }
+      });
+    }, 1000);
+
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('phase', String(index));
+      window.history.replaceState(null, '', url);
+    } catch (e) {}
+
+    if ($('phaseKicker')) $('phaseKicker')!.textContent = p.kicker;
+    if ($('phaseHeadline')) $('phaseHeadline')!.textContent = p.headline;
+    if ($('phaseBody')) $('phaseBody')!.textContent = p.body;
+
+    if ($('sheetPhaseTag')) $('sheetPhaseTag')!.textContent = p.kicker;
+    if ($('sheetHeadline')) $('sheetHeadline')!.textContent = p.headline;
+    if ($('sheetBody')) $('sheetBody')!.textContent = p.body;
+
+    document.querySelectorAll('.phase-stop').forEach((btn, i) => {
+      btn.classList.toggle('is-active', i === index);
+      btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
+    });
+    document.querySelectorAll('.mobile-timeline-stop').forEach((btn, i) => {
+      btn.classList.toggle('is-active', i === index);
+      btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
+    });
+    document.querySelectorAll('.sheet-phase-item').forEach((item, i) => {
+      item.classList.toggle('is-active', i === index);
+    });
+
+    chaos = Math.max(chaos, p.chaos);
+    updateScore();
+
+    currentSongInPhase = 0;
+    updateMusicUI(isPlaying);
+  }
+
+  function updateScore() {
+    chaos = Math.max(0, Math.min(100, chaos));
+    if ($('chaosLabel')) $('chaosLabel')!.textContent = `${chaos}% chaos`;
+    if ($('sheetChaosScore')) $('sheetChaosScore')!.textContent = String(chaos);
+  }
+
+  function showToast(message: string) {
+    const toast = $('toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2300);
+  }
+
+  function pulseDhol() {
+    if (!app) return;
+    app.classList.remove('dhol-pulse');
+    void app.offsetWidth;
+    app.classList.add('dhol-pulse');
+    setTimeout(() => app.classList.remove('dhol-pulse'), 700);
+  }
+
+  function makePetals(count = 36) {
+    const layer = $('petalLayer');
+    if (!layer) return;
+    layer.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+      const petal = document.createElement('i');
+      petal.className = 'petal';
+      petal.style.left = `${Math.random() * 100}%`;
+      petal.style.setProperty('--drift', `${Math.round(Math.random() * 260 - 130)}px`);
+      petal.style.animationDuration = `${Math.random() * 3 + 3.5}s`;
+      petal.style.animationDelay = `${Math.random() * 1.4}s`;
+      layer.appendChild(petal);
+    }
+    setTimeout(() => { layer.innerHTML = ''; }, 9000);
+  }
+
+  function doAction(action: string) {
+    if (action === 'uncle') {
+      uncles += 1; chaos += 8;
+      showToast(uncles === 1 ? 'Uncle has entered the dance floor.' : `${uncles} uncles. One dance floor. No supervision.`);
+    } else if (action === 'dhol') {
+      dholBoosts += 1; chaos += 12; pulseDhol();
+      showToast('Dhol level increased. The windows are rattling.');
+    } else if (action === 'dj') {
+      djUpgrades += 1; chaos += 10; app?.classList.add('dj-lit');
+      showToast('DJ upgraded. The power grid has been informed.');
+    } else if (action === 'bollywood') {
+      chaos = 100; djUpgrades += 1; dholBoosts += 1; makePetals(56); pulseDhol(); app?.classList.add('dj-lit');
+      showToast('FULL BOLLYWOOD. Please keep your relatives inside the frame.');
+    }
+    updateScore();
+  }
+
+  function openSheet() {
+    $('sheetBackdrop')?.classList.add('is-open');
+    $('storySheet')?.classList.add('is-open');
+    $('storySheet')?.setAttribute('aria-hidden', 'false');
+  }
+  function closeSheet() {
+    $('sheetBackdrop')?.classList.remove('is-open');
+    $('storySheet')?.classList.remove('is-open');
+    $('storySheet')?.setAttribute('aria-hidden', 'true');
+  }
+
+  function openVideo() {
+    if (isPlaying) {
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        try { ytPlayer.pauseVideo(); } catch (e) {}
+      }
+      stopBaraatSynth();
+      setPlaybackState(false);
+    }
+    const s = getCurrentSong();
+    const p = phases[currentIndex] || {};
+    const songName = s.titleEn || (p as any).song || 'Soundtrack';
+    if ($('videoModalTitle')) $('videoModalTitle')!.textContent = `${songName} · ${s.film || p.title || 'Soundtrack'}`;
+    if ($('youtubeLink')) ($('youtubeLink') as HTMLAnchorElement).href = youtubeUrl(s.youtubeId);
+    if ($('youtubeFrame')) ($('youtubeFrame') as HTMLIFrameElement).src = `https://www.youtube-nocookie.com/embed/${s.youtubeId}?autoplay=1&rel=0&modestbranding=1`;
+    ($('videoModal') as any)?.showModal();
+  }
+
+  function openReport() {
+    if ($('reportScore')) $('reportScore')!.textContent = String(chaos);
+    if ($('reportUncles')) $('reportUncles')!.textContent = String(uncles);
+    if ($('reportDhol')) $('reportDhol')!.textContent = String(dholBoosts);
+    if ($('reportDJ')) $('reportDJ')!.textContent = String(djUpgrades);
+    let headline = 'A respectable start. Suspiciously respectable.';
+    if (chaos >= 90) headline = 'The baraat is now a UNESCO-level incident.';
+    else if (chaos >= 70) headline = 'The DJ has assumed administrative control.';
+    else if (chaos >= 45) headline = 'Uncle Sharma is now the main character.';
+    else if (chaos >= 25) headline = 'The traffic police have started dancing.';
+    if ($('reportHeadline')) $('reportHeadline')!.textContent = headline;
+    const p = phases[currentIndex];
+    if ($('reportCopy')) $('reportCopy')!.textContent = `Current stop: ${p.title} at ${p.time}. Chaos is at ${chaos}%. You deployed ${uncles} uncle${uncles === 1 ? '' : 's'}, ordered ${dholBoosts} dhol boost${dholBoosts === 1 ? '' : 's'}, and approved ${djUpgrades} DJ upgrade${djUpgrades === 1 ? '' : 's'}. The official explanation is “bas ek gaana aur.”`;
+    ($('reportModal') as any)?.showModal();
+  }
+
+  function reportText() {
+    return `SHADI KI BARAAT — OFFICIAL BARAAT REPORT\n\n${$('reportHeadline')?.textContent || ''}\n${$('reportCopy')?.textContent || ''}\n\nChaos: ${chaos}/100\nUncles deployed: ${uncles}\nDhol boosts: ${dholBoosts}\nDJ upgrades: ${djUpgrades}\n\nSent from Shadi Ki Baraat.`;
+  }
+
+  buildTimeline();
+  syncSceneSources();
+
+  phases.forEach((_, i) => {
+    const el = $(`scene-${i}`);
+    if (el) {
+      el.classList.toggle('is-active', i === currentIndex);
+      el.classList.remove('is-outgoing');
+    }
+  });
+
+  let lastWasMobile = window.innerWidth <= 860;
+  window.addEventListener('resize', () => {
+    const isMobile = window.innerWidth <= 860;
+    if (isMobile !== lastWasMobile) {
+      lastWasMobile = isMobile;
+      syncSceneSources();
+    }
+  });
+
+  const initP = phases[currentIndex];
+  if ($('phaseKicker')) $('phaseKicker')!.textContent = initP.kicker;
+  if ($('phaseHeadline')) $('phaseHeadline')!.textContent = initP.headline;
+  if ($('phaseBody')) $('phaseBody')!.textContent = initP.body;
+
+  function updateLiveClock() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase();
+    const el = $('headerTime');
+    if (el) el.textContent = timeStr;
+  }
+  updateLiveClock();
+  setInterval(updateLiveClock, 1000);
+
+  updateMusicUI(false);
+  updateScore();
+
+  $('prevTrack')?.addEventListener('click', (e) => { e.stopPropagation(); prevSong(true); });
+  $('nextTrack')?.addEventListener('click', (e) => { e.stopPropagation(); nextSong(true); });
+  $('mPrevTrack')?.addEventListener('click', (e) => { e.stopPropagation(); prevSong(true); });
+  $('mNextTrack')?.addEventListener('click', (e) => { e.stopPropagation(); nextSong(true); });
+  
+  $('playVideo')?.addEventListener('click', toggleMusic);
+  $('mPlayTrack')?.addEventListener('click', toggleMusic);
+  $('headerPlayBtn')?.addEventListener('click', toggleMusic);
+  $('mTrackInfo')?.addEventListener('click', toggleMusic);
+
+  $('watchYtBtn')?.addEventListener('click', openVideo);
+  $('mWatchYtBtn')?.addEventListener('click', (e) => { e.stopPropagation(); openVideo(); });
+  $('vinylWrap')?.addEventListener('click', openVideo);
+  $('mVinylWrap')?.addEventListener('click', openVideo);
+  $('sheetYtBtn')?.addEventListener('click', openVideo);
+  $('quickResetBtn')?.addEventListener('click', () => $('resetBtn')?.click());
+
+  function setupSeek(wrapId: string, fillId: string, handleId: string | null, timeDisplayId: string) {
+    const wrap = $(wrapId);
+    if (!wrap) return;
+    function seekToEvent(e: any) {
+      const rect = wrap!.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      let dur = 0;
+      if (ytPlayer && typeof ytPlayer.getDuration === 'function') {
+        dur = ytPlayer.getDuration() || 0;
+      }
+      if (dur <= 0) {
+        const s = getCurrentSong();
+        const parts = (s.duration || '4:00').split(':');
+        dur = (parseInt(parts[0], 10) || 4) * 60 + (parseInt(parts[1], 10) || 0);
+      }
+      const targetSec = ratio * dur;
+      if (ytPlayer && typeof ytPlayer.seekTo === 'function') {
+        try { ytPlayer.seekTo(targetSec, true); } catch (err) {}
+      }
+      const pct = (ratio * 100);
+      if ($(fillId)) $(fillId)!.style.width = pct + '%';
+      if (handleId && $(handleId)) $(handleId)!.style.left = pct + '%';
+      if ($(timeDisplayId)) $(timeDisplayId)!.textContent = `${formatTime(targetSec)} / ${formatTime(dur)}`;
+    }
+    wrap.addEventListener('click', seekToEvent);
+  }
+  setupSeek('progressWrap', 'trackProgressBar', 'trackProgressHandle', 'trackTimeDisplay');
+  setupSeek('mProgressWrap', 'mTrackProgressBar', null, 'mTrackTimeDisplay');
+
+  $('sheetCloseBtn')?.addEventListener('click', closeSheet);
+  $('sheetBackdrop')?.addEventListener('click', closeSheet);
+  $('sheetChaosBtn')?.addEventListener('click', () => {
+    closeSheet();
+    doAction('uncle');
+  });
+
+  $('zenBtn')?.addEventListener('click', () => {
+    const isZen = app?.classList.toggle('zen-mode');
+    showToast(isZen ? 'Zen mode: full scene view' : 'Controls visible');
+  });
+
+  $('livePill')?.addEventListener('click', () => {
+    showToast(`${$('liveCount')?.textContent} visitors celebrating live in the baraat.`);
+  });
+  setInterval(() => {
+    const countEl = $('liveCount');
+    if (countEl) {
+      const current = parseInt(countEl.textContent || '148', 10) || 148;
+      const delta = (Math.random() > 0.48 ? 1 : -1) * Math.floor(Math.random() * 2);
+      countEl.textContent = String(Math.max(140, Math.min(160, current + delta)));
+    }
+  }, 5000);
+
+  $('moodBtn')?.addEventListener('click', () => {
+    lightsLow = !lightsLow;
+    app?.classList.toggle('lights-low', lightsLow);
+    $('moodBtn')?.setAttribute('aria-pressed', lightsLow ? 'true' : 'false');
+    const icon = $('moodIcon');
+    if (icon) {
+      icon.innerHTML = lightsLow
+        ? '<path d="M20.5 14.5A8.6 8.6 0 0 1 9.5 3.2 8.8 8.8 0 1 0 20.5 14.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>'
+        : '<circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+    }
+  });
+
+  $('menuBtn')?.addEventListener('click', () => ($('menuModal') as any)?.showModal());
+  $('menuReport')?.addEventListener('click', () => {
+    ($('menuModal') as any)?.close();
+    openReport();
+  });
+  $('resetBtn')?.addEventListener('click', () => {
+    ($('menuModal') as any)?.close();
+    currentIndex = 0; chaos = phases[0].chaos; uncles = 0; dholBoosts = 0; djUpgrades = 0;
+    app?.classList.remove('dj-lit','lights-low');
+    lightsLow = false;
+    $('moodBtn')?.setAttribute('aria-pressed','false');
+    const icon = $('moodIcon');
+    if (icon) icon.innerHTML = '<circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+    currentIndex = 1;
+    setPhase(0);
+    closeSheet();
+    updateScore();
+    showToast('Fresh sehra. Fresh start. Same family.');
+  });
+
+  document.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', () => {
+    const target = $((button as HTMLElement).dataset.close || '') as any;
+    target?.close();
+    if (target?.id === 'videoModal' && $('youtubeFrame')) ($('youtubeFrame') as HTMLIFrameElement).src = 'about:blank';
+  }));
+  $('videoModal')?.addEventListener('close', () => {
+    if ($('youtubeFrame')) ($('youtubeFrame') as HTMLIFrameElement).src = 'about:blank';
+  });
+
+  $('copyReport')?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(reportText());
+      showToast('Report copied. Send it to the family group.');
+    } catch (e) {
+      showToast('Clipboard unavailable. Use Save as .txt instead.');
+    }
+  });
+  $('downloadReport')?.addEventListener('click', () => {
+    const blob = new Blob([reportText()], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'shadi-ki-baraat-report.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+  $('shareReport')?.addEventListener('click', async () => {
+    const data = {title:'My Shadi Ki Baraat Report', text:reportText(), url:location.href};
+    if (navigator.share) {
+      try { await navigator.share(data); } catch (e) {}
+    } else {
+      try {
+        await navigator.clipboard.writeText(reportText());
+        showToast('Share not available. Report copied instead.');
+      } catch (e) {
+        showToast('Use Copy report to share your result.');
+      }
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (['INPUT','TEXTAREA'].includes((document.activeElement as HTMLElement)?.tagName || '')) return;
+    if (($('videoModal') as any)?.open || ($('reportModal') as any)?.open || ($('menuModal') as any)?.open) {
+      if (event.key === 'Escape' && ($('videoModal') as any)?.open) {
+        if ($('youtubeFrame')) ($('youtubeFrame') as HTMLIFrameElement).src = 'about:blank';
+      }
+      return;
+    }
+    if (event.key === 'ArrowRight') nextSong(true);
+    if (event.key === 'ArrowLeft') prevSong(true);
+    if (event.key === 'ArrowUp') setPhase(Math.min(phases.length - 1, currentIndex + 1));
+    if (event.key === 'ArrowDown') setPhase(Math.max(0, currentIndex - 1));
+    if (event.key.toLowerCase() === 'z') {
+      const isZen = app?.classList.toggle('zen-mode');
+      showToast(isZen ? 'Zen mode: full scene view' : 'Controls visible');
+    }
+    if (event.key === 'Escape') closeSheet();
+  });
+
+  const dockAboutChip = $('dockAboutChip');
+  if (dockAboutChip) {
+    dockAboutChip.addEventListener('click', (e) => {
+      e.preventDefault();
+      const footer = $('baraatFooter');
+      if (footer) {
+        if ((window as any).__lenis) {
+          (window as any).__lenis.scrollTo(footer, { duration: 1.4 });
+        } else {
+          footer.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  }
+  const menuAboutRow = $('menuAboutRow');
+  if (menuAboutRow) {
+    menuAboutRow.addEventListener('click', (e) => {
+      e.preventDefault();
+      ($('menuModal') as any)?.close();
+      const footer = $('baraatFooter');
+      if (footer) {
+        if ((window as any).__lenis) {
+          (window as any).__lenis.scrollTo(footer, { duration: 1.4 });
+        } else {
+          footer.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  }
+})();
+</script>
+
+<style is:global>
+  :root {
+    --gold: #e5b061;
+    --gold-hover: #f0be71;
+    --line: rgba(255, 255, 255, 0.12);
+    --dim: rgba(255, 255, 255, 0.45);
+    --muted: rgba(255, 255, 255, 0.72);
+    --ui: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --display: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --hindi: 'Rozha One', 'Noto Serif Devanagari', serif;
+  }
+
+  .app {
+    width: 100%;
+    height: 100svh;
+    min-height: 600px;
+    position: relative;
+    isolation: isolate;
+    background: #0c1017;
+    margin: 0;
+    padding: 0;
+  }
+
+  .playfolly-footer {
+    margin-top: 0 !important;
+  }
+
+  /* Ultra-delicate Analog Film Grain (Preserves 100% original master sharpness & detail) */
+  .grain {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background-image: var(--noise-pattern);
+    background-repeat: repeat;
+    background-size: 140px 140px;
+    mix-blend-mode: overlay;
+    opacity: 0.08;
+  }
+
+  .scene-stack, .scene-image, .scene-wash, .vignette {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .scene-stack {
+    z-index: -4;
+    overflow: hidden;
+    background: #0c1017;
+  }
+
+  @keyframes scene-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .scene-image {
+    object-fit: cover;
+    object-position: center 36%;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: high-quality;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .scene-image.is-active {
+    opacity: 1;
+    z-index: 3;
+    animation: scene-in 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+  }
+
+  .scene-image.is-outgoing {
+    opacity: 1;
+    z-index: 2;
+    animation: none;
+    pointer-events: none;
+  }
+
+  .scene-wash {
+    z-index: -3;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(5, 7, 10, 0.18) 0%, transparent 12%),
+      linear-gradient(0deg, rgba(5, 7, 10, 0.22) 0%, transparent 16%);
+    transition: background 400ms ease;
+  }
+
+  .vignette {
+    z-index: -2;
+    pointer-events: none;
+    box-shadow: none;
+  }
+
+  .app.lights-low .scene-wash {
+    background: linear-gradient(180deg, rgba(3,4,8,.52) 0%, rgba(3,4,8,.08) 22%, rgba(3,4,8,.12) 65%, rgba(3,4,8,.68) 100%);
+  }
+
+  .app.dj-lit .scene-wash {
+    background: linear-gradient(180deg, rgba(7,3,10,.42) 0%, rgba(10,5,10,.1) 35%, rgba(7,3,11,.06) 65%, rgba(4,4,8,.55) 100%);
+  }
+
+  .app.dhol-pulse {
+    animation: lowPulse .62s ease-out;
+  }
+
+  @keyframes lowPulse {
+    0% { filter: saturate(1); }
+    35% { filter: saturate(1.35) brightness(1.08); }
+    100% { filter: saturate(1); }
+  }
+
+  /* Header */
+  .site-header {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: clamp(14px, 2.2vw, 22px) clamp(16px, 3.2vw, 32px);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 16px;
+    box-sizing: border-box;
+  }
+
+  .header-time {
+    font-family: var(--ui);
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.92);
+    letter-spacing: -0.01em;
+    justify-self: start;
+  }
+
+  .live-pill {
+    justify-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    background: rgba(13,15,20,0.52);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    font-size: 12px;
+    font-weight: 500;
+    color: #ffffff;
+    user-select: none;
+    cursor: pointer;
+    transition: background .2s;
+  }
+
+  .live-pill:hover { background: rgba(13,15,20,0.75); }
+  .live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 10px #10b981;
+    animation: liveBlink 2.4s infinite ease-in-out;
+  }
+
+  @keyframes liveBlink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+
+  .live-count { font-weight: 600; color: #ffffff; font-variant-numeric: tabular-nums; }
+  .live-label { color: rgba(255,255,255,0.72); font-size: 11px; }
+
+  .header-actions {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .icon-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: rgba(14,16,20,.58);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.2);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    transition: all .2s;
+  }
+
+  .icon-button:hover {
+    background: rgba(255,255,255,.14);
+    border-color: rgba(255,255,255,.3);
+  }
+
+  .icon-button:active { transform: translateY(1px); }
+  .mini-icon { width: 16px; height: 16px; display: inline-block; flex: 0 0 auto; }
+
+  /* Centered Logo */
+  .hero-logo-wrap {
+    position: absolute;
+    top: clamp(48px, 6.5vh, 78px);
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 4;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .hero-logo-img {
+    width: clamp(340px, 28vw, 480px);
+    max-width: 88vw;
+    height: auto;
+    display: block;
+    user-select: none;
+    pointer-events: auto;
+    filter: drop-shadow(0 6px 28px rgba(0, 0, 0, 0.45));
+    transition: width 0.3s ease, transform 0.3s ease;
+  }
+
+  /* Desktop Bottom Docks */
+  .bottom-left-dock {
+    position: absolute;
+    left: clamp(16px, 2.5vw, 28px);
+    bottom: clamp(16px, 2.5vw, 28px);
+    width: min(520px, calc(50vw - 36px));
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: opacity .3s, transform .3s;
+  }
+
+  .story-block {
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    animation: riseIn .45s ease both;
+  }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .kicker {
+    font-family: var(--ui);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 8px;
+    display: block;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.85);
+    opacity: 0.95;
+  }
+
+  .story-headline {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(26px, 3.2vw, 36px);
+    line-height: 1.15;
+    letter-spacing: -.02em;
+    margin: 0 0 8px;
+    max-width: 440px;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.9);
+  }
+
+  .story-body {
+    font-family: var(--ui);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.92);
+    margin: 0;
+    max-width: 420px;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.85);
+  }
+
+  /* Music Capsule */
+  .music-card {
+    position: relative;
+    width: 100%;
+    height: 86px;
+    padding: 10px 18px 10px 12px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, rgba(62, 38, 30, 0.88) 0%, rgba(98, 48, 36, 0.85) 55%, rgba(126, 46, 32, 0.82) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .vinyl-wrap {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+    user-select: none;
+  }
+
+  .vinyl-disc {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    animation: vinylSpin 8s linear infinite;
+    animation-play-state: paused;
+  }
+
+  .vinyl-disc.is-spinning {
+    animation-play-state: running;
+  }
+
+  @keyframes vinylSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  .vinyl-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .vinyl-spindle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.75);
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    pointer-events: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  }
+
+  .player-center {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .track-title {
+    font-family: var(--ui);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    letter-spacing: -0.01em;
+  }
+
+  .track-artist {
+    font-family: var(--ui);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.72);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 2px;
+  }
+
+  .progress-wrap {
+    position: relative;
+    width: 100%;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 6px;
+    user-select: none;
+  }
+
+  .progress-track {
+    position: relative;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 9999px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #ffffff;
+    border-radius: 9999px;
+    transition: width 0.15s linear;
+  }
+
+  .progress-handle {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 0.15s;
+    pointer-events: none;
+  }
+
+  .progress-wrap:hover .progress-handle {
+    opacity: 1;
+  }
+
+  .time-display {
+    font-family: var(--ui);
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.65);
+    font-variant-numeric: tabular-nums;
+    margin-top: 2px;
+    text-align: left;
+  }
+
+  .player-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  .player-ctrl-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, transform 0.12s;
+    padding: 0;
+  }
+
+  .player-ctrl-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+  }
+
+  .player-ctrl-btn:active {
+    transform: scale(0.92);
+  }
+
+  .player-play-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: #ffffff;
+    color: #000000;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    transition: transform 0.15s, background 0.15s;
+    padding: 0;
+  }
+
+  .player-play-btn:hover {
+    transform: scale(1.06);
+    background: #ffffff;
+  }
+
+  .player-play-btn:active {
+    transform: scale(0.94);
+  }
+
+  .player-watch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-family: var(--ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    flex-shrink: 0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    margin-left: 2px;
+  }
+
+  .player-watch-btn:hover {
+    background: rgba(255, 255, 255, 0.26);
+    border-color: rgba(255, 255, 255, 0.48);
+    transform: translateY(-1px);
+  }
+
+  .player-watch-btn:active {
+    transform: scale(0.96);
+  }
+
+  /* Desktop Bottom-Right Dock */
+  .bottom-right-dock {
+    position: absolute;
+    right: clamp(16px, 2.5vw, 28px);
+    bottom: clamp(16px, 2.5vw, 28px);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    width: min(520px, calc(50vw - 36px));
+    box-sizing: border-box;
+    transition: opacity .3s, transform .3s;
+  }
+
+  .bottom-right-subbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    box-sizing: border-box;
+  }
+
+  .dock-nav-chips {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dock-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 26px;
+    padding: 0 12px;
+    border-radius: 9999px;
+    font-family: var(--ui);
+    font-size: 11px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: all 0.18s ease;
+    box-sizing: border-box;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .dock-chip.active {
+    background: #ffffff;
+    color: #111111;
+    font-weight: 600;
+    border: 1px solid #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+    cursor: default;
+  }
+
+  .dock-chip:not(.active) {
+    background: rgba(36, 20, 16, 0.65);
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  .dock-chip:not(.active):hover {
+    background: rgba(75, 36, 28, 0.85);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.38);
+    transform: translateY(-1px);
+  }
+
+  .reset-pill-inline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 26px;
+    padding: 0 12px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(36, 20, 16, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: rgba(255, 255, 255, 0.85);
+    font-family: var(--ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+  }
+
+  .reset-pill-inline:hover {
+    background: rgba(75, 36, 28, 0.85);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.38);
+    transform: translateY(-1px);
+  }
+
+  .timeline {
+    position: relative;
+    width: 100%;
+    height: 86px;
+    padding: 10px 20px 10px;
+    border-radius: 28px;
+    background: linear-gradient(90deg, rgba(62, 38, 30, 0.88) 0%, rgba(98, 48, 36, 0.85) 55%, rgba(126, 46, 32, 0.82) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .timeline-topline {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin: 0 0 6px;
+    line-height: 1;
+  }
+
+  .timeline-items {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 4px;
+    align-items: flex-start;
+  }
+
+  .timeline-items:before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 8px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.22);
+    z-index: 0;
+  }
+
+  .phase-stop {
+    z-index: 1;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    min-width: 0;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    color: rgba(255, 255, 255, 0.65);
+    padding: 0 4px;
+    gap: 3px;
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .phase-stop:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .stop-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(45, 22, 16, 0.85);
+    margin: 4px 0 3px 4px;
+    transition: all .25s;
+    display: block;
+  }
+
+  .phase-time {
+    font-size: 10px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.72);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .phase-name {
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.1;
+    transition: color .2s;
+  }
+
+  .phase-stop:hover .stop-dot {
+    border-color: #ffffff;
+    transform: scale(1.2);
+  }
+
+  .phase-stop.is-active .stop-dot {
+    width: 12px;
+    height: 12px;
+    margin: 2px 0 1px 2px;
+    background: #ffffff;
+    border-color: #e5b061;
+    box-shadow: 0 0 0 3px rgba(229, 176, 97, 0.35), 0 0 14px rgba(229, 176, 97, 0.6);
+  }
+
+  .phase-stop.is-active .phase-time,
+  .phase-stop.is-active .phase-name {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  /* Zen Scene Mode */
+  .app.zen-mode .bottom-left-dock,
+  .app.zen-mode .bottom-right-dock,
+  .app.zen-mode .mobile-dock {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(14px);
+  }
+
+  .mobile-dock { display: none; }
+  .story-sheet-backdrop, .story-sheet { display: none; }
+
+  .petal-layer { position: absolute; inset: 0; z-index: 7; pointer-events: none; overflow: hidden; }
+  .petal { position: absolute; top: -35px; width: 9px; height: 13px; border-radius: 70% 20% 70% 20%; background: #efb65d; opacity: .9; animation: fall linear forwards; filter: drop-shadow(0 2px 3px rgba(0,0,0,.16)); }
+  .petal:nth-child(3n) { background: #d65c63; width: 7px; height: 11px; }
+  .petal:nth-child(4n) { background: #fff0c8; width: 5px; height: 8px; }
+  @keyframes fall { to { transform: translate3d(var(--drift), 112vh, 0) rotate(740deg); opacity: .1; } }
+
+  .modal {
+    width: min(860px, calc(100vw - 32px));
+    max-width: none;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 0;
+    color: #ffffff;
+    background: rgba(14,15,18,.95);
+    backdrop-filter: blur(28px);
+    box-shadow: 0 25px 120px rgba(0,0,0,.65);
+  }
+  .modal::backdrop { background: rgba(2,4,6,.75); backdrop-filter: blur(8px); }
+  .modal-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+  .modal-title { font-family: var(--display); font-size: 24px; font-weight: 700; line-height: 1; }
+  .modal-subtitle { color: var(--dim); font-size: 11px; margin-top: 4px; }
+  .close-button { border: 1px solid var(--line); background: rgba(255,255,255,.05); color: #ffffff; height: 36px; width: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; cursor: pointer; }
+  .video-frame { aspect-ratio: 16 / 9; width: 100%; background: #050505; overflow: hidden; }
+  .video-frame iframe { border: 0; width: 100%; height: 100%; display: block; }
+  .modal-foot { padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 11px; color: var(--dim); }
+  .plain-link { color: var(--gold); text-decoration: none; }
+
+  .report-body { padding: 24px; }
+  .report-score { font-family: var(--display); font-size: clamp(48px, 6vw, 72px); font-weight: 700; line-height: .9; color: var(--gold); }
+  .report-score small { font-family: var(--ui); font-size: 11px; font-weight: 600; letter-spacing: .15em; color: var(--dim); text-transform: uppercase; }
+  .report-headline { font-family: var(--display); font-size: 28px; font-weight: 600; line-height: 1.15; margin: 16px 0 8px; }
+  .report-copy { color: var(--muted); font-size: 13px; line-height: 1.6; max-width: 650px; }
+  .report-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 24px; }
+  .report-stat { border: 1px solid var(--line); border-radius: 16px; padding: 16px; background: rgba(255,255,255,.03); }
+  .report-stat strong { display: block; font-family: var(--display); font-size: 24px; font-weight: 700; color: #ffffff; }
+  .report-stat span { display: block; font-size: 10px; font-weight: 500; color: var(--dim); text-transform: uppercase; letter-spacing: .1em; margin-top: 4px; }
+  .report-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .action-primary { border: none; background: var(--gold); color: #17120c; font-weight: 600; }
+  .action-secondary { border: 1px solid var(--line); background: rgba(255,255,255,.05); color: #ffffff; }
+  .report-actions button { border-radius: 9999px; padding: 10px 18px; font-size: 11px; font-weight: 600; font-family: var(--ui); cursor: pointer; }
+
+  .menu-body { padding: 16px; }
+  .menu-row { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-radius: 14px; border: 1px solid transparent; background: transparent; width: 100%; text-align: left; cursor: pointer; }
+  .menu-row:hover { background: rgba(255,255,255,.05); border-color: var(--line); }
+  .menu-row span:first-child { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; }
+  .menu-row small { color: var(--dim); font-size: 11px; font-weight: 400; }
+  .menu-arrow { color: var(--gold); font-size: 16px; }
+
+  .toast {
+    position: absolute;
+    z-index: 25;
+    bottom: 32px;
+    left: 50%;
+    transform: translate(-50%, 10px);
+    padding: 10px 20px;
+    color: #ffffff;
+    background: rgba(14,15,18,.92);
+    border: 1px solid var(--line);
+    border-radius: 9999px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(20px);
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .24s, transform .24s;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+  @media (max-width: 1180px) {
+    .site-header { padding: 18px 20px; }
+    .hero-logo-wrap { top: clamp(54px, 7.5vh, 84px); }
+    .hero-logo-img { width: clamp(280px, 26vw, 380px); }
+    .bottom-left-dock { left: 20px; bottom: 20px; width: calc(50vw - 28px); max-width: 440px; gap: 12px; }
+    .bottom-right-dock { right: 20px; bottom: 20px; width: calc(50vw - 28px); max-width: 440px; }
+  }
+
+  /* Mobile Layout */
+  @media (max-width: 860px) {
+    .app { min-height: 100svh; height: 100svh; position: relative; }
+    .scene-image { object-position: center 30%; }
+    .site-header { padding: 16px; }
+    .header-time { font-size: 13px; font-weight: 600; min-width: auto; }
+    .live-pill { padding: 5px 12px; font-size: 11px; gap: 6px; }
+    .live-pill .live-label { display: inline-block !important; }
+    .icon-button { width: 36px; height: 36px; }
+    .header-actions { gap: 6px; min-width: auto; }
+    #headerPlayBtn, #zenBtn { display: none !important; }
+    
+    .hero-logo-wrap { top: clamp(64px, 10vh, 90px); padding: 0 16px; }
+    .hero-logo-img { width: clamp(190px, 48vw, 260px); }
+
+    .bottom-left-dock {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      max-width: min(400px, calc(100vw - 32px));
+      bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 124px);
+      z-index: 10;
+      display: flex !important;
+      flex-direction: column;
+      gap: 0;
+      pointer-events: none;
+    }
+    .bottom-left-dock .story-block {
+      pointer-events: auto;
+      padding: 0;
+      background: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+      border-radius: 0 !important;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    .bottom-left-dock .kicker {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .16em;
+      margin-bottom: 6px;
+      color: var(--gold);
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+      opacity: 0.95;
+    }
+    .bottom-left-dock .story-headline {
+      font-size: clamp(24px, 6.2vw, 30px);
+      margin: 0 0 6px;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.95);
+    }
+    .bottom-left-dock .story-body {
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.92);
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+    }
+    .bottom-left-dock .music-card {
+      display: none !important;
+    }
+
+    .bottom-right-dock {
+      display: none !important;
+    }
+
+    .mobile-dock {
+      position: absolute;
+      bottom: max(16px, env(safe-area-inset-bottom, 16px));
+      left: 16px;
+      right: 16px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+      box-sizing: border-box;
+    }
+
+    .mobile-timeline-bar {
+      align-self: stretch;
+      width: 100%;
+      max-width: 100%;
+      position: relative;
+      padding: 8px 14px 7px;
+      background: linear-gradient(90deg, rgba(48, 28, 22, 0.88) 0%, rgba(76, 36, 28, 0.85) 55%, rgba(98, 36, 26, 0.82) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      border-radius: 9999px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      pointer-events: auto;
+      box-sizing: border-box;
+    }
+    .mobile-timeline-track {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mobile-timeline-track::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      top: 6px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.22);
+      z-index: 0;
+    }
+    .mobile-timeline-stop {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      min-width: 34px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-timeline-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(30, 18, 14, 0.9);
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: block;
+    }
+    .mobile-timeline-time {
+      font-family: var(--ui);
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.65);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      transition: color 0.18s;
+      white-space: nowrap;
+    }
+    .mobile-timeline-stop:hover .mobile-timeline-dot {
+      border-color: #ffffff;
+      transform: scale(1.15);
+    }
+    .mobile-timeline-stop.is-active .mobile-timeline-dot {
+      width: 12px;
+      height: 12px;
+      background: #ff6e30;
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 0 3px rgba(255, 110, 48, 0.35), 0 0 14px rgba(255, 110, 48, 0.6);
+    }
+    .mobile-timeline-stop.is-active .mobile-timeline-time {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .mobile-bar {
+      align-self: stretch;
+      width: 100%;
+      max-width: 100%;
+      padding: 6px 12px 6px 8px;
+      background: linear-gradient(90deg, rgba(62, 38, 30, 0.92) 0%, rgba(98, 48, 36, 0.88) 55%, rgba(126, 46, 32, 0.86) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      border-radius: 9999px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+    }
+    .mobile-vinyl {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+    }
+    .mobile-vinyl .vinyl-spindle {
+      width: 10px;
+      height: 10px;
+    }
+    .mobile-player-center {
+      flex: 1 1 0px;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+      cursor: pointer;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .mobile-track-title {
+      font-family: var(--ui);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    .mobile-phase-meta {
+      font-family: var(--ui);
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 1.25;
+      color: rgba(255, 255, 255, 0.7);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 1px;
+    }
+    .mobile-progress {
+      height: 10px;
+      margin-top: 3px;
+    }
+    .mobile-time {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 1px;
+    }
+    .mobile-player-controls {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .mobile-ctrl-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.85);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      padding: 0;
+    }
+    .mobile-ctrl-btn:active { transform: scale(0.9); }
+    .mobile-play-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: none;
+      background: #ffffff;
+      color: #000000;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+      transition: transform .15s;
+    }
+    .mobile-play-btn:active { transform: scale(0.92); }
+
+    /* Mobile Story Sheet */
+    .story-sheet-backdrop {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .story-sheet-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .story-sheet {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 35;
+      max-height: 84svh;
+      padding: 14px 20px max(24px, env(safe-area-inset-bottom, 24px));
+      background: rgba(14, 16, 22, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px 24px 0 0;
+      backdrop-filter: blur(32px);
+      -webkit-backdrop-filter: blur(32px);
+      box-shadow: 0 -16px 48px rgba(0, 0, 0, 0.6);
+      transform: translateY(105%);
+      transition: transform .35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+    .story-sheet.is-open {
+      transform: translateY(0);
+    }
+
+    .sheet-handle-bar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .sheet-handle {
+      width: 36px;
+      height: 4px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .sheet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .sheet-phase-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .sheet-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .sheet-headline {
+      font-family: var(--display);
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 8px;
+      line-height: 1.2;
+    }
+    .sheet-body {
+      font-size: 14px;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.75);
+      margin: 0 0 16px;
+    }
+
+    .sheet-music-box {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 16px;
+    }
+    .sheet-song-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .sheet-song-row strong {
+      display: block;
+      font-size: 14px;
+      color: #ffffff;
+    }
+    .sheet-song-row span {
+      display: block;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 2px;
+    }
+    .sheet-yt-btn {
+      height: 32px;
+      padding: 0 12px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      font-family: var(--ui);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .sheet-timeline-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .sheet-timeline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+    .sheet-phase-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: var(--ui);
+      font-size: 13px;
+      text-align: left;
+      cursor: pointer;
+      transition: all .18s;
+    }
+    .sheet-phase-item.is-active {
+      background: rgba(229, 176, 97, 0.12);
+      border-color: rgba(229, 176, 97, 0.3);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .sheet-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .sheet-chaos-btn {
+      width: 100%;
+      height: 42px;
+      border-radius: 9999px;
+      border: 1px solid rgba(229, 176, 97, 0.35);
+      background: rgba(229, 176, 97, 0.1);
+      color: var(--gold);
+      font-family: var(--ui);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .toast { bottom: 90px; }
+  }
+
+  @media (max-width: 480px) {
+    .live-label { display: none; }
+    .hero-logo-wrap { top: clamp(60px, 9vh, 80px); }
+    .hero-logo-img { width: clamp(170px, 52vw, 220px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      scroll-behavior: auto !important;
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+  }
+</style>

@@ -1,0 +1,217 @@
+---
+// src/pages/old-hindi-baraat-songs.astro
+import ArticleLayout from '../layouts/ArticleLayout.astro';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Old Hindi Baraat Songs and 90s Wedding Favourites",
+      "description": "A curated collection of genuine vintage 70s, 80s, and 90s Bollywood baraat songs that keep uncles and families dancing.",
+      "url": "https://shadikibaraat.com/old-hindi-baraat-songs",
+      "image": "https://shadikibaraat.com/og/og-home.jpg",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Shadi Ki Baraat",
+        "url": "https://shadikibaraat.com/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://shadikibaraat.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Songs",
+          "item": "https://shadikibaraat.com/songs"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Old Hindi Baraat Songs",
+          "item": "https://shadikibaraat.com/old-hindi-baraat-songs"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which 90s Bollywood songs are must-plays for a baraat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "'Didi Tera Devar Deewana' (Hum Aapke Hain Koun..!), 'Mehndi Laga Ke Rakhna' (DDLJ), 'Saajanji Ghar Aaye' (KKHH), and 'Gur Naalo Ishq Mitha' are essential 90s tracks that bring both older relatives and youth together."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why are vintage Bollywood tracks played during the baraat procession?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vintage Hindi tracks like 'Aaj Mere Yaar Ki Shaadi Hai' anchor Phase 4 ('Uncle Era'). They give senior family members an opportunity to dance to the songs of their own youth before modern EDM and DJ bass drops take over."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<ArticleLayout
+  title="Old Hindi Baraat Songs: Classic Bollywood Wedding Playlist | Shadi Ki Baraat"
+  description="Explore genuine old Hindi baraat songs and 90s Bollywood wedding classics. Timeless retro anthems for uncles, elders, and nostalgic dance processions."
+  badge="RETRO WEDDING CLASSICS"
+  jsonLd={jsonLd}
+>
+  <header class="article-header">
+    <p class="article-badge">Curated Collection · Retro Bollywood Gold</p>
+    <h1 class="article-title">Old Hindi Baraat Songs and 90s Wedding Favourites</h1>
+    <p class="article-lead">
+      Before auto-tune, mobile phones, and pyrotechnics, Indian wedding processions ran on acoustic brass, live dholak, and songs whose choruses every single guest knew by heart. If you want to satisfy uncles, elder aunts, and lovers of timeless melody, here is our definitive curated collection. To search and filter through the complete library, you can <a href="/songs">browse all baraat songs</a> across all eras.
+    </p>
+  </header>
+
+  <!-- Section 1: The 90s Golden Era -->
+  <section class="curated-category">
+    <h2 class="category-heading">1. 90s Bollywood Wedding Anthems</h2>
+    <p class="category-desc">The golden decade of family romances, Sooraj Barjatya blockbusters, and iconic wedding hooks.</p>
+    
+    <div class="song-cards-grid">
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/uE_MpQk3z64/hqdefault.jpg" alt="Mehndi Laga Ke Rakhna artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Mehndi Laga Ke Rakhna</h3>
+          <p class="song-artist">Lata Mangeshkar · Udit Narayan · DDLJ (1995)</p>
+          <span class="song-vibe-tag">1995 Classic</span>
+        </div>
+        <button class="play-trigger-btn" data-video="uE_MpQk3z64" data-title="Mehndi Laga Ke Rakhna — DDLJ" aria-label="Play Mehndi Laga Ke Rakhna">▶</button>
+      </article>
+
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/ktZ3TNVX7DE/hqdefault.jpg" alt="Saajanji Ghar Aaye artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Saajanji Ghar Aaye</h3>
+          <p class="song-artist">Kumar Sanu · Alka Yagnik · KKHH (1998)</p>
+          <span class="song-vibe-tag">1998 Classic</span>
+        </div>
+        <button class="play-trigger-btn" data-video="ktZ3TNVX7DE" data-title="Saajanji Ghar Aaye — KKHH" aria-label="Play Saajanji Ghar Aaye">▶</button>
+      </article>
+
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/aL3p7_pE5qA/hqdefault.jpg" alt="Didi Tera Devar Deewana artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Didi Tera Devar Deewana</h3>
+          <p class="song-artist">Lata Mangeshkar · S.P.B. · HAHK (1994)</p>
+          <span class="song-vibe-tag">1994 Anthem</span>
+        </div>
+        <button class="play-trigger-btn" data-video="aL3p7_pE5qA" data-title="Didi Tera Devar Deewana — HAHK" aria-label="Play Didi Tera Devar Deewana">▶</button>
+      </article>
+
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/Xb3r6Yp8M0Y/hqdefault.jpg" alt="Gur Naalo Ishq Mitha artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Gur Naalo Ishq Mitha</h3>
+          <p class="song-artist">Bally Sagoo · Malkit Singh (1998)</p>
+          <span class="song-vibe-tag">90s Indi-Pop</span>
+        </div>
+        <button class="play-trigger-btn" data-video="Xb3r6Yp8M0Y" data-title="Gur Naalo Ishq Mitha — Bally Sagoo" aria-label="Play Gur Naalo Ishq Mitha">▶</button>
+      </article>
+    </div>
+  </section>
+
+  <!-- Section 2: 70s & 80s Vintage Classics -->
+  <section class="curated-category">
+    <h2 class="category-heading">2. Vintage 70s & 80s Procession Standards</h2>
+    <p class="category-desc">The authentic street-brass tracks that defined the baraat soundscape for multiple generations.</p>
+    
+    <div class="song-cards-grid">
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/q4_uW5k9p8c/hqdefault.jpg" alt="Aaj Mere Yaar Ki Shaadi Hai artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Aaj Mere Yaar Ki Shaadi Hai</h3>
+          <p class="song-artist">Mohammed Rafi · Deven Verma · Aadmi Sadak Ka (1977)</p>
+          <span class="song-vibe-tag">1977 Masterpiece</span>
+        </div>
+        <button class="play-trigger-btn" data-video="q4_uW5k9p8c" data-title="Aaj Mere Yaar Ki Shaadi Hai — Mohd Rafi" aria-label="Play Aaj Mere Yaar Ki Shaadi Hai">▶</button>
+      </article>
+
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/eP3oW8r5u4Y/hqdefault.jpg" alt="Le Jayenge Le Jayenge artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Le Jayenge Le Jayenge</h3>
+          <p class="song-artist">Kishore Kumar · Asha Bhosle · Chor Machaye Shor (1974)</p>
+          <span class="song-vibe-tag">1974 Classic</span>
+        </div>
+        <button class="play-trigger-btn" data-video="eP3oW8r5u4Y" data-title="Le Jayenge Le Jayenge — Kishore Kumar" aria-label="Play Le Jayenge Le Jayenge">▶</button>
+      </article>
+
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/Y8v2k7m9L8g/hqdefault.jpg" alt="Yeh Desh Hai Veer Jawanon Ka artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Yeh Desh Hai Veer Jawanon Ka</h3>
+          <p class="song-artist">Mohammed Rafi · Balbir · Naya Daur (1957)</p>
+          <span class="song-vibe-tag">Brass Band Staple</span>
+        </div>
+        <button class="play-trigger-btn" data-video="Y8v2k7m9L8g" data-title="Yeh Desh Hai Veer Jawanon Ka — Naya Daur" aria-label="Play Yeh Desh Hai Veer Jawanon Ka">▶</button>
+      </article>
+
+      <article class="editorial-song-card">
+        <div class="song-thumb-box">
+          <img class="song-thumb-img" src="https://i.ytimg.com/vi/r6_uW2k8v9Y/hqdefault.jpg" alt="Chadha De Rang artwork" loading="lazy" />
+        </div>
+        <div class="song-info">
+          <h3 class="song-name">Baharoon Phool Barsao</h3>
+          <p class="song-artist">Mohammed Rafi · Suraj (1966)</p>
+          <span class="song-vibe-tag">Golden Nostalgia</span>
+        </div>
+        <button class="play-trigger-btn" data-video="r6_uW2k8v9Y" data-title="Baharoon Phool Barsao — Suraj" aria-label="Play Baharoon Phool Barsao">▶</button>
+      </article>
+    </div>
+  </section>
+
+  <!-- Cultural Context: Phase 4 Uncle Era -->
+  <section class="editorial-pro-tips">
+    <h3 class="tips-title">Why the 90s Belong to "Phase 4: Uncle Era"</h3>
+    <div class="tips-copy">
+      <p>In our seven-phase timeline, Phase 4 (around 8:30 PM) is officially designated <strong>Uncle Era</strong>. By this point, the procession has entered prime time. Senior family members who stayed reserved during the early steps take off their coats, loosen their collars, and make eye contact with the DJ.</p>
+      <p>This is where 90s Bollywood tracks like <em>Didi Tera Devar Deewana</em> and <em>Mehndi Laga Ke Rakhna</em> work pure magic. They provide the perfect musical bridge where grandchildren and elders share the same dance circle. To see the full progression, <a href="/songs" style="color:var(--gold);text-decoration:underline;">browse all baraat songs</a> and explore all 140 curated records.</p>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <h2 class="faq-heading">Frequently Asked Questions: Vintage & 90s Baraat Music</h2>
+    
+    <div class="faq-item">
+      <h3 class="faq-q">Can older Hindi songs keep energy high during a modern wedding?</h3>
+      <p class="faq-a">Absolutely. High-tempo retro numbers like <em>Aaj Mere Yaar Ki Shaadi Hai</em> and 90s bhangra-pop like <em>Gur Naalo Ishq Mitha</em> carry an organic acoustic bounce that synthesizers cannot replicate. When placed in the middle of a modern DJ set, they create a universal sing-along peak.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-q">How should a DJ transition between retro classics and new Punjabi beats?</h3>
+      <p class="faq-a">A skilled wedding DJ uses live dhol fills or 8-count percussion sweeps to blend 90s Bollywood melodies directly into modern Punjabi basslines, preventing abrupt tempo clashes.</p>
+    </div>
+  </section>
+</ArticleLayout>

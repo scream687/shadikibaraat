@@ -1,0 +1,842 @@
+---
+// src/pages/playlists.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+import PlayfollyFooter from '../components/PlayfollyFooter.astro';
+import songsData from '../data/songs.json';
+
+const allPhases = songsData.phases;
+const allSongs = songsData.songs;
+
+const phaseTimes: Record<number, string> = {
+  1: '5:30 PM',
+  2: '6:30 PM',
+  3: '7:30 PM',
+  4: '8:30 PM',
+  5: '9:30 PM',
+  6: '10:30 PM',
+  7: '12:00 AM'
+};
+
+const phaseImages: Record<number, string> = {
+  1: '/assets/01-baraat-wide.png',
+  2: '/assets/02-baraat-wide.png',
+  3: '/assets/03-baraat-wide.png',
+  4: '/assets/04-baraat-wide.png',
+  5: '/assets/05-baraat-wide.png',
+  6: '/assets/06-baraat-wide.png',
+  7: '/assets/07-baraat-wide.png'
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Baraat Playlist Hindi: 7 Curated Wedding Music Rotations",
+  "description": "Ready-to-use Hindi baraat playlists for Indian weddings across seven distinct chapters, from sehra bandi to afterparty.",
+  "url": "https://shadikibaraat.com/playlists",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Shadi Ki Baraat",
+    "url": "https://shadikibaraat.com/"
+  }
+};
+---
+
+<BaseLayout
+  title="Baraat Playlist Hindi: 7 Curated Wedding Music Rotations | Shadi Ki Baraat"
+  description="Find ready-to-use Hindi baraat playlists for your wedding procession. 7 curated phases from groom entry to the midnight afterparty in an ad-free interface."
+  canonicalURL="https://shadikibaraat.com/playlists"
+  ogImage="/og/og-playlists.jpg"
+  jsonLd={jsonLd}
+>
+  <!-- Background -->
+  <div class="backdrop-container" aria-hidden="true">
+    <img id="pageBackdrop" class="backdrop-img" src="/assets/02-baraat-wide.png" alt="" />
+    <div class="backdrop-wash"></div>
+    <div class="saloon-vignette"></div>
+  </div>
+
+  <div class="page-wrap">
+    <TopNav badge="7 ROTATIONS" />
+
+    <!-- Page Header -->
+    <header class="page-header">
+      <p class="header-badge">Ad-Free Baraat Playlists · 7 Phases · 140 Songs</p>
+      <h1 class="header-title-hi">फेज रोटेशन और बारात प्लेलिस्ट</h1>
+      <p class="header-subtitle-en">Baraat Playlist Hindi: 7 Curated Wedding Music Rotations</p>
+      <p class="header-desc">
+        The night unfolds in seven distinct chapters. Find the cleanest ready-to-use Hindi baraat playlists without advertisements cluttering your celebration. Looking for specific wedding moments? You can <a href="/baraat-entry-songs-for-groom" style="color:var(--gold);text-decoration:underline;">find songs for the groom's entry</a>, <a href="/old-hindi-baraat-songs" style="color:var(--gold);text-decoration:underline;">explore old Hindi baraat songs</a>, <a href="/songs" style="color:var(--gold);text-decoration:underline;">browse the baraat songs list</a>, or understand <a href="/baraat-meaning" style="color:var(--gold);text-decoration:underline;">what is a baraat</a>.
+      </p>
+    </header>
+
+    <!-- Playlist Grid -->
+    <div class="playlist-grid" id="playlistGrid">
+      {allPhases.map((phase) => {
+        const timeStr = phaseTimes[phase.phase] || 'Night';
+        const imgPath = phaseImages[phase.phase] || '/assets/02-baraat-wide.png';
+        const sampleSongs = phase.songs.slice(0, 3);
+
+        return (
+          <article class="playlist-card">
+            <div class="card-art-box">
+              <img class="card-art-img" src={imgPath} alt={phase.title} loading="lazy" />
+              <div class="card-art-wash"></div>
+              <span class="card-phase-pill">20 SONGS · {timeStr}</span>
+            </div>
+            <div class="card-content">
+              <h2 class="card-title-hi">{phase.hindiTitle}</h2>
+              <p class="card-title-en">{phase.title}</p>
+              <p class="card-desc">{phase.description}</p>
+              
+              <div class="card-samples">
+                {sampleSongs.map((s) => (
+                  <span class="sample-tag">{s.titleEn}</span>
+                ))}
+                <span class="sample-tag">+17 more</span>
+              </div>
+
+              <div class="card-actions">
+                <button class="btn-play-phase" data-phase={phase.phase} type="button">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                  Play Phase
+                </button>
+                <a href={`/songs?phase=${phase.phase}`} class="btn-view-phase">View 20 Songs</a>
+                <a
+                  href={`https://music.youtube.com/playlist?list=${phase.playlistId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-yt-phase"
+                  title="Open on YouTube Music"
+                >
+                  YT Music
+                </a>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+
+  <PlayfollyFooter />
+
+  <!-- Persistent Bottom Player Dock -->
+  <div class="player-dock-wrap">
+    <div class="player-dock-inner">
+      <div class="saloon-glass">
+        <div class="player-art-wrap">
+          <img id="playerArt" class="player-art-img" src="https://i.ytimg.com/vi/8uUhxTs3UUQ/hqdefault.jpg" alt="" />
+          <div class="player-art-center"></div>
+        </div>
+
+        <div class="player-center">
+          <div class="player-title-row">
+            <span id="playerTrackTitle" class="player-track-title">Dulhe Ka Sehra</span>
+            <span id="playerPhaseTag" class="phase-badge-pill">Phase 01</span>
+          </div>
+          <p id="playerTrackArtist" class="player-track-artist">Nusrat Fateh Ali Khan · Dhadkan</p>
+          
+          <div class="scrub-wrap">
+            <input type="range" id="seekSlider" class="saloon-range" min="0" max="100" value="0" aria-label="Seek track" />
+            <span id="playerTime" class="player-time">0:00 / 8:33</span>
+          </div>
+        </div>
+
+        <div class="player-buttons">
+          <button id="prevBtn" class="saloon-icon-btn" aria-label="Previous track" title="Previous track">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+          </button>
+          <button id="playBtn" class="saloon-play-btn" aria-label="Play / Pause" title="Play / Pause">
+            <svg id="playIconSvg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button id="nextBtn" class="saloon-icon-btn" aria-label="Next track" title="Next track">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offscreen YouTube Streaming Frame -->
+  <div id="ytAudioWrap" aria-hidden="true">
+    <div id="ytAudioPlayer"></div>
+  </div>
+</BaseLayout>
+
+<script is:inline src="https://www.youtube.com/iframe_api"></script>
+
+<script define:vars={{ allSongs }}>
+  (() => {
+    'use strict';
+
+    const phaseImages = {
+      1: '/assets/01-baraat-wide.png',
+      2: '/assets/02-baraat-wide.png',
+      3: '/assets/03-baraat-wide.png',
+      4: '/assets/04-baraat-wide.png',
+      5: '/assets/05-baraat-wide.png',
+      6: '/assets/06-baraat-wide.png',
+      7: '/assets/07-baraat-wide.png'
+    };
+
+    function getPhaseImage(phaseNum) {
+      return phaseImages[phaseNum] || '/assets/02-baraat-wide.png';
+    }
+
+    const pageBackdrop = document.getElementById('pageBackdrop');
+    const playerArt = document.getElementById('playerArt');
+    const playerTrackTitle = document.getElementById('playerTrackTitle');
+    const playerTrackArtist = document.getElementById('playerTrackArtist');
+    const playerPhaseTag = document.getElementById('playerPhaseTag');
+    const playerTime = document.getElementById('playerTime');
+    const seekSlider = document.getElementById('seekSlider');
+    const playBtn = document.getElementById('playBtn');
+    const playIconSvg = document.getElementById('playIconSvg');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let currentSongIndex = 0;
+    let isPlaying = false;
+    let ytPlayer = null;
+    let ytReady = false;
+    let seekInterval = null;
+    let activePhasePlaying = null;
+
+    document.querySelectorAll('.btn-play-phase').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const phaseNum = parseInt(btn.getAttribute('data-phase') || '1', 10);
+        playPhase(phaseNum);
+      });
+    });
+
+    function playPhase(phaseNum) {
+      activePhasePlaying = phaseNum;
+      const phaseSongs = allSongs.filter((s) => s.phase === phaseNum);
+      if (phaseSongs.length > 0) {
+        const idx = allSongs.findIndex((s) => s.youtubeId === phaseSongs[0].youtubeId);
+        playTrackByIndex(idx);
+      }
+    }
+
+    window.onYouTubeIframeAPIReady = () => {
+      if (window.YT && window.YT.Player) {
+        ytPlayer = new window.YT.Player('ytAudioPlayer', {
+          height: '160',
+          width: '160',
+          videoId: allSongs[0]?.youtubeId || '8uUhxTs3UUQ',
+          playerVars: { autoplay: 0, controls: 0, disablekb: 1 },
+          events: {
+            onReady: () => {
+              ytReady = true;
+              ytPlayer.setVolume(85);
+            },
+            onStateChange: (event) => {
+              if (event.data === window.YT.PlayerState.PLAYING) setPlayState(true);
+              else if (event.data === window.YT.PlayerState.PAUSED) setPlayState(false);
+              else if (event.data === window.YT.PlayerState.ENDED) playNext();
+            }
+          }
+        });
+      }
+    };
+
+    function playTrackByIndex(idx) {
+      if (idx < 0 || idx >= allSongs.length) return;
+      currentSongIndex = idx;
+      const song = allSongs[currentSongIndex];
+
+      if (playerTrackTitle) playerTrackTitle.textContent = song.titleEn;
+      if (playerTrackArtist) playerTrackArtist.textContent = `${song.artist} · ${song.film}`;
+      if (playerPhaseTag) playerPhaseTag.textContent = `Phase 0${song.phase}`;
+      if (playerArt) playerArt.src = song.thumbnail;
+      if (playerTime) playerTime.textContent = `0:00 / ${song.duration}`;
+      if (seekSlider) {
+        seekSlider.value = 0;
+        seekSlider.style.setProperty('--progress', '0%');
+      }
+
+      if (pageBackdrop) {
+        pageBackdrop.src = getPhaseImage(activePhasePlaying || song.phase);
+      }
+
+      if (ytReady && ytPlayer && ytPlayer.loadVideoById) {
+        ytPlayer.loadVideoById(song.youtubeId);
+        ytPlayer.playVideo();
+      }
+
+      setPlayState(true);
+    }
+
+    function pauseTrack() {
+      if (ytReady && ytPlayer && ytPlayer.pauseVideo) ytPlayer.pauseVideo();
+      setPlayState(false);
+    }
+
+    function resumeTrack() {
+      if (ytReady && ytPlayer && ytPlayer.playVideo) ytPlayer.playVideo();
+      setPlayState(true);
+    }
+
+    function playNext() {
+      if (activePhasePlaying) {
+        const phaseSongs = allSongs.filter((s) => s.phase === activePhasePlaying);
+        const currentId = allSongs[currentSongIndex]?.youtubeId;
+        const currentPhaseIdx = phaseSongs.findIndex((s) => s.youtubeId === currentId);
+        if (currentPhaseIdx !== -1 && phaseSongs.length > 0) {
+          const nextInPhase = phaseSongs[(currentPhaseIdx + 1) % phaseSongs.length];
+          const globalIdx = allSongs.findIndex((s) => s.youtubeId === nextInPhase.youtubeId);
+          playTrackByIndex(globalIdx);
+          return;
+        }
+      }
+      playTrackByIndex((currentSongIndex + 1) % allSongs.length);
+    }
+
+    function playPrev() {
+      if (activePhasePlaying) {
+        const phaseSongs = allSongs.filter((s) => s.phase === activePhasePlaying);
+        const currentId = allSongs[currentSongIndex]?.youtubeId;
+        const currentPhaseIdx = phaseSongs.findIndex((s) => s.youtubeId === currentId);
+        if (currentPhaseIdx !== -1 && phaseSongs.length > 0) {
+          const prevInPhase = phaseSongs[(currentPhaseIdx - 1 + phaseSongs.length) % phaseSongs.length];
+          const globalIdx = allSongs.findIndex((s) => s.youtubeId === prevInPhase.youtubeId);
+          playTrackByIndex(globalIdx);
+          return;
+        }
+      }
+      playTrackByIndex((currentSongIndex - 1 + allSongs.length) % allSongs.length);
+    }
+
+    function setPlayState(playing) {
+      isPlaying = playing;
+      if (playIconSvg) {
+        if (playing) {
+          playIconSvg.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+          playerArt?.classList.add('spinning');
+          startProgress();
+        } else {
+          playIconSvg.innerHTML = '<path d="M8 5v14l11-7z"/>';
+          playerArt?.classList.remove('spinning');
+          stopProgress();
+        }
+      }
+    }
+
+    function startProgress() {
+      stopProgress();
+      seekInterval = setInterval(() => {
+        if (!ytReady || !ytPlayer || !ytPlayer.getCurrentTime) return;
+        const cur = ytPlayer.getCurrentTime() || 0;
+        const dur = ytPlayer.getDuration() || 0;
+        if (dur > 0 && seekSlider && playerTime) {
+          const pct = (cur / dur) * 100;
+          seekSlider.value = String(pct);
+          seekSlider.style.setProperty('--progress', `${pct}%`);
+          playerTime.textContent = `${formatTime(cur)} / ${formatTime(dur)}`;
+        }
+      }, 500);
+    }
+
+    function stopProgress() {
+      if (seekInterval) {
+        clearInterval(seekInterval);
+        seekInterval = null;
+      }
+    }
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    playBtn?.addEventListener('click', () => {
+      if (isPlaying) pauseTrack();
+      else {
+        if (!ytReady || !ytPlayer) playTrackByIndex(currentSongIndex);
+        else resumeTrack();
+      }
+    });
+
+    nextBtn?.addEventListener('click', playNext);
+    prevBtn?.addEventListener('click', playPrev);
+
+    seekSlider?.addEventListener('input', (e) => {
+      const target = e.target;
+      const pct = parseFloat(target.value);
+      seekSlider.style.setProperty('--progress', `${pct}%`);
+      if (ytReady && ytPlayer && ytPlayer.getDuration) {
+        const dur = ytPlayer.getDuration();
+        if (dur > 0) ytPlayer.seekTo((pct / 100) * dur, true);
+      }
+    });
+  })();
+</script>
+
+<style>
+  .backdrop-container {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .backdrop-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 70% 30%;
+    opacity: 0.32;
+    filter: saturate(1.15) brightness(0.9);
+    transition: opacity 0.8s ease;
+  }
+  .backdrop-wash {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 20%, rgba(13, 15, 21, 0.65) 0%, rgba(13, 15, 21, 0.94) 75%, #0d0f15 100%);
+  }
+  .saloon-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 85% at 50% 40%, transparent 25%, rgba(13, 15, 21, 0.8) 100%),
+                linear-gradient(to bottom, rgba(13, 15, 21, 0.45) 0%, transparent 20%, transparent 70%, #0d0f15 100%);
+  }
+
+  .page-wrap {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 24px 20px 48px;
+    position: relative;
+    z-index: 1;
+  }
+  @media (min-width: 640px) {
+    .page-wrap { padding: 36px 32px 64px; }
+  }
+
+  /* Page Header */
+  .page-header {
+    margin-top: 16px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 24px;
+  }
+  .header-badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .header-title-hi {
+    font-family: var(--font-hindi);
+    font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-top: 8px;
+    color: var(--sand);
+    letter-spacing: -0.01em;
+  }
+  .header-subtitle-en {
+    font-size: 0.88rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sand-80);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .header-desc {
+    margin-top: 14px;
+    max-width: 640px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--sand-80);
+    font-weight: 400;
+  }
+
+  /* Playlist Grid */
+  .playlist-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 640px) {
+    .playlist-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  }
+
+  .playlist-card {
+    position: relative;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 248, 237, 0.12);
+    background: rgba(15, 18, 25, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .playlist-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(229, 176, 97, 0.35);
+    box-shadow: 0 22px 50px -10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(229, 176, 97, 0.1);
+  }
+
+  .card-art-box {
+    position: relative;
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    background: #151821;
+  }
+  .card-art-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    transition: transform 0.6s ease;
+  }
+  .playlist-card:hover .card-art-img {
+    transform: scale(1.05);
+  }
+  .card-art-wash {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(13,15,21,0.2) 0%, rgba(13,15,21,0.85) 100%);
+  }
+  .card-phase-pill {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(13, 15, 21, 0.82);
+    border: 1px solid rgba(229, 176, 97, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 9999px;
+    padding: 4px 10px;
+    font-weight: 600;
+  }
+
+  .card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .card-title-hi {
+    font-family: var(--font-hindi);
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--sand);
+  }
+  .card-title-en {
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sand-80);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .card-desc {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--sand-80);
+    margin-top: 10px;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+
+  .card-samples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+  .sample-tag {
+    font-size: 0.72rem;
+    color: var(--sand-60);
+    background: rgba(255, 248, 237, 0.05);
+    border: 1px solid rgba(255, 248, 237, 0.08);
+    border-radius: 6px;
+    padding: 3px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .card-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid rgba(255, 248, 237, 0.08);
+    padding-top: 14px;
+  }
+  .btn-play-phase {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 9999px;
+    background: var(--gold);
+    color: #141109;
+    border: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .btn-play-phase:hover {
+    background: #f0be71;
+    transform: scale(1.02);
+  }
+  .btn-view-phase {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 9999px;
+    background: rgba(255, 248, 237, 0.06);
+    border: 1px solid rgba(255, 248, 237, 0.12);
+    color: var(--sand);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.18s;
+  }
+  .btn-view-phase:hover {
+    background: rgba(255, 248, 237, 0.14);
+    border-color: rgba(255, 248, 237, 0.3);
+  }
+  .btn-yt-phase {
+    margin-left: auto;
+    color: var(--sand-60);
+    text-decoration: none;
+    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.15s;
+  }
+  .btn-yt-phase:hover { color: #ff0033; }
+
+  /* Sticky Bottom Player Dock */
+  .player-dock-wrap {
+    position: fixed;
+    inset-x: 0;
+    bottom: 0;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .player-dock-inner {
+    pointer-events: auto;
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    margin-bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+    padding: 0 12px;
+  }
+  @media (min-width: 640px) {
+    .player-dock-inner { margin-bottom: 24px; padding: 0; }
+  }
+
+  .saloon-glass {
+    background: rgba(15, 17, 24, 0.82);
+    backdrop-filter: blur(24px) saturate(1.2);
+    -webkit-backdrop-filter: blur(24px) saturate(1.2);
+    border: 1px solid rgba(255, 248, 237, 0.16);
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.75);
+    border-radius: 9999px;
+    padding: 8px 12px 8px 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-sizing: border-box;
+  }
+  @media (min-width: 640px) {
+    .saloon-glass { padding: 10px 18px 10px 10px; gap: 16px; }
+  }
+
+  .player-art-wrap {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    background: #191b24;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  }
+  @media (min-width: 640px) {
+    .player-art-wrap { width: 54px; height: 54px; }
+  }
+  .player-art-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .player-art-img.spinning {
+    animation: vinylSpin 14s linear infinite;
+  }
+  @keyframes vinylSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .player-art-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #0d0f15;
+    border: 2px solid var(--sand);
+  }
+
+  .player-center {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .player-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .player-track-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--sand);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+  }
+  .phase-badge-pill {
+    padding: 2px 7px;
+    border-radius: 9999px;
+    background: rgba(255, 248, 237, 0.06);
+    border: 1px solid rgba(255, 248, 237, 0.1);
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    color: var(--sand-80);
+    font-family: var(--font-mono);
+  }
+  .player-track-artist {
+    font-size: 0.72rem;
+    color: var(--sand-80);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+  }
+
+  .scrub-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .saloon-range {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 9999px;
+    background: linear-gradient(to right, var(--gold) 0%, var(--gold) var(--progress, 0%), rgba(255, 248, 237, 0.22) var(--progress, 0%), rgba(255, 248, 237, 0.22) 100%);
+    cursor: pointer;
+    outline: none;
+  }
+  .saloon-range::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--sand);
+    cursor: pointer;
+  }
+  .player-time {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--sand-60);
+    white-space: nowrap;
+  }
+
+  .player-buttons {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  @media (min-width: 640px) {
+    .player-buttons { gap: 6px; }
+  }
+  .saloon-icon-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--sand-80);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  @media (min-width: 640px) {
+    .saloon-icon-btn { width: 36px; height: 36px; }
+  }
+  .saloon-icon-btn:hover {
+    background: rgba(255, 248, 237, 0.12);
+    color: var(--sand);
+  }
+  .saloon-play-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--sand);
+    color: #141109;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(229, 176, 97, 0.35);
+    transition: all 0.15s;
+  }
+  @media (min-width: 640px) {
+    .saloon-play-btn { width: 46px; height: 46px; }
+  }
+  .saloon-play-btn:hover {
+    transform: scale(1.06);
+    background: var(--gold);
+  }
+
+  #ytAudioWrap {
+    position: fixed;
+    bottom: -600px;
+    left: -600px;
+    width: 160px;
+    height: 160px;
+    opacity: 0.001;
+    pointer-events: none;
+    z-index: -9999;
+  }
+</style>
