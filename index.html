@@ -49,7 +49,7 @@
     button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
     button { cursor: pointer; }
     .app { width: 100%; height: 100svh; min-height: 600px; position: relative; isolation: isolate; overflow: hidden; background: #0c1017; }
-    .scene-stack, .scene-image, .scene-wash, .grain, .vignette { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .scene-stack, .scene-image, .scene-wash, .vignette { position: absolute; inset: 0; width: 100%; height: 100%; }
     .scene-stack { z-index: -4; overflow: hidden; background: #0c1017; }
     @keyframes scene-in {
       0% { opacity: 0; }
@@ -84,7 +84,18 @@
       transition: background 400ms ease;
     }
     .vignette { z-index: -2; pointer-events: none; box-shadow: inset 0 0 50px rgba(0,0,0,.15); }
-    .grain { z-index: -1; pointer-events: none; opacity: .04; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E"); mix-blend-mode: soft-light; }
+    /* Authentic Saloon.wtf Analog Film Grain Overlay */
+    .grain {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 6;
+      pointer-events: none;
+      opacity: 0.085;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
     .app.lights-low .scene-wash { background: linear-gradient(180deg, rgba(3,4,8,.52) 0%, rgba(3,4,8,.08) 22%, rgba(3,4,8,.12) 65%, rgba(3,4,8,.68) 100%); }
     .app.dj-lit .scene-wash { background: linear-gradient(180deg, rgba(7,3,10,.42) 0%, rgba(10,5,10,.1) 35%, rgba(7,3,11,.06) 65%, rgba(4,4,8,.55) 100%); }
     .app.dhol-pulse { animation: lowPulse .62s ease-out; }
@@ -143,7 +154,17 @@
     .hero-logo-img { width: clamp(210px, 22vw, 310px); max-width: 90vw; height: auto; display: block; user-select: none; pointer-events: auto; }
 
     /* Desktop Bottom Docks */
-    .bottom-left-dock { position: absolute; left: 28px; bottom: 28px; width: min(440px, calc(100vw - 56px)); z-index: 5; display: flex; flex-direction: column; gap: 16px; transition: opacity .3s, transform .3s; }
+    .bottom-left-dock {
+      position: absolute;
+      left: 28px;
+      bottom: 28px;
+      width: min(520px, calc(100vw - 56px));
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: opacity .3s, transform .3s;
+    }
     .story-block {
       width: 100%;
       padding: 0;
@@ -156,34 +177,213 @@
       animation: riseIn .45s ease both;
     }
     @keyframes riseIn { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: translateY(0) } }
-    .kicker { font-family: var(--ui); font-size: 11px; font-weight: 400; line-height: 1; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin: 0 0 10px; display: block; text-shadow: none; opacity: 0.95; }
-    h1 { font-family: var(--display); font-weight: 700; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 10px; max-width: 440px; color: #ffffff; text-wrap: balance; text-shadow: none; }
-    .story-body { font-family: var(--ui); font-weight: 400; font-size: 14.5px; line-height: 1.55; color: rgba(255, 255, 255, 0.9); margin: 0; max-width: 420px; text-shadow: none; }
+    .kicker { font-family: var(--ui); font-size: 11px; font-weight: 400; line-height: 1; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin: 0 0 8px; display: block; text-shadow: none; opacity: 0.95; }
+    h1 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.2vw, 36px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 8px; max-width: 440px; color: #ffffff; text-wrap: balance; text-shadow: none; }
+    .story-body { font-family: var(--ui); font-weight: 400; font-size: 14px; line-height: 1.5; color: rgba(255, 255, 255, 0.9); margin: 0; max-width: 420px; text-shadow: none; }
 
-    .sound-wave { display: inline-flex; align-items: flex-end; gap: 2.5px; height: 12px; margin-left: 8px; opacity: 0; transition: opacity .2s; }
-    .sound-wave.is-playing { opacity: 1; }
-    .sound-wave span { width: 2.5px; height: 100%; background: var(--gold); border-radius: 1px; animation: eqBounce .75s ease-in-out infinite alternate; }
-    .sound-wave span:nth-child(2) { animation-delay: .2s; height: 50%; }
-    .sound-wave span:nth-child(3) { animation-delay: .4s; height: 85%; }
-    .sound-wave span:nth-child(4) { animation-delay: .1s; height: 35%; }
-    @keyframes eqBounce { 0% { height: 20%; } 100% { height: 100%; } }
-
-    .music-card { width: 100%; padding: 18px 20px; border-radius: 18px; background: rgba(13, 15, 20, 0.72); border: 1px solid var(--line); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); box-shadow: var(--shadow); display: flex; flex-direction: column; box-sizing: border-box; }
-    .music-card-top { display: flex; align-items: center; gap: 14px; }
-    .player-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-    .player-ctrl-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04); color: #ffffff; display: grid; place-items: center; cursor: pointer; transition: all .2s; padding: 0; }
-    .player-ctrl-btn:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); }
-    .player-ctrl-btn:active { transform: scale(0.94); }
-    .player-play-btn { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--gold); color: #161109; display: grid; place-items: center; cursor: pointer; transition: background .2s, transform .2s; padding: 0; }
-    .player-play-btn:hover { background: var(--gold-hover); transform: scale(1.04); }
-    .player-play-btn:active { transform: scale(0.94); }
-    .track-meta { min-width: 0; flex: 1; }
-    .track-title { font-size: 15px; font-weight: 700; line-height: 1.25; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .track-artist { font-size: 12px; font-weight: 400; line-height: 1.3; color: var(--dim); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .music-card-divider { height: 1px; width: 100%; background: var(--line); margin: 12px 0; }
-    .track-caption { font-size: 12px; line-height: 1.5; color: var(--muted); margin: 0 0 12px; }
-    .watch-yt-btn { align-self: flex-start; display: inline-flex; align-items: center; justify-content: center; height: 34px; padding: 0 14px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.04); color: #ffffff; font-family: var(--ui); font-size: 12px; font-weight: 500; cursor: pointer; transition: all .2s; }
-    .watch-yt-btn:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.35); }
+    /* Deluxe Saloon Capsule Pill Player with Grain Texture (https://saloon.wtf) */
+    .music-card {
+      position: relative;
+      width: 100%;
+      padding: 10px 18px 10px 12px;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, rgba(62, 38, 30, 0.88) 0%, rgba(98, 48, 36, 0.85) 55%, rgba(126, 46, 32, 0.82) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-sizing: border-box;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .music-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity: 0.55;
+      z-index: 0;
+    }
+    .vinyl-wrap {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1;
+      user-select: none;
+    }
+    .vinyl-disc {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      animation: vinylSpin 8s linear infinite;
+      animation-play-state: paused;
+    }
+    .vinyl-disc.is-spinning {
+      animation-play-state: running;
+    }
+    @keyframes vinylSpin {
+      to { transform: rotate(360deg); }
+    }
+    .vinyl-cover {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .vinyl-spindle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.75);
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      pointer-events: none;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+    .player-center {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 1;
+    }
+    .track-title {
+      font-family: var(--ui);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+      letter-spacing: -0.01em;
+    }
+    .track-artist {
+      font-family: var(--ui);
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.3;
+      color: rgba(255, 255, 255, 0.72);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+    .progress-wrap {
+      position: relative;
+      width: 100%;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      margin-top: 6px;
+      user-select: none;
+    }
+    .progress-track {
+      position: relative;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.22);
+      border-radius: 9999px;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #ffffff;
+      border-radius: 9999px;
+      transition: width 0.15s linear;
+    }
+    .progress-handle {
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transition: opacity 0.15s;
+      pointer-events: none;
+    }
+    .progress-wrap:hover .progress-handle {
+      opacity: 1;
+    }
+    .time-display {
+      font-family: var(--ui);
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.65);
+      font-variant-numeric: tabular-nums;
+      margin-top: 2px;
+      text-align: left;
+    }
+    .player-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .player-ctrl-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.85);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, transform 0.12s;
+      padding: 0;
+    }
+    .player-ctrl-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+    }
+    .player-ctrl-btn:active {
+      transform: scale(0.92);
+    }
+    .player-play-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: #ffffff;
+      color: #000000;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+      transition: transform 0.15s, background 0.15s;
+      padding: 0;
+    }
+    .player-play-btn:hover {
+      transform: scale(1.06);
+      background: #ffffff;
+    }
+    .player-play-btn:active {
+      transform: scale(0.94);
+    }
 
     .make-worse { position: absolute; z-index: 8; right: 28px; top: 88px; border: 1px solid var(--line); background: rgba(14,15,18,.62); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow); border-radius: 9999px; display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; color: #ffffff; font-family: var(--ui); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; transition: all .2s; }
     .make-worse:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.28); }
@@ -401,31 +601,94 @@
         align-self: stretch;
         width: 100%;
         max-width: 100%;
-        height: 52px;
-        padding: 6px 10px 6px 6px;
-        background: rgba(13, 15, 20, 0.85);
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
+        padding: 6px 12px 6px 8px;
+        background: linear-gradient(90deg, rgba(62, 38, 30, 0.92) 0%, rgba(98, 48, 36, 0.88) 55%, rgba(126, 46, 32, 0.86) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(28px) saturate(160%);
+        -webkit-backdrop-filter: blur(28px) saturate(160%);
         border-radius: 9999px;
-        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25);
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         pointer-events: auto;
         box-sizing: border-box;
+        position: relative;
+        isolation: isolate;
         overflow: hidden;
       }
-
+      .mobile-bar::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+        mix-blend-mode: overlay;
+        opacity: 0.55;
+        z-index: 0;
+      }
+      .mobile-vinyl {
+        width: 48px;
+        height: 48px;
+        flex-shrink: 0;
+      }
+      .mobile-vinyl .vinyl-spindle {
+        width: 10px;
+        height: 10px;
+      }
+      .mobile-player-center {
+        flex: 1 1 0px;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: left;
+        cursor: pointer;
+        z-index: 1;
+        overflow: hidden;
+      }
+      .mobile-track-title {
+        font-family: var(--ui);
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.25;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      }
+      .mobile-phase-meta {
+        font-family: var(--ui);
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.25;
+        color: rgba(255, 255, 255, 0.7);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-top: 1px;
+      }
+      .mobile-progress {
+        height: 10px;
+        margin-top: 3px;
+      }
+      .mobile-time {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 1px;
+      }
       .mobile-player-controls {
         display: flex;
         align-items: center;
         gap: 2px;
         flex-shrink: 0;
+        z-index: 1;
       }
       .mobile-ctrl-btn {
-        width: 26px;
-        height: 26px;
+        width: 28px;
+        height: 28px;
         border-radius: 50%;
         border: none;
         background: transparent;
@@ -437,82 +700,20 @@
       }
       .mobile-ctrl-btn:active { transform: scale(0.9); }
       .mobile-play-btn {
-        width: 36px;
-        height: 36px;
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
         border: none;
-        background: var(--gold);
-        color: #15110a;
+        background: #ffffff;
+        color: #000000;
         display: grid;
         place-items: center;
         cursor: pointer;
         padding: 0;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
         transition: transform .15s;
       }
       .mobile-play-btn:active { transform: scale(0.92); }
-
-      .mobile-track-info {
-        flex: 1 1 0px;
-        min-width: 0;
-        max-width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: left;
-        cursor: pointer;
-        overflow: hidden;
-      }
-      .mobile-track-title {
-        font-size: 12px;
-        font-weight: 700;
-        color: #ffffff;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        min-width: 0;
-        max-width: 100%;
-        display: block;
-      }
-      .mobile-phase-meta {
-        font-size: 10px;
-        font-weight: 400;
-        color: rgba(255, 255, 255, 0.68);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-top: 1px;
-        min-width: 0;
-        max-width: 100%;
-        display: block;
-      }
-
-      .mobile-yt-btn {
-        flex: 0 0 auto;
-        height: 30px;
-        padding: 0 10px;
-        border-radius: 9999px;
-        border: 1px solid rgba(255, 255, 255, 0.38);
-        background: #000000;
-        color: #ffffff;
-        font-family: var(--ui);
-        font-size: 10.5px;
-        font-weight: 500;
-        letter-spacing: -0.01em;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        white-space: nowrap;
-        cursor: pointer;
-        box-sizing: border-box;
-        transition: background .18s, border-color .18s, transform .15s;
-      }
-      .mobile-yt-btn:hover {
-        background: rgba(255, 255, 255, 0.15);
-        border-color: rgba(255, 255, 255, 0.6);
-      }
-      .mobile-yt-btn:active {
-        transform: scale(0.94);
-      }
 
       .mobile-story-trigger {
         display: none !important;
@@ -784,32 +985,40 @@
         <p class="story-body" id="phaseBody">The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.</p>
       </section>
 
-      <div class="music-card">
-        <div class="music-card-top">
-          <div class="player-controls">
-            <button class="player-ctrl-btn" id="prevTrack" type="button" aria-label="Previous track" title="Previous track">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-            </button>
-            <button class="player-play-btn" id="playVideo" type="button" aria-label="Play soundtrack" title="Play soundtrack">
-              <svg id="playIconSvg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-            <button class="player-ctrl-btn" id="nextTrack" type="button" aria-label="Next track" title="Next track">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-            </button>
+      <div class="music-card" id="musicCard">
+        <!-- Circular Spinning Album / Vinyl Cover -->
+        <div class="vinyl-wrap" id="vinylWrap" title="Click to view full video">
+          <div class="vinyl-disc" id="vinylDisc">
+            <img class="vinyl-cover" id="trackCoverImg" src="https://img.youtube.com/vi/jCEdTq3j-0U/hqdefault.jpg" alt="Album artwork" />
           </div>
-          <div class="track-meta">
-            <div style="display:flex;align-items:center;gap:8px;">
-              <div class="track-title" id="trackTitle">Gallan Goodiyaan</div>
-              <div class="sound-wave" id="soundWave" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-            </div>
-            <div class="track-artist" id="trackArtist">Official video · T-Series</div>
-          </div>
+          <div class="vinyl-spindle" aria-hidden="true"></div>
         </div>
-        <div class="music-card-divider"></div>
-        <div class="track-caption" id="trackCaption">The current phase soundtrack</div>
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-          <button class="watch-yt-btn" id="watchYtBtn" type="button">Watch on YouTube</button>
-          <a href="songs.html" class="watch-yt-btn" style="text-decoration:none;border-color:rgba(229,176,97,0.35);color:var(--gold);">All 140 Songs ↗</a>
+
+        <!-- Track Meta & Progress Scrubber -->
+        <div class="player-center">
+          <div class="track-title" id="trackTitle">Gallan Goodiyaan</div>
+          <div class="track-artist" id="trackArtist">Shankar Mahadevan · Sukhwinder Singh</div>
+          
+          <div class="progress-wrap" id="progressWrap" role="slider" aria-label="Seek track" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="progress-track">
+              <div class="progress-fill" id="trackProgressBar"></div>
+              <div class="progress-handle" id="trackProgressHandle"></div>
+            </div>
+          </div>
+          <div class="time-display" id="trackTimeDisplay">0:00 / 0:00</div>
+        </div>
+
+        <!-- Playback Controls Cluster on Right -->
+        <div class="player-controls">
+          <button class="player-ctrl-btn" id="prevTrack" type="button" aria-label="Previous track" title="Previous track">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+          </button>
+          <button class="player-play-btn" id="playVideo" type="button" aria-label="Play / Pause soundtrack" title="Play / Pause soundtrack">
+            <svg id="playIconSvg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button class="player-ctrl-btn" id="nextTrack" type="button" aria-label="Next track" title="Next track">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 6h2v12h-2zm-2 6L5.5 6v12z"/></svg>
+          </button>
         </div>
       </div>
     </div>
@@ -845,28 +1054,39 @@
     <!-- Mobile Low-Density Floating Dock (Deluxe Saloon Vibe) -->
     <div class="mobile-dock" id="mobileDock">
       <div class="mobile-dots" id="mobileDots" role="tablist" aria-label="Baraat phases"></div>
-      <div class="mobile-bar">
+      <div class="mobile-bar" id="mobileBar">
+        <!-- Mobile Spinning Vinyl Cover -->
+        <div class="vinyl-wrap mobile-vinyl" id="mVinylWrap" title="Click to view full video">
+          <div class="vinyl-disc" id="mVinylDisc">
+            <img class="vinyl-cover" id="mTrackCoverImg" src="https://img.youtube.com/vi/jCEdTq3j-0U/hqdefault.jpg" alt="Album Cover" />
+          </div>
+          <div class="vinyl-spindle" aria-hidden="true"></div>
+        </div>
+
+        <!-- Mobile Center Meta & Progress -->
+        <div class="mobile-player-center" id="mTrackInfo">
+          <div class="mobile-track-title" id="mTrackTitle">Gallan Goodiyaan</div>
+          <div class="mobile-phase-meta" id="mPhaseMeta">Shankar Mahadevan · Sukhwinder Singh</div>
+          <div class="progress-wrap mobile-progress" id="mProgressWrap" role="slider" aria-label="Seek track">
+            <div class="progress-track">
+              <div class="progress-fill" id="mTrackProgressBar"></div>
+            </div>
+          </div>
+          <div class="time-display mobile-time" id="mTrackTimeDisplay">0:00 / 0:00</div>
+        </div>
+
+        <!-- Mobile Controls on Right -->
         <div class="mobile-player-controls">
           <button class="mobile-ctrl-btn" id="mPrevTrack" type="button" aria-label="Previous track" title="Previous track">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
           </button>
           <button class="mobile-play-btn" id="mPlayTrack" type="button" aria-label="Play song" title="Play song">
-            <svg id="mPlayIconSvg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="mPlayIconSvg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </button>
           <button class="mobile-ctrl-btn" id="mNextTrack" type="button" aria-label="Next track" title="Next track">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zm-2 6L5.5 6v12z"/></svg>
           </button>
         </div>
-        <div class="mobile-track-info" id="mTrackInfo" role="button" aria-label="Play / Pause soundtrack" tabindex="0">
-          <div style="display:flex;align-items:center;min-width:0;overflow:hidden;">
-            <div class="mobile-track-title" id="mTrackTitle">Gallan Goodiyaan</div>
-            <div class="sound-wave" id="mSoundWave" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-          </div>
-          <div class="mobile-phase-meta" id="mPhaseMeta">Shankar Mahadevan · Sukhwinder Singh · Yashita Sharma</div>
-        </div>
-        <button class="mobile-yt-btn" id="mWatchYtBtn" type="button" aria-label="Watch on YouTube">
-          <span>Watch on YouTube</span>
-        </button>
       </div>
     </div>
 
@@ -1097,6 +1317,39 @@
     };
   }
 
+  function formatTime(sec) {
+    if (isNaN(sec) || sec < 0) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  }
+
+  let progressTimer = null;
+  function startProgressTracking() {
+    if (progressTimer) clearInterval(progressTimer);
+    progressTimer = setInterval(() => {
+      if (!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+      try {
+        const cur = ytPlayer.getCurrentTime() || 0;
+        const dur = ytPlayer.getDuration() || 0;
+        if (dur > 0) {
+          const pct = Math.min(100, Math.max(0, (cur / dur) * 100));
+          if ($('trackProgressBar')) $('trackProgressBar').style.width = pct + '%';
+          if ($('mTrackProgressBar')) $('mTrackProgressBar').style.width = pct + '%';
+          if ($('trackProgressHandle')) $('trackProgressHandle').style.left = pct + '%';
+          const timeStr = `${formatTime(cur)} / ${formatTime(dur)}`;
+          if ($('trackTimeDisplay')) $('trackTimeDisplay').textContent = timeStr;
+          if ($('mTrackTimeDisplay')) $('mTrackTimeDisplay').textContent = timeStr;
+        }
+      } catch (e) {}
+    }, 250);
+  }
+
+  function stopProgressTracking() {
+    if (progressTimer) clearInterval(progressTimer);
+    progressTimer = null;
+  }
+
   function updateMusicUI(autoLoad = false) {
     const p = phases[currentIndex];
     const s = getCurrentSong();
@@ -1112,6 +1365,18 @@
 
     if ($('mTrackTitle')) $('mTrackTitle').textContent = titleText;
     if ($('mPhaseMeta')) $('mPhaseMeta').textContent = artistText;
+
+    // Cover Artwork for Vinyl Record
+    const coverUrl = s.thumbnail || (s.youtubeId ? `https://img.youtube.com/vi/${s.youtubeId}/hqdefault.jpg` : p.image);
+    if ($('trackCoverImg')) $('trackCoverImg').src = coverUrl;
+    if ($('mTrackCoverImg')) $('mTrackCoverImg').src = coverUrl;
+
+    if ($('trackProgressBar')) $('trackProgressBar').style.width = '0%';
+    if ($('mTrackProgressBar')) $('mTrackProgressBar').style.width = '0%';
+    if ($('trackProgressHandle')) $('trackProgressHandle').style.left = '0%';
+    const durStr = s.duration || '4:00';
+    if ($('trackTimeDisplay')) $('trackTimeDisplay').textContent = `0:00 / ${durStr}`;
+    if ($('mTrackTimeDisplay')) $('mTrackTimeDisplay').textContent = `0:00 / ${durStr}`;
 
     // Mobile Sheet Meta
     if ($('sheetSongTitle')) $('sheetSongTitle').textContent = titleText;
@@ -1209,9 +1474,16 @@
     const path = playing ? pausePath : playPath;
     if ($('playIconSvg')) $('playIconSvg').querySelector('path').setAttribute('d', path);
     if ($('mPlayIconSvg')) $('mPlayIconSvg').querySelector('path').setAttribute('d', path);
+    if ($('vinylDisc')) $('vinylDisc').classList.toggle('is-spinning', playing);
+    if ($('mVinylDisc')) $('mVinylDisc').classList.toggle('is-spinning', playing);
     if ($('soundWave')) $('soundWave').classList.toggle('is-playing', playing);
     if ($('mSoundWave')) $('mSoundWave').classList.toggle('is-playing', playing);
     if ($('headerPlayBtn')) $('headerPlayBtn').classList.toggle('is-playing', playing);
+    if (playing) {
+      startProgressTracking();
+    } else {
+      stopProgressTracking();
+    }
   }
 
   function toggleMusic() {
@@ -1573,8 +1845,34 @@
   // Optional Video Modal Handlers
   if ($('watchYtBtn')) $('watchYtBtn').addEventListener('click', openVideo);
   if ($('mWatchYtBtn')) $('mWatchYtBtn').addEventListener('click', (e) => { e.stopPropagation(); openVideo(); });
+  if ($('vinylWrap')) $('vinylWrap').addEventListener('click', openVideo);
+  if ($('mVinylWrap')) $('mVinylWrap').addEventListener('click', openVideo);
   if ($('sheetYtBtn')) $('sheetYtBtn').addEventListener('click', openVideo);
   if ($('quickResetBtn')) $('quickResetBtn').addEventListener('click', () => $('resetBtn').click());
+
+  // Interactive Seek Scrubber Setup
+  function setupSeek(wrapId, fillId, handleId, timeDisplayId) {
+    const wrap = $(wrapId);
+    if (!wrap) return;
+    function seekToEvent(e) {
+      if (!ytPlayer || typeof ytPlayer.getDuration !== 'function') return;
+      const rect = wrap.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      const dur = ytPlayer.getDuration() || 0;
+      if (dur > 0) {
+        const targetSec = ratio * dur;
+        ytPlayer.seekTo(targetSec, true);
+        const pct = (ratio * 100);
+        if ($(fillId)) $(fillId).style.width = pct + '%';
+        if (handleId && $(handleId)) $(handleId).style.left = pct + '%';
+        if ($(timeDisplayId)) $(timeDisplayId).textContent = `${formatTime(targetSec)} / ${formatTime(dur)}`;
+      }
+    }
+    wrap.addEventListener('click', seekToEvent);
+  }
+  setupSeek('progressWrap', 'trackProgressBar', 'trackProgressHandle', 'trackTimeDisplay');
+  setupSeek('mProgressWrap', 'mTrackProgressBar', null, 'mTrackTimeDisplay');
 
   // Preload all 7 phase artworks (desktop and mobile) for uncompromised master quality and zero transition lag
   phases.forEach((phase) => {
