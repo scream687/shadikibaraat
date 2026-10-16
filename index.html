@@ -171,10 +171,11 @@
     h1 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.2vw, 36px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 8px; max-width: 440px; color: #ffffff; text-wrap: balance; text-shadow: none; }
     .story-body { font-family: var(--ui); font-weight: 400; font-size: 14px; line-height: 1.5; color: rgba(255, 255, 255, 0.9); margin: 0; max-width: 420px; text-shadow: none; }
 
-    /* Deluxe Saloon Capsule Pill Player with Grain Texture (https://saloon.wtf) */
+    /* Clean Luxury Glass Music Player Capsule (No Noise Texture) */
     .music-card {
       position: relative;
       width: 100%;
+      height: 86px;
       padding: 10px 18px 10px 12px;
       border-radius: 9999px;
       background: linear-gradient(90deg, rgba(62, 38, 30, 0.88) 0%, rgba(98, 48, 36, 0.85) 55%, rgba(126, 46, 32, 0.82) 100%);
@@ -187,20 +188,6 @@
       gap: 14px;
       box-sizing: border-box;
       overflow: hidden;
-      isolation: isolate;
-    }
-    .music-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      pointer-events: none;
-      background-image: var(--noise-pattern);
-      background-repeat: repeat;
-      background-size: 128px 128px;
-      mix-blend-mode: overlay;
-      opacity: 0.42;
-      z-index: 0;
     }
     .vinyl-wrap {
       position: relative;
@@ -407,20 +394,7 @@
       transform: scale(0.96);
     }
 
-    .make-worse { position: absolute; z-index: 8; right: 28px; top: 88px; border: 1px solid var(--line); background: rgba(14,15,18,.62); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow); border-radius: 9999px; display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; color: #ffffff; font-family: var(--ui); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; transition: all .2s; }
-    .make-worse:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.28); }
-    .make-worse .plus { width: 18px; height: 18px; background: var(--gold); color: #17120c; display: grid; place-items: center; border-radius: 50%; font-size: 13px; font-weight: 700; line-height: 1; }
-    .score-mini { display: inline-flex; min-width: 28px; justify-content: center; color: var(--gold); font-variant-numeric: tabular-nums; }
-    .control-drawer { position: absolute; z-index: 9; right: 28px; top: 136px; width: 232px; padding: 16px; border: 1px solid var(--line); border-radius: 20px; background: rgba(13, 15, 20, 0.88); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); box-shadow: 0 24px 80px rgba(0,0,0,.45); transform: translateY(-8px) scale(.98); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; box-sizing: border-box; }
-    .control-drawer.is-open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
-    .drawer-label { display: flex; align-items: center; justify-content: space-between; margin: 0 0 12px; color: var(--dim); letter-spacing: .14em; font-size: 10px; font-weight: 600; text-transform: uppercase; }
-    .drawer-label b { color: var(--gold); font-weight: 600; }
-    .action-list { display: grid; gap: 8px; }
-    .action-button { text-align: left; width: 100%; border: 1px solid transparent; display: flex; gap: 12px; align-items: center; padding: 8px; background: transparent; border-radius: 12px; transition: background .18s; cursor: pointer; }
-    .action-button:hover { background: rgba(255,255,255,.06); }
-    .action-symbol { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line); background: rgba(255,255,255,.04); border-radius: 8px; color: var(--gold); font-size: 15px; }
-    .action-copy { display: flex; flex-direction: column; gap: 2px; font-size: 12px; font-weight: 500; }
-    .action-copy small { color: var(--dim); font-size: 10px; font-weight: 400; }
+    .make-worse, .control-drawer { display: none !important; }
 
     /* Desktop Bottom-Right Dock matching Left Player Capsule */
     .bottom-right-dock {
@@ -431,15 +405,105 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 12px;
-      width: min(500px, calc(100vw - 570px));
+      gap: 10px;
+      width: min(520px, calc(100vw - 570px));
       box-sizing: border-box;
       transition: opacity .3s, transform .3s;
     }
+
+    /* Subbar above Timeline: Compact Reference Pills matching Chai Tapri (Image 5) */
+    .bottom-right-subbar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-sizing: border-box;
+    }
+    .dock-nav-chips {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dock-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 26px;
+      padding: 0 12px;
+      border-radius: 9999px;
+      font-family: var(--ui);
+      font-size: 11px;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: all 0.18s ease;
+      box-sizing: border-box;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .dock-chip.active {
+      background: #ffffff;
+      color: #111111;
+      font-weight: 600;
+      border: 1px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+      cursor: default;
+    }
+    .dock-chip:not(.active) {
+      background: rgba(36, 20, 16, 0.65);
+      color: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+    .dock-chip:not(.active):hover {
+      background: rgba(75, 36, 28, 0.85);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.38);
+      transform: translateY(-1px);
+    }
+    .dock-chip:active {
+      transform: scale(0.96);
+    }
+    .reset-pill-inline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 26px;
+      padding: 0 12px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(36, 20, 16, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: rgba(255, 255, 255, 0.85);
+      font-family: var(--ui);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      white-space: nowrap;
+    }
+    .reset-pill-inline:hover {
+      background: rgba(75, 36, 28, 0.85);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.38);
+      transform: translateY(-1px);
+    }
+    .reset-pill-inline:active {
+      transform: scale(0.96);
+    }
+
+    /* Clean Luxury Glass Timeline (No Noise Texture, Aligned with Music Card) */
     .timeline {
       position: relative;
       width: 100%;
-      padding: 14px 20px 14px;
+      height: 86px;
+      padding: 10px 20px 10px;
       border-radius: 28px;
       background: linear-gradient(90deg, rgba(62, 38, 30, 0.88) 0%, rgba(98, 48, 36, 0.85) 55%, rgba(126, 46, 32, 0.82) 100%);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -448,20 +512,9 @@
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.25);
       box-sizing: border-box;
       overflow: hidden;
-      isolation: isolate;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      pointer-events: none;
-      background-image: var(--noise-pattern);
-      background-repeat: repeat;
-      background-size: 128px 128px;
-      mix-blend-mode: overlay;
-      opacity: 0.42;
-      z-index: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .timeline-topline {
       position: relative;
@@ -472,9 +525,10 @@
       font-size: 10px;
       font-weight: 600;
       color: rgba(255, 255, 255, 0.75);
-      letter-spacing: .16em;
+      letter-spacing: .15em;
       text-transform: uppercase;
-      margin: 0 0 14px;
+      margin: 0 0 6px;
+      line-height: 1;
     }
     .timeline-items {
       position: relative;
@@ -482,13 +536,14 @@
       display: grid;
       grid-template-columns: repeat(7, minmax(0, 1fr));
       gap: 4px;
+      align-items: flex-start;
     }
     .timeline-items:before {
       content: '';
       position: absolute;
-      left: 14px;
-      right: 14px;
-      top: 13px;
+      left: 10px;
+      right: 10px;
+      top: 8px;
       height: 1px;
       background: rgba(255, 255, 255, 0.22);
       z-index: 0;
@@ -503,25 +558,26 @@
       background: transparent;
       border: 0;
       color: rgba(255, 255, 255, 0.65);
-      padding: 0 4px;
-      gap: 6px;
+      padding: 0 2px;
+      gap: 3px;
       cursor: pointer;
     }
     .stop-dot {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       border: 1px solid rgba(255, 255, 255, 0.4);
       background: rgba(45, 22, 16, 0.85);
-      margin: 9px 0 7px 6px;
+      margin: 4px 0 3px 4px;
       transition: all .25s;
     }
     .phase-time {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 500;
       white-space: nowrap;
       color: rgba(255, 255, 255, 0.72);
       font-variant-numeric: tabular-nums;
+      line-height: 1.1;
     }
     .phase-name {
       font-size: 11px;
@@ -531,6 +587,7 @@
       text-overflow: ellipsis;
       max-width: 100%;
       color: rgba(255, 255, 255, 0.88);
+      line-height: 1.1;
       transition: color .2s;
     }
     .phase-stop:hover .stop-dot {
@@ -538,96 +595,17 @@
       transform: scale(1.2);
     }
     .phase-stop.is-active .stop-dot {
-      width: 13px;
-      height: 13px;
-      margin-top: 7px;
-      margin-bottom: 5px;
-      margin-left: 4px;
+      width: 12px;
+      height: 12px;
+      margin: 2px 0 1px 2px;
       background: #ffffff;
       border-color: #e5b061;
-      box-shadow: 0 0 0 4px rgba(229, 176, 97, 0.35), 0 0 16px rgba(229, 176, 97, 0.6);
+      box-shadow: 0 0 0 3px rgba(229, 176, 97, 0.35), 0 0 14px rgba(229, 176, 97, 0.6);
     }
     .phase-stop.is-active .phase-time,
     .phase-stop.is-active .phase-name {
       color: #ffffff;
       font-weight: 700;
-    }
-
-    /* Subbar under Timeline: Image 2 Buttons (Baraat, Playlists, Songs) + Reset */
-    .bottom-right-subbar {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      box-sizing: border-box;
-    }
-    .dock-nav-chips {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .dock-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 7px 18px;
-      border-radius: 9999px;
-      font-family: var(--ui);
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-      letter-spacing: -0.01em;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      box-sizing: border-box;
-      user-select: none;
-    }
-    .dock-chip.active {
-      background: #ffffff;
-      color: #121214;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      cursor: default;
-    }
-    .dock-chip:not(.active) {
-      background: rgba(62, 38, 30, 0.75);
-      color: rgba(255, 255, 255, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(20px) saturate(150%);
-      -webkit-backdrop-filter: blur(20px) saturate(150%);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    }
-    .dock-chip:not(.active):hover {
-      background: rgba(98, 48, 36, 0.88);
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.35);
-      transform: translateY(-1px);
-    }
-    .dock-chip:active {
-      transform: scale(0.96);
-    }
-    .reset-pill-inline {
-      height: 32px;
-      padding: 0 14px;
-      border-radius: 9999px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(62, 38, 30, 0.7);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      color: rgba(255, 255, 255, 0.85);
-      font-family: var(--ui);
-      font-size: 11px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all .2s;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-      white-space: nowrap;
-    }
-    .reset-pill-inline:hover {
-      background: rgba(98, 48, 36, 0.88);
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.35);
-      transform: translateY(-1px);
     }
 
     /* Zen Scene Mode */
@@ -691,11 +669,8 @@
       .site-header { padding: 20px 24px; }
       .hero-logo-wrap { top: clamp(70px, 11vh, 105px); }
       .hero-logo-img { width: clamp(200px, 22vw, 290px); }
-      .bottom-left-dock { left: 24px; bottom: 24px; width: 360px; gap: 14px; }
-      .bottom-right-dock { right: 24px; bottom: 24px; width: min(420px, calc(100vw - 420px)); }
-      .music-card { padding: 16px 18px; }
-      .make-worse { right: 24px; top: 84px; }
-      .control-drawer { right: 24px; top: 130px; }
+      .bottom-left-dock { left: 24px; bottom: 24px; width: 380px; gap: 12px; }
+      .bottom-right-dock { right: 24px; bottom: 24px; width: min(440px, calc(100vw - 420px)); }
     }
 
     /* Mobile Layout — Deluxe Saloon Low Density Vibe */
@@ -828,21 +803,7 @@
         pointer-events: auto;
         box-sizing: border-box;
         position: relative;
-        isolation: isolate;
         overflow: hidden;
-      }
-      .mobile-bar::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        pointer-events: none;
-        background-image: var(--noise-pattern);
-        background-repeat: repeat;
-        background-size: 128px 128px;
-        mix-blend-mode: overlay;
-        opacity: 0.42;
-        z-index: 0;
       }
       .mobile-vinyl {
         width: 48px;
@@ -1240,10 +1201,6 @@
 
     <!-- Desktop Bottom-Right Dock -->
     <div class="bottom-right-dock">
-      <div class="timeline">
-        <div class="timeline-topline"><span>THE NIGHT, IN SEVEN STOPS</span><span>Pick a moment ↗</span></div>
-        <div class="timeline-items" id="timelineItems" role="tablist" aria-label="Baraat phases"></div>
-      </div>
       <div class="bottom-right-subbar">
         <nav class="dock-nav-chips" aria-label="Quick Navigation">
           <a href="index.html" class="dock-chip active">Baraat</a>
@@ -1252,12 +1209,11 @@
         </nav>
         <button class="reset-pill-inline" id="quickResetBtn" type="button" title="Restart experience">↻ Start Over</button>
       </div>
+      <div class="timeline">
+        <div class="timeline-topline"><span>THE NIGHT, IN SEVEN STOPS</span><span>Pick a moment ↗</span></div>
+        <div class="timeline-items" id="timelineItems" role="tablist" aria-label="Baraat phases"></div>
+      </div>
     </div>
-
-    <!-- Desktop Chaos Toggle & Drawer -->
-    <button class="make-worse" id="chaosToggle" type="button" aria-expanded="false" aria-controls="controlDrawer">
-      <span class="plus">+</span><span>Make it worse</span><span class="score-mini"><span id="scoreValue">18</span>%</span>
-    </button>
     <aside class="control-drawer" id="controlDrawer" aria-hidden="true">
       <p class="drawer-label"><span>Bad ideas, good music</span><b id="chaosLabel">18% chaos</b></p>
       <div class="action-list">
@@ -1922,11 +1878,13 @@
 
   function updateScore() {
     chaos = Math.max(0, Math.min(100, chaos));
-    $('scoreValue').textContent = String(chaos);
-    $('chaosLabel').textContent = `${chaos}% chaos`;
+    if ($('scoreValue')) $('scoreValue').textContent = String(chaos);
+    if ($('chaosLabel')) $('chaosLabel').textContent = `${chaos}% chaos`;
     if ($('sheetScore')) $('sheetScore').textContent = String(chaos);
     if ($('sheetChaosScore')) $('sheetChaosScore').textContent = String(chaos);
-    $('chaosToggle').setAttribute('aria-expanded', $('controlDrawer').classList.contains('is-open') ? 'true' : 'false');
+    if ($('chaosToggle') && $('controlDrawer')) {
+      $('chaosToggle').setAttribute('aria-expanded', $('controlDrawer').classList.contains('is-open') ? 'true' : 'false');
+    }
   }
 
   function showToast(message) {
@@ -1975,9 +1933,11 @@
       showToast('FULL BOLLYWOOD. Please keep your relatives inside the frame.');
     }
     updateScore();
-    $('controlDrawer').classList.add('is-open');
-    $('controlDrawer').setAttribute('aria-hidden', 'false');
-    $('chaosToggle').setAttribute('aria-expanded', 'true');
+    if ($('controlDrawer')) {
+      $('controlDrawer').classList.add('is-open');
+      $('controlDrawer').setAttribute('aria-hidden', 'false');
+    }
+    if ($('chaosToggle')) $('chaosToggle').setAttribute('aria-expanded', 'true');
   }
 
   function openSheet() {
@@ -2029,9 +1989,11 @@
   }
 
   function closeAllDrawers() {
-    $('controlDrawer').classList.remove('is-open');
-    $('controlDrawer').setAttribute('aria-hidden', 'true');
-    $('chaosToggle').setAttribute('aria-expanded', 'false');
+    if ($('controlDrawer')) {
+      $('controlDrawer').classList.remove('is-open');
+      $('controlDrawer').setAttribute('aria-hidden', 'true');
+    }
+    if ($('chaosToggle')) $('chaosToggle').setAttribute('aria-expanded', 'false');
     closeSheet();
   }
 
@@ -2165,14 +2127,18 @@
     }
   }, 5000);
 
-  $('chaosToggle').addEventListener('click', () => {
-    const drawer = $('controlDrawer');
-    const open = !drawer.classList.contains('is-open');
-    drawer.classList.toggle('is-open', open);
-    drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
-    $('chaosToggle').setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  $('controlDrawer').querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => doAction(button.dataset.action)));
+  if ($('chaosToggle') && $('controlDrawer')) {
+    $('chaosToggle').addEventListener('click', () => {
+      const drawer = $('controlDrawer');
+      const open = !drawer.classList.contains('is-open');
+      drawer.classList.toggle('is-open', open);
+      drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+      $('chaosToggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  if ($('controlDrawer')) {
+    $('controlDrawer').querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => doAction(button.dataset.action)));
+  }
   $('moodBtn').addEventListener('click', () => {
     lightsLow = !lightsLow;
     app.classList.toggle('lights-low', lightsLow);
