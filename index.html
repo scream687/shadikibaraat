@@ -10,6 +10,24 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700,900&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500;600;700&family=Yatra+One&display=swap" rel="stylesheet" />
+  <script>
+    (function() {
+      try {
+        var c = document.createElement('canvas');
+        c.width = 128; c.height = 128;
+        var ctx = c.getContext('2d');
+        var img = ctx.createImageData(128, 128);
+        var d = img.data;
+        for (var i = 0; i < d.length; i += 4) {
+          var v = (Math.random() * 255) | 0;
+          d[i] = v; d[i+1] = v; d[i+2] = v;
+          d[i+3] = (Math.random() * 55 + 25) | 0; // Noticeable, authentic film grain
+        }
+        ctx.putImageData(img, 0, 0);
+        document.documentElement.style.setProperty('--noise-pattern', 'url("' + c.toDataURL('image/png') + '")');
+      } catch (e) {}
+    })();
+  </script>
   <style>
     @font-face {
       font-family: 'Satoshi';
@@ -26,6 +44,7 @@
       font-display: swap;
     }
     :root {
+      --noise-pattern: none;
       --space: 8px;
       --gutter: 16px;
       --cream: #ffffff;
@@ -92,9 +111,11 @@
       height: 100%;
       z-index: 6;
       pointer-events: none;
-      opacity: 0.085;
+      background-image: var(--noise-pattern);
+      background-repeat: repeat;
+      background-size: 128px 128px;
       mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.32;
     }
     .app.lights-low .scene-wash { background: linear-gradient(180deg, rgba(3,4,8,.52) 0%, rgba(3,4,8,.08) 22%, rgba(3,4,8,.12) 65%, rgba(3,4,8,.68) 100%); }
     .app.dj-lit .scene-wash { background: linear-gradient(180deg, rgba(7,3,10,.42) 0%, rgba(10,5,10,.1) 35%, rgba(7,3,11,.06) 65%, rgba(4,4,8,.55) 100%); }
@@ -111,37 +132,6 @@
     .live-count { font-weight: 600; color: #ffffff; font-variant-numeric: tabular-nums; }
     .live-label { color: rgba(255,255,255,0.72); font-size: 11px; }
 
-    /* Deluxe Saloon Chip Navigation */
-    .header-nav-chips { display: flex; align-items: center; gap: 6px; }
-    .saloon-chip {
-      color: #ffffff;
-      background: rgba(13, 15, 20, 0.52);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 9999px;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      font-size: 11px;
-      font-weight: 500;
-      display: inline-flex;
-      text-decoration: none;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      transition: all .2s;
-    }
-    .saloon-chip:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.28);
-    }
-    .saloon-chip.active {
-      background: #ffffff;
-      color: #0d0f15;
-      font-weight: 600;
-      border-color: #ffffff;
-    }
-    @media (max-width: 640px) {
-      .header-nav-chips { display: none; }
-    }
 
     .header-actions { display: flex; align-items: center; gap: 8px; justify-content: flex-end; min-width: 60px; }
     .icon-button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: rgba(14,16,20,.58); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 8px 24px rgba(0,0,0,.2); color: #ffffff; display: grid; place-items: center; padding: 0; transition: all .2s; }
@@ -205,9 +195,11 @@
       inset: 0;
       border-radius: inherit;
       pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+      background-image: var(--noise-pattern);
+      background-repeat: repeat;
+      background-size: 128px 128px;
       mix-blend-mode: overlay;
-      opacity: 0.55;
+      opacity: 0.42;
       z-index: 0;
     }
     .vinyl-wrap {
@@ -384,6 +376,36 @@
     .player-play-btn:active {
       transform: scale(0.94);
     }
+    .player-watch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      height: 32px;
+      padding: 0 12px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      font-family: var(--ui);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      flex-shrink: 0;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      margin-left: 2px;
+    }
+    .player-watch-btn:hover {
+      background: rgba(255, 255, 255, 0.26);
+      border-color: rgba(255, 255, 255, 0.48);
+      transform: translateY(-1px);
+    }
+    .player-watch-btn:active {
+      transform: scale(0.96);
+    }
 
     .make-worse { position: absolute; z-index: 8; right: 28px; top: 88px; border: 1px solid var(--line); background: rgba(14,15,18,.62); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow); border-radius: 9999px; display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; color: #ffffff; font-family: var(--ui); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; transition: all .2s; }
     .make-worse:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.28); }
@@ -400,21 +422,213 @@
     .action-copy { display: flex; flex-direction: column; gap: 2px; font-size: 12px; font-weight: 500; }
     .action-copy small { color: var(--dim); font-size: 10px; font-weight: 400; }
 
-    .bottom-right-dock { position: absolute; right: 28px; bottom: 28px; z-index: 5; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; width: min(460px, calc(100vw - 480px)); box-sizing: border-box; transition: opacity .3s, transform .3s; }
-    .timeline { width: 100%; padding: 14px 18px; border-radius: 18px; background: rgba(13,15,20,.72); border: 1px solid var(--line); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); box-shadow: var(--shadow); box-sizing: border-box; }
-    .timeline-topline { display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-weight: 600; color: var(--dim); letter-spacing: .16em; text-transform: uppercase; margin: 0 0 14px; }
-    .timeline-items { position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
-    .timeline-items:before { content: ''; position: absolute; left: 14px; right: 14px; top: 13px; height: 1px; background: rgba(255,255,255,.14); z-index: 0; }
-    .phase-stop { z-index: 1; display: flex; flex-direction: column; align-items: flex-start; min-width: 0; text-align: left; background: transparent; border: 0; color: var(--dim); padding: 0 4px; gap: 6px; cursor: pointer; }
-    .stop-dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid rgba(255,255,255,.35); background: #171513; margin: 9px 0 7px 6px; transition: all .25s; }
-    .phase-time { font-size: 10px; font-weight: 500; white-space: nowrap; color: var(--dim); font-variant-numeric: tabular-nums; }
-    .phase-name { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; color: var(--muted); transition: color .2s; }
-    .phase-stop:hover .stop-dot { border-color: var(--gold); transform: scale(1.2); }
-    .phase-stop.is-active .stop-dot { width: 13px; height: 13px; margin-top: 7px; margin-bottom: 5px; margin-left: 4px; background: var(--gold); border-color: #ffffff; box-shadow: 0 0 0 4px rgba(229,176,97,.2), 0 0 16px rgba(229,176,97,.45); }
-    .phase-stop.is-active .phase-time, .phase-stop.is-active .phase-name { color: #ffffff; }
-    .bottom-right-footer { display: flex; align-items: center; gap: 12px; font-size: 11px; color: var(--dim); }
-    .reset-pill-inline { height: 26px; padding: 0 12px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: var(--muted); font-family: var(--ui); font-size: 10px; font-weight: 500; cursor: pointer; transition: all .2s; }
-    .reset-pill-inline:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.25); }
+    /* Desktop Bottom-Right Dock matching Left Player Capsule */
+    .bottom-right-dock {
+      position: absolute;
+      right: 28px;
+      bottom: 28px;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      width: min(500px, calc(100vw - 570px));
+      box-sizing: border-box;
+      transition: opacity .3s, transform .3s;
+    }
+    .timeline {
+      position: relative;
+      width: 100%;
+      padding: 14px 20px 14px;
+      border-radius: 28px;
+      background: linear-gradient(90deg, rgba(62, 38, 30, 0.88) 0%, rgba(98, 48, 36, 0.85) 55%, rgba(126, 46, 32, 0.82) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      box-sizing: border-box;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background-image: var(--noise-pattern);
+      background-repeat: repeat;
+      background-size: 128px 128px;
+      mix-blend-mode: overlay;
+      opacity: 0.42;
+      z-index: 0;
+    }
+    .timeline-topline {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin: 0 0 14px;
+    }
+    .timeline-items {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 4px;
+    }
+    .timeline-items:before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      top: 13px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.22);
+      z-index: 0;
+    }
+    .phase-stop {
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 0;
+      text-align: left;
+      background: transparent;
+      border: 0;
+      color: rgba(255, 255, 255, 0.65);
+      padding: 0 4px;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .stop-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(45, 22, 16, 0.85);
+      margin: 9px 0 7px 6px;
+      transition: all .25s;
+    }
+    .phase-time {
+      font-size: 10px;
+      font-weight: 500;
+      white-space: nowrap;
+      color: rgba(255, 255, 255, 0.72);
+      font-variant-numeric: tabular-nums;
+    }
+    .phase-name {
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      color: rgba(255, 255, 255, 0.88);
+      transition: color .2s;
+    }
+    .phase-stop:hover .stop-dot {
+      border-color: #ffffff;
+      transform: scale(1.2);
+    }
+    .phase-stop.is-active .stop-dot {
+      width: 13px;
+      height: 13px;
+      margin-top: 7px;
+      margin-bottom: 5px;
+      margin-left: 4px;
+      background: #ffffff;
+      border-color: #e5b061;
+      box-shadow: 0 0 0 4px rgba(229, 176, 97, 0.35), 0 0 16px rgba(229, 176, 97, 0.6);
+    }
+    .phase-stop.is-active .phase-time,
+    .phase-stop.is-active .phase-name {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    /* Subbar under Timeline: Image 2 Buttons (Baraat, Playlists, Songs) + Reset */
+    .bottom-right-subbar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-sizing: border-box;
+    }
+    .dock-nav-chips {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dock-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 18px;
+      border-radius: 9999px;
+      font-family: var(--ui);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-sizing: border-box;
+      user-select: none;
+    }
+    .dock-chip.active {
+      background: #ffffff;
+      color: #121214;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      cursor: default;
+    }
+    .dock-chip:not(.active) {
+      background: rgba(62, 38, 30, 0.75);
+      color: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    .dock-chip:not(.active):hover {
+      background: rgba(98, 48, 36, 0.88);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+    .dock-chip:active {
+      transform: scale(0.96);
+    }
+    .reset-pill-inline {
+      height: 32px;
+      padding: 0 14px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(62, 38, 30, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: rgba(255, 255, 255, 0.85);
+      font-family: var(--ui);
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      white-space: nowrap;
+    }
+    .reset-pill-inline:hover {
+      background: rgba(98, 48, 36, 0.88);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
 
     /* Zen Scene Mode */
     .app.zen-mode .bottom-left-dock,
@@ -623,9 +837,11 @@
         inset: 0;
         border-radius: inherit;
         pointer-events: none;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+        background-image: var(--noise-pattern);
+        background-repeat: repeat;
+        background-size: 128px 128px;
         mix-blend-mode: overlay;
-        opacity: 0.55;
+        opacity: 0.42;
         z-index: 0;
       }
       .mobile-vinyl {
@@ -950,11 +1166,6 @@
       <span class="live-count" id="liveCount">148</span>
       <span class="live-label">visitors</span>
     </div>
-    <nav class="header-nav-chips" aria-label="Sections">
-      <a href="index.html" class="saloon-chip active">Baraat</a>
-      <a href="playlists.html" class="saloon-chip">Playlists</a>
-      <a href="songs.html" class="saloon-chip">Songs (140)</a>
-    </nav>
     <div class="header-actions">
       <button class="icon-button" id="headerPlayBtn" type="button" aria-label="Play soundtrack" title="Play soundtrack">
         <svg class="mini-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
@@ -987,7 +1198,7 @@
 
       <div class="music-card" id="musicCard">
         <!-- Circular Spinning Album / Vinyl Cover -->
-        <div class="vinyl-wrap" id="vinylWrap" title="Click to view full video">
+        <div class="vinyl-wrap" id="vinylWrap" title="Click to watch full music video">
           <div class="vinyl-disc" id="vinylDisc">
             <img class="vinyl-cover" id="trackCoverImg" src="https://img.youtube.com/vi/jCEdTq3j-0U/hqdefault.jpg" alt="Album artwork" />
           </div>
@@ -1019,6 +1230,10 @@
           <button class="player-ctrl-btn" id="nextTrack" type="button" aria-label="Next track" title="Next track">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 6h2v12h-2zm-2 6L5.5 6v12z"/></svg>
           </button>
+          <button class="player-watch-btn" id="watchYtBtn" type="button" aria-label="Watch video" title="Watch full music video">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.58 7.19a2.5 2.5 0 0 0-1.76-1.77C18.26 5 12 5 12 5s-6.26 0-7.82.42A2.5 2.5 0 0 0 2.42 7.19 26.07 26.07 0 0 0 2 12a26.07 26.07 0 0 0 .42 4.81 2.5 2.5 0 0 0 1.76 1.77C5.74 19 12 19 12 19s6.26 0 7.82-.42a2.5 2.5 0 0 0 1.76-1.77A26.07 26.07 0 0 0 22 12a26.07 26.07 0 0 0-.42-4.81zM9.75 15.02V8.98L15 12l-5.25 3.02z"/></svg>
+            <span>Watch</span>
+          </button>
         </div>
       </div>
     </div>
@@ -1029,9 +1244,13 @@
         <div class="timeline-topline"><span>THE NIGHT, IN SEVEN STOPS</span><span>Pick a moment ↗</span></div>
         <div class="timeline-items" id="timelineItems" role="tablist" aria-label="Baraat phases"></div>
       </div>
-      <div class="bottom-right-footer">
-        <button class="reset-pill-inline" id="quickResetBtn" type="button">↻ Start Over</button>
-        <span>A love letter to every Indian baraat</span>
+      <div class="bottom-right-subbar">
+        <nav class="dock-nav-chips" aria-label="Quick Navigation">
+          <a href="index.html" class="dock-chip active">Baraat</a>
+          <a href="playlists.html" class="dock-chip">Playlists</a>
+          <a href="songs.html" class="dock-chip">Songs (140)</a>
+        </nav>
+        <button class="reset-pill-inline" id="quickResetBtn" type="button" title="Restart experience">↻ Start Over</button>
       </div>
     </div>
 
@@ -1086,12 +1305,15 @@
           <button class="mobile-ctrl-btn" id="mNextTrack" type="button" aria-label="Next track" title="Next track">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zm-2 6L5.5 6v12z"/></svg>
           </button>
+          <button class="mobile-ctrl-btn" id="mWatchYtBtn" type="button" aria-label="Watch video" title="Watch full video">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.5 2.5 0 0 0-1.76-1.77C18.26 5 12 5 12 5s-6.26 0-7.82.42A2.5 2.5 0 0 0 2.42 7.19 26.07 26.07 0 0 0 2 12a26.07 26.07 0 0 0 .42 4.81 2.5 2.5 0 0 0 1.76 1.77C5.74 19 12 19 12 19s6.26 0 7.82-.42a2.5 2.5 0 0 0 1.76-1.77A26.07 26.07 0 0 0 22 12a26.07 26.07 0 0 0-.42-4.81zM9.75 15.02V8.98L15 12l-5.25 3.02z"/></svg>
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Hidden In-Browser Audio Player Frame -->
-    <div id="ytAudioWrap" style="position:fixed;bottom:-500px;left:-500px;width:150px;height:150px;opacity:0.001;pointer-events:none;z-index:-9999;" aria-hidden="true">
+    <div id="ytAudioWrap" style="position:fixed;bottom:0;left:0;width:1px;height:1px;opacity:0.001;pointer-events:none;z-index:-9999;" aria-hidden="true">
       <div id="ytAudioFrame"></div>
     </div>
 
@@ -1415,7 +1637,7 @@
     const p = phases[currentIndex];
     const total = (p.songs && p.songs.length) ? p.songs.length : 1;
     currentSongInPhase = (currentSongInPhase + 1) % total;
-    updateMusicUI(isPlaying || userInitiated);
+    updateMusicUI(isPlaying);
     const s = getCurrentSong();
     showToast(`♪ ${s.titleEn || s.titleHi || p.song}`);
   }
@@ -1424,17 +1646,18 @@
     const p = phases[currentIndex];
     const total = (p.songs && p.songs.length) ? p.songs.length : 1;
     currentSongInPhase = (currentSongInPhase - 1 + total) % total;
-    updateMusicUI(isPlaying || userInitiated);
+    updateMusicUI(isPlaying);
     const s = getCurrentSong();
     showToast(`♪ ${s.titleEn || s.titleHi || p.song}`);
   }
 
-  window.onYouTubeIframeAPIReady = function() {
+  function initYouTubePlayer() {
+    if (ytPlayer || !window.YT || !window.YT.Player) return;
     try {
       const s = getCurrentSong();
       ytPlayer = new YT.Player('ytAudioFrame', {
-        height: '150',
-        width: '150',
+        height: '100',
+        width: '100',
         videoId: s.youtubeId,
         playerVars: {
           autoplay: 0,
@@ -1446,7 +1669,12 @@
           playsinline: 1
         },
         events: {
-          onReady: () => { ytReady = true; },
+          onReady: () => {
+            ytReady = true;
+            if (isPlaying) {
+              try { ytPlayer.playVideo(); } catch (e) {}
+            }
+          },
           onStateChange: (event) => {
             if (event.data === YT.PlayerState.PLAYING) {
               setPlaybackState(true);
@@ -1465,7 +1693,12 @@
     } catch (e) {
       console.warn('YT audio player init', e);
     }
-  };
+  }
+
+  window.onYouTubeIframeAPIReady = initYouTubePlayer;
+  if (window.YT && window.YT.Player) {
+    initYouTubePlayer();
+  }
 
   function setPlaybackState(playing) {
     isPlaying = playing;
@@ -1492,6 +1725,9 @@
     setPlaybackState(isPlaying);
 
     const s = getCurrentSong();
+    const p = phases[currentIndex] || {};
+    const songName = s.titleEn || s.titleHi || p.song || 'Soundtrack';
+
     if (isPlaying) {
       if (silentAudio) {
         try { silentAudio.play(); } catch (e) {}
@@ -1505,7 +1741,7 @@
       }
       if (!ytStarted) startBaraatSynth();
       updateMediaSession();
-      showToast(`Now playing: ${s.titleEn || p.song}`);
+      showToast(`Now playing: ${songName}`);
     } else {
       if (silentAudio) {
         try { silentAudio.pause(); } catch (e) {}
@@ -1756,9 +1992,17 @@
   }
 
   function openVideo() {
+    if (isPlaying) {
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        try { ytPlayer.pauseVideo(); } catch (e) {}
+      }
+      stopBaraatSynth();
+      setPlaybackState(false);
+    }
     const s = getCurrentSong();
-    const p = phases[currentIndex];
-    $('videoModalTitle').textContent = `${s.titleEn || p.song} · ${s.film || p.title}`;
+    const p = phases[currentIndex] || {};
+    const songName = s.titleEn || p.song || 'Soundtrack';
+    $('videoModalTitle').textContent = `${songName} · ${s.film || p.title || 'Soundtrack'}`;
     $('youtubeLink').href = youtubeUrl(s.youtubeId);
     $('youtubeFrame').src = `https://www.youtube-nocookie.com/embed/${s.youtubeId}?autoplay=1&rel=0&modestbranding=1`;
     $('videoModal').showModal();
@@ -1855,19 +2099,26 @@
     const wrap = $(wrapId);
     if (!wrap) return;
     function seekToEvent(e) {
-      if (!ytPlayer || typeof ytPlayer.getDuration !== 'function') return;
       const rect = wrap.getBoundingClientRect();
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
       const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-      const dur = ytPlayer.getDuration() || 0;
-      if (dur > 0) {
-        const targetSec = ratio * dur;
-        ytPlayer.seekTo(targetSec, true);
-        const pct = (ratio * 100);
-        if ($(fillId)) $(fillId).style.width = pct + '%';
-        if (handleId && $(handleId)) $(handleId).style.left = pct + '%';
-        if ($(timeDisplayId)) $(timeDisplayId).textContent = `${formatTime(targetSec)} / ${formatTime(dur)}`;
+      let dur = 0;
+      if (ytPlayer && typeof ytPlayer.getDuration === 'function') {
+        dur = ytPlayer.getDuration() || 0;
       }
+      if (dur <= 0) {
+        const s = getCurrentSong();
+        const parts = (s.duration || '4:00').split(':');
+        dur = (parseInt(parts[0], 10) || 4) * 60 + (parseInt(parts[1], 10) || 0);
+      }
+      const targetSec = ratio * dur;
+      if (ytPlayer && typeof ytPlayer.seekTo === 'function') {
+        try { ytPlayer.seekTo(targetSec, true); } catch (err) {}
+      }
+      const pct = (ratio * 100);
+      if ($(fillId)) $(fillId).style.width = pct + '%';
+      if (handleId && $(handleId)) $(handleId).style.left = pct + '%';
+      if ($(timeDisplayId)) $(timeDisplayId).textContent = `${formatTime(targetSec)} / ${formatTime(dur)}`;
     }
     wrap.addEventListener('click', seekToEvent);
   }
