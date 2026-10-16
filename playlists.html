@@ -730,6 +730,18 @@
         return phaseImages[phaseNum] || (isMobile ? 'assets/mobile-phase-2.webp' : 'assets/02-baraat-wide.png');
       }
 
+      // Pre-decode backdrop images for zero-lag switching
+      Object.values(phaseImages).forEach(src => {
+        const img = new Image();
+        img.src = src;
+        if (img.decode) img.decode().catch(() => {});
+      });
+      Object.values(phaseMobileImages).forEach(src => {
+        const img = new Image();
+        img.src = src;
+        if (img.decode) img.decode().catch(() => {});
+      });
+
       const phaseTimes = {
         1: '5:30 PM',
         2: '6:30 PM',

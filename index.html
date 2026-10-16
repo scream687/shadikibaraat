@@ -56,12 +56,13 @@
       object-position: center 36%;
       opacity: 0;
       z-index: 1;
-      transform: scale(1.02);
-      transition: opacity 850ms cubic-bezier(0.25, 1, 0.5, 1), transform 1100ms cubic-bezier(0.25, 1, 0.5, 1);
+      transform: scale(1.015);
+      transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1), transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
       will-change: opacity, transform;
+      pointer-events: none;
     }
-    .scene-image.is-active { opacity: 1; z-index: 2; transform: scale(1); }
-    .scene-image.is-outgoing { opacity: 1; z-index: 1; transform: scale(1); }
+    .scene-image.is-active { opacity: 1; z-index: 3; transform: scale(1); }
+    .scene-image.is-outgoing { opacity: 1; z-index: 2; transform: scale(1); }
     .scene-wash {
       z-index: -3;
       pointer-events: none;
@@ -707,14 +708,26 @@
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
     }
   </style>
+  <link rel="preload" as="image" href="assets/01-baraat-wide.png" />
+  <link rel="preload" as="image" href="assets/02-baraat-wide.png" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/03-baraat-wide.png" />
+  <link rel="preload" as="image" href="assets/04-baraat-wide.png" />
+  <link rel="preload" as="image" href="assets/05-baraat-wide.png" />
+  <link rel="preload" as="image" href="assets/06-baraat-wide.png" />
+  <link rel="preload" as="image" href="assets/07-baraat-wide.png" />
   <script src="https://www.youtube.com/iframe_api"></script>
   <script src="baraat_songs_data.js"></script>
 </head>
 <body>
 <div class="app" id="app">
-  <div class="scene-stack" aria-hidden="true">
-    <img class="scene-image is-active" id="sceneA" src="assets/02-baraat-wide.png" alt="" fetchpriority="high" style="object-position: center 36%;" />
-    <img class="scene-image" id="sceneB" alt="" />
+  <div class="scene-stack" aria-hidden="true" id="sceneStack">
+    <img class="scene-image" id="scene-0" src="assets/01-baraat-wide.png" alt="" style="object-position: center 36%;" />
+    <img class="scene-image is-active" id="scene-1" src="assets/02-baraat-wide.png" alt="" fetchpriority="high" style="object-position: center 36%;" />
+    <img class="scene-image" id="scene-2" src="assets/03-baraat-wide.png" alt="" style="object-position: center 36%;" />
+    <img class="scene-image" id="scene-3" src="assets/04-baraat-wide.png" alt="" style="object-position: center 36%;" />
+    <img class="scene-image" id="scene-4" src="assets/05-baraat-wide.png" alt="" style="object-position: center 36%;" />
+    <img class="scene-image" id="scene-5" src="assets/06-baraat-wide.png" alt="" style="object-position: center 36%;" />
+    <img class="scene-image" id="scene-6" src="assets/07-baraat-wide.png" alt="" style="object-position: center 36%;" />
   </div>
   <div class="scene-wash"></div><div class="vignette"></div><div class="grain"></div>
 
@@ -944,8 +957,30 @@
   const paramPhase = parseInt(urlParams.get('phase'), 10);
   let currentIndex = (!isNaN(paramPhase) && paramPhase >= 0 && paramPhase < phases.length) ? paramPhase : 1;
   let currentSongInPhase = 0;
-  let activeScene = $('sceneA');
-  let inactiveScene = $('sceneB');
+  // Pre-decode all phase images immediately for absolute zero-delay switching
+  phases.forEach((p) => {
+    const dImg = new Image();
+    dImg.src = p.image;
+    if (dImg.decode) dImg.decode().catch(() => {});
+    if (p.mobileImage) {
+      const mImg = new Image();
+      mImg.src = p.mobileImage;
+      if (mImg.decode) mImg.decode().catch(() => {});
+    }
+  });
+
+  function syncSceneSources() {
+    const isMobile = window.innerWidth <= 860;
+    phases.forEach((p, i) => {
+      const el = $(`scene-${i}`);
+      if (!el) return;
+      const targetSrc = isMobile && p.mobileImage ? p.mobileImage : p.image;
+      if (!el.src.includes(targetSrc)) {
+        el.src = targetSrc;
+      }
+      el.style.objectPosition = getFocalPosition(p);
+    });
+  }
   let chaos = phases[currentIndex].chaos;
   let uncles = 0, dholBoosts = 0, djUpgrades = 0;
   let lightsLow = false;
@@ -1288,38 +1323,30 @@
 
   function setPhase(index) {
     if (index < 0 || index >= phases.length || index === currentIndex) return;
+    const oldIndex = currentIndex;
     currentIndex = index;
     const p = phases[index];
-    const incoming = inactiveScene;
-    const outgoing = activeScene;
 
-    const targetSrc = getPhaseImage(p);
-    incoming.style.objectPosition = getFocalPosition(p);
-    incoming.src = targetSrc;
+    // ZERO DELAY: Instant crossfade between pre-mounted scene elements
+    phases.forEach((_, i) => {
+      const el = $(`scene-${i}`);
+      if (!el) return;
+      if (i === index) {
+        el.classList.add('is-active');
+        el.classList.remove('is-outgoing');
+      } else if (i === oldIndex) {
+        el.classList.add('is-outgoing');
+        el.classList.remove('is-active');
+      } else {
+        el.classList.remove('is-active', 'is-outgoing');
+      }
+    });
 
-    const doMorph = () => {
-      incoming.onload = null;
-      // Keep outgoing visible underneath at z-index: 1 so screen never dips to dark
-      outgoing.classList.add('is-outgoing');
-      outgoing.classList.remove('is-active');
-
-      // Fade-morph incoming in on top at z-index: 2
-      incoming.classList.add('is-active');
-      incoming.classList.remove('is-outgoing');
-
-      activeScene = incoming;
-      inactiveScene = outgoing;
-
-      // Cleanly reset outgoing after morph completes
+    const oldEl = $(`scene-${oldIndex}`);
+    if (oldEl) {
       setTimeout(() => {
-        outgoing.classList.remove('is-outgoing');
-      }, 950);
-    };
-
-    if (incoming.complete && incoming.naturalWidth > 0 && incoming.src.includes(targetSrc)) {
-      doMorph();
-    } else {
-      incoming.onload = doMorph;
+        oldEl.classList.remove('is-outgoing');
+      }, 380);
     }
 
     try {
@@ -1470,21 +1497,22 @@
 
   buildTimeline();
 
-  // Set initial phase values
-  const initP = phases[currentIndex];
-  if (activeScene && initP) {
-    activeScene.src = getPhaseImage(initP);
-    activeScene.style.objectPosition = getFocalPosition(initP);
-  }
+  // Set initial phase values & sync scenes
+  syncSceneSources();
+  phases.forEach((_, i) => {
+    const el = $(`scene-${i}`);
+    if (el) {
+      el.classList.toggle('is-active', i === currentIndex);
+      el.classList.remove('is-outgoing');
+    }
+  });
+
   let lastWasMobile = window.innerWidth <= 860;
   window.addEventListener('resize', () => {
-    if (activeScene && phases[currentIndex]) {
-      const isMobile = window.innerWidth <= 860;
-      if (isMobile !== lastWasMobile) {
-        lastWasMobile = isMobile;
-        activeScene.src = getPhaseImage(phases[currentIndex]);
-      }
-      activeScene.style.objectPosition = getFocalPosition(phases[currentIndex]);
+    const isMobile = window.innerWidth <= 860;
+    if (isMobile !== lastWasMobile) {
+      lastWasMobile = isMobile;
+      syncSceneSources();
     }
   });
   $('phaseKicker').textContent = initP.kicker;

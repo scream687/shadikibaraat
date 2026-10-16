@@ -1040,6 +1040,18 @@
         return phaseBackdrops[phaseNum] || (isMobile ? 'assets/mobile-phase-2.webp' : 'assets/02-baraat-wide.png');
       }
 
+      // Pre-decode backdrop images for zero-lag switching
+      Object.values(phaseBackdrops).forEach(src => {
+        const img = new Image();
+        img.src = src;
+        if (img.decode) img.decode().catch(() => {});
+      });
+      Object.values(phaseMobileBackdrops).forEach(src => {
+        const img = new Image();
+        img.src = src;
+        if (img.decode) img.decode().catch(() => {});
+      });
+
       // State
       let filteredSongs = [...allSongs];
       let currentSongIndex = 0; // index in allSongs
