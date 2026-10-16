@@ -1,0 +1,1637 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101116" />
+  <meta name="description" content="A cinematic little journey through an Indian baraat. Pick a phase, turn up the dhol, and see where the night takes you." />
+  <title>Shadi Ki Baraat — Music, Mayhem & Memories</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700,900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500;600;700&family=Yatra+One&display=swap" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: 'Satoshi';
+      src: url('assets/fonts/Satoshi-Variable.ttf') format('truetype');
+      font-weight: 300 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Yatra One';
+      src: url('assets/fonts/YatraOne-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    :root {
+      --space: 8px;
+      --gutter: 16px;
+      --cream: #ffffff;
+      --muted: rgba(255, 255, 255, 0.72);
+      --dim: rgba(255, 255, 255, 0.45);
+      --gold: #e5b061;
+      --gold-hover: #f0be71;
+      --card-bg: rgba(13, 14, 17, 0.82);
+      --line: rgba(255, 255, 255, 0.09);
+      --shadow: 0 16px 48px rgba(0, 0, 0, 0.42);
+      --ui: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --display: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --hindi: 'Yatra One', 'Noto Serif Devanagari', serif;
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; margin: 0; background: #0d0e12; color: var(--cream); font-family: var(--ui); }
+    body { overflow: hidden; }
+    button, a { font: inherit; }
+    button { color: inherit; }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+    button { cursor: pointer; }
+    .app { width: 100%; height: 100svh; min-height: 600px; position: relative; isolation: isolate; overflow: hidden; background: #0c1017; }
+    .scene-stack, .scene-image, .scene-wash, .grain, .vignette { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .scene-stack { z-index: -4; overflow: hidden; background: #0c1017; }
+    .scene-image {
+      object-fit: cover;
+      object-position: center 36%;
+      opacity: 0;
+      z-index: 1;
+      transform: scale(1.02);
+      transition: opacity 850ms cubic-bezier(0.25, 1, 0.5, 1), transform 1100ms cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: opacity, transform;
+    }
+    .scene-image.is-active { opacity: 1; z-index: 2; transform: scale(1); }
+    .scene-image.is-outgoing { opacity: 1; z-index: 1; transform: scale(1); }
+    .scene-wash {
+      z-index: -3;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(5, 7, 10, 0.55) 0%, rgba(5, 7, 10, 0) 18%),
+        radial-gradient(ellipse 90% 75% at 0% 90%, rgba(4, 5, 8, 0.92) 0%, rgba(4, 5, 8, 0.65) 45%, rgba(4, 5, 8, 0.18) 72%, transparent 100%),
+        linear-gradient(0deg, rgba(4, 5, 8, 0.85) 0%, rgba(4, 5, 8, 0.35) 28%, transparent 55%);
+      transition: background 400ms ease;
+    }
+    .vignette { z-index: -2; pointer-events: none; box-shadow: inset 0 0 50px rgba(0,0,0,.15); }
+    .grain { z-index: -1; pointer-events: none; opacity: .04; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E"); mix-blend-mode: soft-light; }
+    .app.lights-low .scene-wash { background: linear-gradient(180deg, rgba(3,4,8,.52) 0%, rgba(3,4,8,.08) 22%, rgba(3,4,8,.12) 65%, rgba(3,4,8,.68) 100%); }
+    .app.dj-lit .scene-wash { background: linear-gradient(180deg, rgba(7,3,10,.42) 0%, rgba(10,5,10,.1) 35%, rgba(7,3,11,.06) 65%, rgba(4,4,8,.55) 100%); }
+    .app.dhol-pulse { animation: lowPulse .62s ease-out; }
+    @keyframes lowPulse { 0% { filter: saturate(1) } 35% { filter: saturate(1.35) brightness(1.08) } 100% { filter: saturate(1) } }
+
+    /* Deluxe Saloon Top Header */
+    .site-header { position: absolute; z-index: 10; top: 0; left: 0; right: 0; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-sizing: border-box; }
+    .header-time { font-family: var(--ui); font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.92); letter-spacing: -0.01em; min-width: 60px; }
+    .live-pill { display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 9999px; background: rgba(13,15,20,0.52); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); font-size: 12px; font-weight: 500; color: #ffffff; user-select: none; cursor: pointer; transition: background .2s; }
+    .live-pill:hover { background: rgba(13,15,20,0.75); }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #10b981; box-shadow: 0 0 10px #10b981; animation: liveBlink 2.4s infinite ease-in-out; }
+    @keyframes liveBlink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+    .live-count { font-weight: 600; color: #ffffff; font-variant-numeric: tabular-nums; }
+    .live-label { color: rgba(255,255,255,0.72); font-size: 11px; }
+
+    /* Deluxe Saloon Chip Navigation */
+    .header-nav-chips { display: flex; align-items: center; gap: 6px; }
+    .saloon-chip {
+      color: #ffffff;
+      background: rgba(13, 15, 20, 0.52);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 9999px;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 500;
+      display: inline-flex;
+      text-decoration: none;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: all .2s;
+    }
+    .saloon-chip:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.28);
+    }
+    .saloon-chip.active {
+      background: #ffffff;
+      color: #0d0f15;
+      font-weight: 600;
+      border-color: #ffffff;
+    }
+    @media (max-width: 640px) {
+      .header-nav-chips { display: none; }
+    }
+
+    .header-actions { display: flex; align-items: center; gap: 8px; justify-content: flex-end; min-width: 60px; }
+    .icon-button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: rgba(14,16,20,.58); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 8px 24px rgba(0,0,0,.2); color: #ffffff; display: grid; place-items: center; padding: 0; transition: all .2s; }
+    .icon-button:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.3); }
+    .icon-button:active { transform: translateY(1px); }
+    .mini-icon { width: 16px; height: 16px; display: inline-block; flex: 0 0 auto; }
+
+    /* Centered Logo (Shadi Ki Baraat Custom Typography) */
+    .hero-logo-wrap { position: absolute; top: clamp(72px, 11vh, 115px); left: 0; right: 0; width: 100%; display: flex; justify-content: center; align-items: center; pointer-events: none; z-index: 4; padding: 0 16px; box-sizing: border-box; }
+    .hero-logo-img { width: clamp(210px, 22vw, 310px); max-width: 90vw; height: auto; display: block; user-select: none; pointer-events: auto; }
+
+    /* Desktop Bottom Docks */
+    .bottom-left-dock { position: absolute; left: 28px; bottom: 28px; width: min(440px, calc(100vw - 56px)); z-index: 5; display: flex; flex-direction: column; gap: 16px; transition: opacity .3s, transform .3s; }
+    .story-block {
+      width: 100%;
+      padding: 0;
+      background: transparent;
+      box-shadow: none;
+      border: none;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      animation: riseIn .45s ease both;
+    }
+    @keyframes riseIn { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: translateY(0) } }
+    .kicker { font-family: var(--ui); font-size: 11px; font-weight: 400; line-height: 1; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin: 0 0 10px; display: block; text-shadow: none; opacity: 0.95; }
+    h1 { font-family: var(--display); font-weight: 700; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 10px; max-width: 440px; color: #ffffff; text-wrap: balance; text-shadow: none; }
+    .story-body { font-family: var(--ui); font-weight: 400; font-size: 14.5px; line-height: 1.55; color: rgba(255, 255, 255, 0.9); margin: 0; max-width: 420px; text-shadow: none; }
+
+    .sound-wave { display: inline-flex; align-items: flex-end; gap: 2.5px; height: 12px; margin-left: 8px; opacity: 0; transition: opacity .2s; }
+    .sound-wave.is-playing { opacity: 1; }
+    .sound-wave span { width: 2.5px; height: 100%; background: var(--gold); border-radius: 1px; animation: eqBounce .75s ease-in-out infinite alternate; }
+    .sound-wave span:nth-child(2) { animation-delay: .2s; height: 50%; }
+    .sound-wave span:nth-child(3) { animation-delay: .4s; height: 85%; }
+    .sound-wave span:nth-child(4) { animation-delay: .1s; height: 35%; }
+    @keyframes eqBounce { 0% { height: 20%; } 100% { height: 100%; } }
+
+    .music-card { width: 100%; padding: 18px 20px; border-radius: 18px; background: rgba(13, 15, 20, 0.72); border: 1px solid var(--line); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); box-shadow: var(--shadow); display: flex; flex-direction: column; box-sizing: border-box; }
+    .music-card-top { display: flex; align-items: center; gap: 14px; }
+    .player-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .player-ctrl-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04); color: #ffffff; display: grid; place-items: center; cursor: pointer; transition: all .2s; padding: 0; }
+    .player-ctrl-btn:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); }
+    .player-ctrl-btn:active { transform: scale(0.94); }
+    .player-play-btn { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--gold); color: #161109; display: grid; place-items: center; cursor: pointer; transition: background .2s, transform .2s; padding: 0; }
+    .player-play-btn:hover { background: var(--gold-hover); transform: scale(1.04); }
+    .player-play-btn:active { transform: scale(0.94); }
+    .track-meta { min-width: 0; flex: 1; }
+    .track-title { font-size: 15px; font-weight: 700; line-height: 1.25; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .track-artist { font-size: 12px; font-weight: 400; line-height: 1.3; color: var(--dim); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .music-card-divider { height: 1px; width: 100%; background: var(--line); margin: 12px 0; }
+    .track-caption { font-size: 12px; line-height: 1.5; color: var(--muted); margin: 0 0 12px; }
+    .watch-yt-btn { align-self: flex-start; display: inline-flex; align-items: center; justify-content: center; height: 34px; padding: 0 14px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.04); color: #ffffff; font-family: var(--ui); font-size: 12px; font-weight: 500; cursor: pointer; transition: all .2s; }
+    .watch-yt-btn:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.35); }
+
+    .make-worse { position: absolute; z-index: 8; right: 28px; top: 88px; border: 1px solid var(--line); background: rgba(14,15,18,.62); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow); border-radius: 9999px; display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; color: #ffffff; font-family: var(--ui); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; transition: all .2s; }
+    .make-worse:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.28); }
+    .make-worse .plus { width: 18px; height: 18px; background: var(--gold); color: #17120c; display: grid; place-items: center; border-radius: 50%; font-size: 13px; font-weight: 700; line-height: 1; }
+    .score-mini { display: inline-flex; min-width: 28px; justify-content: center; color: var(--gold); font-variant-numeric: tabular-nums; }
+    .control-drawer { position: absolute; z-index: 9; right: 28px; top: 136px; width: 232px; padding: 16px; border: 1px solid var(--line); border-radius: 20px; background: rgba(13, 15, 20, 0.88); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); box-shadow: 0 24px 80px rgba(0,0,0,.45); transform: translateY(-8px) scale(.98); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; box-sizing: border-box; }
+    .control-drawer.is-open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .drawer-label { display: flex; align-items: center; justify-content: space-between; margin: 0 0 12px; color: var(--dim); letter-spacing: .14em; font-size: 10px; font-weight: 600; text-transform: uppercase; }
+    .drawer-label b { color: var(--gold); font-weight: 600; }
+    .action-list { display: grid; gap: 8px; }
+    .action-button { text-align: left; width: 100%; border: 1px solid transparent; display: flex; gap: 12px; align-items: center; padding: 8px; background: transparent; border-radius: 12px; transition: background .18s; cursor: pointer; }
+    .action-button:hover { background: rgba(255,255,255,.06); }
+    .action-symbol { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line); background: rgba(255,255,255,.04); border-radius: 8px; color: var(--gold); font-size: 15px; }
+    .action-copy { display: flex; flex-direction: column; gap: 2px; font-size: 12px; font-weight: 500; }
+    .action-copy small { color: var(--dim); font-size: 10px; font-weight: 400; }
+
+    .bottom-right-dock { position: absolute; right: 28px; bottom: 28px; z-index: 5; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; width: min(460px, calc(100vw - 480px)); box-sizing: border-box; transition: opacity .3s, transform .3s; }
+    .timeline { width: 100%; padding: 14px 18px; border-radius: 18px; background: rgba(13,15,20,.72); border: 1px solid var(--line); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); box-shadow: var(--shadow); box-sizing: border-box; }
+    .timeline-topline { display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-weight: 600; color: var(--dim); letter-spacing: .16em; text-transform: uppercase; margin: 0 0 14px; }
+    .timeline-items { position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+    .timeline-items:before { content: ''; position: absolute; left: 14px; right: 14px; top: 13px; height: 1px; background: rgba(255,255,255,.14); z-index: 0; }
+    .phase-stop { z-index: 1; display: flex; flex-direction: column; align-items: flex-start; min-width: 0; text-align: left; background: transparent; border: 0; color: var(--dim); padding: 0 4px; gap: 6px; cursor: pointer; }
+    .stop-dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid rgba(255,255,255,.35); background: #171513; margin: 9px 0 7px 6px; transition: all .25s; }
+    .phase-time { font-size: 10px; font-weight: 500; white-space: nowrap; color: var(--dim); font-variant-numeric: tabular-nums; }
+    .phase-name { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; color: var(--muted); transition: color .2s; }
+    .phase-stop:hover .stop-dot { border-color: var(--gold); transform: scale(1.2); }
+    .phase-stop.is-active .stop-dot { width: 13px; height: 13px; margin-top: 7px; margin-bottom: 5px; margin-left: 4px; background: var(--gold); border-color: #ffffff; box-shadow: 0 0 0 4px rgba(229,176,97,.2), 0 0 16px rgba(229,176,97,.45); }
+    .phase-stop.is-active .phase-time, .phase-stop.is-active .phase-name { color: #ffffff; }
+    .bottom-right-footer { display: flex; align-items: center; gap: 12px; font-size: 11px; color: var(--dim); }
+    .reset-pill-inline { height: 26px; padding: 0 12px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: var(--muted); font-family: var(--ui); font-size: 10px; font-weight: 500; cursor: pointer; transition: all .2s; }
+    .reset-pill-inline:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.25); }
+
+    /* Zen Scene Mode */
+    .app.zen-mode .bottom-left-dock,
+    .app.zen-mode .bottom-right-dock,
+    .app.zen-mode .make-worse,
+    .app.zen-mode .control-drawer,
+    .app.zen-mode .mobile-dock {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(14px);
+    }
+
+    /* Mobile Floating Dock & Story Sheet */
+    .mobile-dock { display: none; }
+    .story-sheet-backdrop, .story-sheet { display: none; }
+
+    .petal-layer { position: absolute; inset: 0; z-index: 7; pointer-events: none; overflow: hidden; }
+    .petal { position: absolute; top: -35px; width: 9px; height: 13px; border-radius: 70% 20% 70% 20%; background: #efb65d; opacity: .9; animation: fall linear forwards; filter: drop-shadow(0 2px 3px rgba(0,0,0,.16)); }
+    .petal:nth-child(3n) { background: #d65c63; width: 7px; height: 11px; }
+    .petal:nth-child(4n) { background: #fff0c8; width: 5px; height: 8px; }
+    @keyframes fall { to { transform: translate3d(var(--drift), 112vh, 0) rotate(740deg); opacity: .1; } }
+
+    .modal { width: min(860px, calc(100vw - 32px)); max-width: none; border: 1px solid var(--line); border-radius: 24px; padding: 0; color: #ffffff; background: rgba(14,15,18,.95); backdrop-filter: blur(28px); box-shadow: 0 25px 120px rgba(0,0,0,.65); }
+    .modal::backdrop { background: rgba(2,4,6,.75); backdrop-filter: blur(8px); }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+    .modal-title { font-family: var(--display); font-size: 24px; font-weight: 700; line-height: 1; }
+    .modal-subtitle { color: var(--dim); font-size: 11px; margin-top: 4px; }
+    .close-button { border: 1px solid var(--line); background: rgba(255,255,255,.05); color: #ffffff; height: 36px; width: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; cursor: pointer; }
+    .video-frame { aspect-ratio: 16 / 9; width: 100%; background: #050505; overflow: hidden; }
+    .video-frame iframe { border: 0; width: 100%; height: 100%; display: block; }
+    .modal-foot { padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 11px; color: var(--dim); }
+    .plain-link { color: var(--gold); text-decoration: none; }
+
+    .report-body { padding: 24px; }
+    .report-score { font-family: var(--display); font-size: clamp(48px, 6vw, 72px); font-weight: 700; line-height: .9; color: var(--gold); }
+    .report-score small { font-family: var(--ui); font-size: 11px; font-weight: 600; letter-spacing: .15em; color: var(--dim); text-transform: uppercase; }
+    .report-headline { font-family: var(--display); font-size: 28px; font-weight: 600; line-height: 1.15; margin: 16px 0 8px; }
+    .report-copy { color: var(--muted); font-size: 13px; line-height: 1.6; max-width: 650px; }
+    .report-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 24px; }
+    .report-stat { border: 1px solid var(--line); border-radius: 16px; padding: 16px; background: rgba(255,255,255,.03); }
+    .report-stat strong { display: block; font-family: var(--display); font-size: 24px; font-weight: 700; color: #ffffff; }
+    .report-stat span { display: block; font-size: 10px; font-weight: 500; color: var(--dim); text-transform: uppercase; letter-spacing: .1em; margin-top: 4px; }
+    .report-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .action-primary { border: none; background: var(--gold); color: #17120c; font-weight: 600; }
+    .action-secondary { border: 1px solid var(--line); background: rgba(255,255,255,.05); color: #ffffff; }
+    .report-actions button { border-radius: 9999px; padding: 10px 18px; font-size: 11px; font-weight: 600; font-family: var(--ui); cursor: pointer; }
+
+    .menu-body { padding: 16px; }
+    .menu-row { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-radius: 14px; border: 1px solid transparent; background: transparent; width: 100%; text-align: left; cursor: pointer; }
+    .menu-row:hover { background: rgba(255,255,255,.05); border-color: var(--line); }
+    .menu-row span:first-child { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; }
+    .menu-row small { color: var(--dim); font-size: 11px; font-weight: 400; }
+    .menu-arrow { color: var(--gold); font-size: 16px; }
+
+    .toast { position: absolute; z-index: 25; bottom: 32px; left: 50%; transform: translate(-50%, 10px); padding: 10px 20px; color: #ffffff; background: rgba(14,15,18,.92); border: 1px solid var(--line); border-radius: 9999px; box-shadow: var(--shadow); backdrop-filter: blur(20px); font-size: 12px; font-weight: 500; opacity: 0; pointer-events: none; transition: opacity .24s, transform .24s; white-space: nowrap; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @media (max-width: 1180px) {
+      .site-header { padding: 20px 24px; }
+      .hero-logo-wrap { top: clamp(70px, 11vh, 105px); }
+      .hero-logo-img { width: clamp(200px, 22vw, 290px); }
+      .bottom-left-dock { left: 24px; bottom: 24px; width: 360px; gap: 14px; }
+      .bottom-right-dock { right: 24px; bottom: 24px; width: min(420px, calc(100vw - 420px)); }
+      .music-card { padding: 16px 18px; }
+      .make-worse { right: 24px; top: 84px; }
+      .control-drawer { right: 24px; top: 130px; }
+    }
+
+    /* Mobile Layout — Deluxe Saloon Low Density Vibe */
+    @media (max-width: 860px) {
+      body { overflow: hidden; }
+      .app { min-height: 100svh; height: 100svh; overflow: hidden; }
+      .scene-image { object-position: center 30%; }
+      .site-header { padding: 16px; }
+      .header-time { font-size: 13px; font-weight: 600; min-width: auto; }
+      .live-pill { padding: 5px 12px; font-size: 11px; gap: 6px; }
+      .live-pill .live-label { display: inline-block !important; }
+      .icon-button { width: 36px; height: 36px; }
+      .header-actions { gap: 6px; min-width: auto; }
+      #headerPlayBtn, #zenBtn { display: none !important; }
+      
+      .hero-logo-wrap { top: clamp(64px, 10vh, 90px); padding: 0 16px; }
+      .hero-logo-img { width: clamp(190px, 48vw, 260px); }
+
+      /* Left Dock on Mobile — Sleek Clean Story Text with Ambient Background Shadow (Image 2) */
+      .bottom-left-dock {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        max-width: min(380px, calc(100vw - 32px));
+        bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 84px);
+        z-index: 10;
+        display: flex !important;
+        flex-direction: column;
+        gap: 0;
+        pointer-events: none;
+      }
+      .bottom-left-dock .story-block {
+        pointer-events: auto;
+        padding: 0;
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+      .bottom-left-dock .kicker {
+        font-size: 10px;
+        font-weight: 400;
+        letter-spacing: .16em;
+        margin-bottom: 6px;
+        text-shadow: none !important;
+        opacity: 0.95;
+      }
+      .bottom-left-dock h1 {
+        font-size: clamp(24px, 6.2vw, 30px);
+        margin: 0 0 6px;
+        text-shadow: none !important;
+      }
+      .bottom-left-dock .story-body {
+        font-size: 13px;
+        line-height: 1.45;
+        margin: 0;
+        text-shadow: none !important;
+      }
+      .bottom-left-dock .music-card {
+        display: none !important;
+      }
+
+      /* Hide other desktop heavy elements on mobile */
+      .bottom-right-dock,
+      .make-worse,
+      .control-drawer {
+        display: none !important;
+      }
+
+      /* Mobile Dock at Bottom */
+      .mobile-dock {
+        position: absolute;
+        bottom: max(16px, env(safe-area-inset-bottom, 16px));
+        left: 16px;
+        right: 16px;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        pointer-events: none;
+        box-sizing: border-box;
+      }
+
+      .mobile-dots {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        background: rgba(13, 15, 20, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 9999px;
+        pointer-events: auto;
+      }
+      .mobile-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.35);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: all .2s;
+      }
+      .mobile-dot.is-active {
+        width: 18px;
+        border-radius: 9999px;
+        background: var(--gold);
+        box-shadow: 0 0 10px rgba(229,176,97,0.5);
+      }
+
+      .mobile-bar {
+        align-self: stretch;
+        width: 100%;
+        max-width: 100%;
+        height: 52px;
+        padding: 6px 10px 6px 6px;
+        background: rgba(13, 15, 20, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border-radius: 9999px;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        pointer-events: auto;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+
+      .mobile-player-controls {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        flex-shrink: 0;
+      }
+      .mobile-ctrl-btn {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        border: none;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.85);
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        padding: 0;
+      }
+      .mobile-ctrl-btn:active { transform: scale(0.9); }
+      .mobile-play-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: none;
+        background: var(--gold);
+        color: #15110a;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        padding: 0;
+        transition: transform .15s;
+      }
+      .mobile-play-btn:active { transform: scale(0.92); }
+
+      .mobile-track-info {
+        flex: 1 1 0px;
+        min-width: 0;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: left;
+        cursor: pointer;
+        overflow: hidden;
+      }
+      .mobile-track-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+        max-width: 100%;
+        display: block;
+      }
+      .mobile-phase-meta {
+        font-size: 10px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.68);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-top: 1px;
+        min-width: 0;
+        max-width: 100%;
+        display: block;
+      }
+
+      .mobile-yt-btn {
+        flex: 0 0 auto;
+        height: 30px;
+        padding: 0 10px;
+        border-radius: 9999px;
+        border: 1px solid rgba(255, 255, 255, 0.38);
+        background: #000000;
+        color: #ffffff;
+        font-family: var(--ui);
+        font-size: 10.5px;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        cursor: pointer;
+        box-sizing: border-box;
+        transition: background .18s, border-color .18s, transform .15s;
+      }
+      .mobile-yt-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.6);
+      }
+      .mobile-yt-btn:active {
+        transform: scale(0.94);
+      }
+
+      .mobile-story-trigger {
+        display: none !important;
+      }
+
+      /* Mobile Story Sheet */
+      .story-sheet-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .3s ease;
+      }
+      .story-sheet-backdrop.is-open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .story-sheet {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 35;
+        max-height: 84svh;
+        padding: 14px 20px max(24px, env(safe-area-inset-bottom, 24px));
+        background: rgba(14, 16, 22, 0.95);
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 24px 24px 0 0;
+        backdrop-filter: blur(32px);
+        -webkit-backdrop-filter: blur(32px);
+        box-shadow: 0 -16px 48px rgba(0, 0, 0, 0.6);
+        transform: translateY(105%);
+        transition: transform .35s cubic-bezier(0.16, 1, 0.3, 1);
+        box-sizing: border-box;
+        overflow-y: auto;
+      }
+      .story-sheet.is-open {
+        transform: translateY(0);
+      }
+
+      .sheet-handle-bar {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 12px;
+      }
+      .sheet-handle {
+        width: 36px;
+        height: 4px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.28);
+      }
+
+      .sheet-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .sheet-phase-tag {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+      .sheet-close {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.06);
+        color: #ffffff;
+        display: grid;
+        place-items: center;
+        font-size: 18px;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      .sheet-headline {
+        font-family: var(--display);
+        font-size: 24px;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 0 0 8px;
+        line-height: 1.2;
+      }
+      .sheet-body {
+        font-size: 14px;
+        line-height: 1.55;
+        color: rgba(255, 255, 255, 0.75);
+        margin: 0 0 16px;
+      }
+
+      .sheet-music-box {
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        margin-bottom: 16px;
+      }
+      .sheet-song-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .sheet-song-row strong {
+        display: block;
+        font-size: 14px;
+        color: #ffffff;
+      }
+      .sheet-song-row span {
+        display: block;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.5);
+        margin-top: 2px;
+      }
+      .sheet-yt-btn {
+        height: 32px;
+        padding: 0 12px;
+        border-radius: 9999px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+        font-family: var(--ui);
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      .sheet-timeline-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .15em;
+        color: rgba(255, 255, 255, 0.45);
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .sheet-timeline-list {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 16px;
+      }
+      .sheet-phase-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.7);
+        font-family: var(--ui);
+        font-size: 13px;
+        text-align: left;
+        cursor: pointer;
+        transition: all .18s;
+      }
+      .sheet-phase-item.is-active {
+        background: rgba(229, 176, 97, 0.12);
+        border-color: rgba(229, 176, 97, 0.3);
+        color: #ffffff;
+        font-weight: 600;
+      }
+
+      .sheet-actions {
+        display: flex;
+        gap: 10px;
+      }
+      .sheet-chaos-btn {
+        width: 100%;
+        height: 42px;
+        border-radius: 9999px;
+        border: 1px solid rgba(229, 176, 97, 0.35);
+        background: rgba(229, 176, 97, 0.1);
+        color: var(--gold);
+        font-family: var(--ui);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .toast { bottom: 90px; }
+    }
+
+    @media (max-width: 480px) {
+      .live-label { display: none; }
+      .hero-logo-wrap { top: clamp(60px, 9vh, 80px); }
+      .hero-logo-img { width: clamp(170px, 52vw, 220px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="baraat_songs_data.js"></script>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="scene-stack" aria-hidden="true">
+    <img class="scene-image is-active" id="sceneA" src="assets/phase-nikli.webp" alt="" fetchpriority="high" style="object-position: 68% 30%;" />
+    <img class="scene-image" id="sceneB" alt="" />
+  </div>
+  <div class="scene-wash"></div><div class="vignette"></div><div class="grain"></div>
+
+  <header class="site-header">
+    <div class="header-time" id="headerTime">--:--</div>
+    <div class="live-pill" id="livePill" title="Live visitors enjoying the baraat">
+      <span class="live-dot"></span>
+      <span class="live-count" id="liveCount">148</span>
+      <span class="live-label">visitors</span>
+    </div>
+    <nav class="header-nav-chips" aria-label="Sections">
+      <a href="index.html" class="saloon-chip active">Baraat</a>
+      <a href="playlists.html" class="saloon-chip">Playlists</a>
+      <a href="songs.html" class="saloon-chip">Songs (140)</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button" id="headerPlayBtn" type="button" aria-label="Play soundtrack" title="Play soundtrack">
+        <svg class="mini-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      </button>
+      <button class="icon-button" id="moodBtn" type="button" aria-pressed="false" aria-label="Toggle lights" title="Toggle lights">
+        <svg class="mini-icon" id="moodIcon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <button class="icon-button" id="zenBtn" type="button" aria-label="Toggle scene view" title="Toggle scene view">
+        <svg class="mini-icon" viewBox="0 0 24 24" fill="none"><path d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="icon-button" id="menuBtn" type="button" aria-label="Open menu" aria-haspopup="dialog" title="Open menu">
+        <svg class="mini-icon" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Centered Brand Logo (Shadi Ki Baraat) -->
+    <div class="hero-logo-wrap">
+      <img src="assets/logo-white.webp" alt="शादी Ki बारात" class="hero-logo-img" width="923" height="603" fetchpriority="high" />
+    </div>
+
+    <!-- Left Dock: Sleek Story & Phase Display -->
+    <div class="bottom-left-dock">
+      <section class="story-block" aria-live="polite" aria-atomic="true">
+        <p class="kicker" id="phaseKicker">PHASE 02 · DUSK · 6:30 PM</p>
+        <h1 id="phaseHeadline">Baraat nikli.</h1>
+        <p class="story-body" id="phaseBody">The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.</p>
+      </section>
+
+      <div class="music-card">
+        <div class="music-card-top">
+          <div class="player-controls">
+            <button class="player-ctrl-btn" id="prevTrack" type="button" aria-label="Previous track" title="Previous track">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+            <button class="player-play-btn" id="playVideo" type="button" aria-label="Play soundtrack" title="Play soundtrack">
+              <svg id="playIconSvg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <button class="player-ctrl-btn" id="nextTrack" type="button" aria-label="Next track" title="Next track">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+            </button>
+          </div>
+          <div class="track-meta">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="track-title" id="trackTitle">Gallan Goodiyaan</div>
+              <div class="sound-wave" id="soundWave" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            </div>
+            <div class="track-artist" id="trackArtist">Official video · T-Series</div>
+          </div>
+        </div>
+        <div class="music-card-divider"></div>
+        <div class="track-caption" id="trackCaption">The current phase soundtrack</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <button class="watch-yt-btn" id="watchYtBtn" type="button">Watch on YouTube</button>
+          <a href="songs.html" class="watch-yt-btn" style="text-decoration:none;border-color:rgba(229,176,97,0.35);color:var(--gold);">All 140 Songs ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop Bottom-Right Dock -->
+    <div class="bottom-right-dock">
+      <div class="timeline">
+        <div class="timeline-topline"><span>THE NIGHT, IN SEVEN STOPS</span><span>Pick a moment ↗</span></div>
+        <div class="timeline-items" id="timelineItems" role="tablist" aria-label="Baraat phases"></div>
+      </div>
+      <div class="bottom-right-footer">
+        <button class="reset-pill-inline" id="quickResetBtn" type="button">↻ Start Over</button>
+        <span>A love letter to every Indian baraat</span>
+      </div>
+    </div>
+
+    <!-- Desktop Chaos Toggle & Drawer -->
+    <button class="make-worse" id="chaosToggle" type="button" aria-expanded="false" aria-controls="controlDrawer">
+      <span class="plus">+</span><span>Make it worse</span><span class="score-mini"><span id="scoreValue">18</span>%</span>
+    </button>
+    <aside class="control-drawer" id="controlDrawer" aria-hidden="true">
+      <p class="drawer-label"><span>Bad ideas, good music</span><b id="chaosLabel">18% chaos</b></p>
+      <div class="action-list">
+        <button class="action-button" data-action="uncle" type="button"><span class="action-symbol">↗</span><span class="action-copy">Deploy an uncle<small id="uncleHint">One more has entered the frame</small></span></button>
+        <button class="action-button" data-action="dhol" type="button"><span class="action-symbol">◉</span><span class="action-copy">Dhol boost<small>Let the lane feel it</small></span></button>
+        <button class="action-button" data-action="dj" type="button"><span class="action-symbol">✳</span><span class="action-copy">Upgrade the DJ<small>More speakers. Fewer regrets.</small></span></button>
+        <button class="action-button" data-action="bollywood" type="button"><span class="action-symbol">✦</span><span class="action-copy">Full Bollywood<small>There is no going back</small></span></button>
+      </div>
+      <div style="height:1px;background:rgba(244,233,207,.1);margin:13px 0 10px"></div>
+      <button class="action-button" id="reportBtn" type="button"><span class="action-symbol">▤</span><span class="action-copy">Baraat report<small>Document the damage</small></span></button>
+    </aside>
+
+    <!-- Mobile Low-Density Floating Dock (Deluxe Saloon Vibe) -->
+    <div class="mobile-dock" id="mobileDock">
+      <div class="mobile-dots" id="mobileDots" role="tablist" aria-label="Baraat phases"></div>
+      <div class="mobile-bar">
+        <div class="mobile-player-controls">
+          <button class="mobile-ctrl-btn" id="mPrevTrack" type="button" aria-label="Previous track" title="Previous track">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+          </button>
+          <button class="mobile-play-btn" id="mPlayTrack" type="button" aria-label="Play song" title="Play song">
+            <svg id="mPlayIconSvg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button class="mobile-ctrl-btn" id="mNextTrack" type="button" aria-label="Next track" title="Next track">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+          </button>
+        </div>
+        <div class="mobile-track-info" id="mTrackInfo" role="button" aria-label="Play / Pause soundtrack" tabindex="0">
+          <div style="display:flex;align-items:center;min-width:0;overflow:hidden;">
+            <div class="mobile-track-title" id="mTrackTitle">Gallan Goodiyaan</div>
+            <div class="sound-wave" id="mSoundWave" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="mobile-phase-meta" id="mPhaseMeta">Shankar Mahadevan · Sukhwinder Singh · Yashita Sharma</div>
+        </div>
+        <button class="mobile-yt-btn" id="mWatchYtBtn" type="button" aria-label="Watch on YouTube">
+          <span>Watch on YouTube</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Hidden In-Browser Audio Player Frame -->
+    <div id="ytAudioWrap" style="position:fixed;bottom:-500px;left:-500px;width:150px;height:150px;opacity:0.001;pointer-events:none;z-index:-9999;" aria-hidden="true">
+      <div id="ytAudioFrame"></div>
+    </div>
+
+    <!-- Mobile Slide-Up Story Sheet -->
+    <div class="story-sheet-backdrop" id="sheetBackdrop"></div>
+    <div class="story-sheet" id="storySheet" aria-hidden="true">
+      <div class="sheet-handle-bar"><span class="sheet-handle"></span></div>
+      <div class="sheet-header">
+        <div class="sheet-phase-tag" id="sheetPhaseTag">DUSK · 6:30 PM</div>
+        <button class="sheet-close" id="sheetCloseBtn" type="button" aria-label="Close story sheet">×</button>
+      </div>
+      <h2 class="sheet-headline" id="sheetHeadline">Baraat nikli.</h2>
+      <p class="sheet-body" id="sheetBody">The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.</p>
+      
+      <div class="sheet-music-box">
+        <div class="sheet-song-row">
+          <div>
+            <strong id="sheetSongTitle">Gallan Goodiyaan</strong>
+            <span id="sheetSongArtist">Official video · T-Series</span>
+          </div>
+          <button class="sheet-yt-btn" id="sheetYtBtn" type="button">Watch Video ↗</button>
+        </div>
+      </div>
+
+      <div class="sheet-timeline-label">SEVEN PHASES OF THE BARAAT</div>
+      <div class="sheet-timeline-list" id="sheetTimelineList"></div>
+
+      <div class="sheet-actions">
+        <button class="sheet-chaos-btn" id="sheetChaosBtn" type="button">+ Deploy Uncle / Boost Dhol (<span id="sheetChaosScore">18</span>% chaos)</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="petal-layer" id="petalLayer" aria-hidden="true"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog class="modal" id="videoModal" aria-labelledby="videoModalTitle">
+    <div class="modal-header"><div><div class="modal-title" id="videoModalTitle">Gallan Goodiyaan</div><div class="modal-subtitle">The baraat soundtrack · YouTube</div></div><button class="close-button" data-close="videoModal" aria-label="Close music player" type="button">×</button></div>
+    <div class="video-frame"><iframe id="youtubeFrame" title="Baraat soundtrack YouTube video" src="about:blank" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+    <div class="modal-foot"><span>Playback starts only when you press play.</span><a class="plain-link" id="youtubeLink" href="https://www.youtube.com/watch?v=jCEdTq3j-0U" target="_blank" rel="noopener noreferrer">Open on YouTube ↗</a></div>
+  </dialog>
+
+  <dialog class="modal" id="reportModal" aria-labelledby="reportModalTitle">
+    <div class="modal-header"><div><div class="modal-title" id="reportModalTitle">Official Baraat Report</div><div class="modal-subtitle">Filed under: “it got out of hand”</div></div><button class="close-button" data-close="reportModal" aria-label="Close report" type="button">×</button></div>
+    <div class="report-body">
+      <div class="report-score"><span id="reportScore">18</span><small> / 100 chaos</small></div>
+      <div class="report-headline" id="reportHeadline">A respectable start. Suspiciously respectable.</div>
+      <p class="report-copy" id="reportCopy">The band has started, people are smiling, and the DJ still believes this will finish on time.</p>
+      <div class="report-stats">
+        <div class="report-stat"><strong id="reportUncles">0</strong><span>Uncles deployed</span></div>
+        <div class="report-stat"><strong id="reportDhol">0</strong><span>Dhol boosts</span></div>
+        <div class="report-stat"><strong id="reportDJ">0</strong><span>DJ upgrades</span></div>
+      </div>
+      <div class="report-actions"><button class="action-primary" id="copyReport" type="button">Copy report</button><button class="action-secondary" id="downloadReport" type="button">Save as .txt</button><button class="action-secondary" id="shareReport" type="button">Share report ↗</button></div>
+    </div>
+  </dialog>
+
+  <dialog class="modal" id="menuModal" aria-labelledby="menuModalTitle" style="max-width:470px">
+    <div class="modal-header"><div><div class="modal-title" id="menuModalTitle">A few baraat rules</div><div class="modal-subtitle">There are no actual rules.</div></div><button class="close-button" data-close="menuModal" aria-label="Close menu" type="button">×</button></div>
+    <div class="menu-body">
+      <a class="menu-row" href="songs.html" style="text-decoration:none;display:flex;"><span>Explore all 140 songs<small>Complete Baraat Library across 7 phases</small></span><span class="menu-arrow">↗</span></a>
+      <a class="menu-row" href="playlists.html" style="text-decoration:none;display:flex;"><span>7 Phase Rotations & Playlists<small>From Sehra Bandi to Afterparty</small></span><span class="menu-arrow">↗</span></a>
+      <button class="menu-row" id="menuPhases" type="button"><span>Explore the seven phases<small>From sehra bandi to “bas ek gaana aur”</small></span><span class="menu-arrow">↗</span></button>
+      <button class="menu-row" id="menuReport" type="button"><span>Generate your Baraat Report<small>For the group chat and the family archive</small></span><span class="menu-arrow">↗</span></button>
+      <button class="menu-row" id="resetBtn" type="button"><span>Start the baraat over<small>Everyone gets one last chance to behave</small></span><span class="menu-arrow">↻</span></button>
+    </div>
+  </dialog>
+</div>
+<script>
+(() => {
+  'use strict';
+  const phases = [
+    { time:'5:30 PM', title:'Sehra Bandi', hindi1:'सेहरा', hindi2:'बंदी', kicker:'PHASE 01 · EARLY EVENING · 5:30 PM', headline:'The groom is almost ready.', body:'A sehra is being adjusted for the fourth time. Someone is looking for the car keys. Phupaji has taken charge of the entire operation.', quip:'“Photo achhi aani chahiye.” Nobody is allowed to blink.', micro:'EVERYONE IS A MANAGER', image:'assets/phase-sehra.webp', mobileImage:'assets/mobile-phase-1.webp', desktopFocal:'58% 36%', mobileFocal:'center 30%', song:'Ainvayi Ainvayi', artist:'Salim-Sulaiman · Sunidhi Chauhan', video:'uvf0bsywl4A', caption:'Warm-up acoustic beats and family banter before the chaos starts.', chaos:8 },
+    { time:'6:30 PM', title:'Baraat Nikli', hindi1:'बारात', hindi2:'निकली', kicker:'PHASE 02 · DUSK · 6:30 PM', headline:'Baraat nikli.', body:'The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.', quip:'“Bas, ab seedha venue.” Famous last words.', micro:'THE PROCESSION BEGINS', image:'assets/phase-nikli.webp', mobileImage:'assets/mobile-phase-2.webp', desktopFocal:'70% 36%', mobileFocal:'center 30%', song:'Gallan Goodiyaan', artist:'Shankar Mahadevan · Sukhwinder Singh · Yashita Sharma', video:'jCEdTq3j-0U', caption:'The official procession anthem; brass horns, rolling dhol, and unrestrained joy.', chaos:18 },
+    { time:'7:30 PM', title:'Pehli Gali', hindi1:'पहली', hindi2:'गली', kicker:'PHASE 03 · TWILIGHT · 7:30 PM', headline:'The road is now the dance floor.', body:'The lane is narrow, the baraat is 400 metres wide, and a scooter has become an honorary member of the procession.', quip:'“Gaadi side mein karo!” yelled by the man blocking the road.', micro:'TRAFFIC HAS JOINED THE PARTY', image:'assets/phase-gali.webp', mobileImage:'assets/mobile-phase-3.webp', desktopFocal:'73% 36%', mobileFocal:'center 30%', song:'London Thumakda', artist:'Labh Janjua · Sonu Kakkar · Neha Kakkar', video:'udra3Mfw2oo', caption:'Narrow street anthem; heavy percussions that bring every balcony to life.', chaos:35 },
+    { time:'8:30 PM', title:'Uncle Era', hindi1:'अंकल का', hindi2:'जलवा', kicker:'PHASE 04 · PRIME TIME · 8:30 PM', headline:'The uncle has taken over.', body:'He removed his jacket. He loosened one button. He has made eye contact with the DJ. There is no stopping what comes next.', quip:'The knees are 52. The confidence is 19.', micro:'CAMERAS OUT. IMMEDIATELY.', image:'assets/phase-uncle.webp', mobileImage:'assets/mobile-phase-4.webp', desktopFocal:'53% 36%', mobileFocal:'center 30%', song:'Kala Chashma', artist:'Amar Arshi · Badshah · Neha Kakkar', video:'k4yXQkG2s1E', caption:'High-voltage Punjabi groove for the uncle who just loosened his tie.', chaos:54 },
+    { time:'9:30 PM', title:'DJ Ka Pralay', hindi1:'डीजे का', hindi2:'प्रलय', kicker:'PHASE 05 · NIGHT · 9:30 PM', headline:'The DJ has lost all restraint.', body:'The bass is negotiating with the power grid. Pink lights everywhere. Three cousins are doing the same move with three different levels of confidence.', quip:'“Volume aur badhao!” said from directly beside the speaker.', micro:'THE NEIGHBOURHOOD KNOWS', image:'assets/phase-dj.webp', mobileImage:'assets/mobile-phase-5.webp', desktopFocal:'50% 36%', mobileFocal:'center 30%', song:'Sauda Khara Khara', artist:'Diljit Dosanjh · Sukhbir', video:'LYEqeUr-158', caption:'Earth-shattering bass and synthesizers; volume levels decided by family consensus.', chaos:76 },
+    { time:'10:30 PM', title:'Dulhe Ki Entry', hindi1:'दूल्हे की', hindi2:'एंट्री', kicker:'PHASE 06 · LATE NIGHT · 10:30 PM', headline:'Everybody remember the groom?', body:'Phones go up. The parasol is perfectly positioned. For twelve seconds the entire family coordinates like a world-class production crew.', quip:'One cousin is still asking for the Wi-Fi password.', micro:'ALL EYES ON THE DULHA', image:'assets/phase-entry.webp', mobileImage:'assets/mobile-phase-6.webp', desktopFocal:'62% 36%', mobileFocal:'center 30%', song:'Tenu Leke', artist:'Sonu Nigam · Mahalakshmi Iyer', video:'Cu3QpWEfqgg', caption:'Triumphant entry chorus as the parasol rises and phone flashlights turn on.', chaos:68 },
+    { time:'12:00 AM', title:'Bas Ek Gaana Aur', hindi1:'बस एक गाना', hindi2:'और', kicker:'PHASE 07 · AFTER MIDNIGHT · 12:00 AM', headline:'The stove is still lit.', body:'The dhol is resting. The chai is not. A small group has discovered one more song, and the DJ has accepted the challenge personally.', quip:'“Last song pakka.” The eleventh last song.', micro:'THE NIGHT REFUSES TO END', image:'assets/phase-last-song.webp', mobileImage:'assets/mobile-phase-7.webp', desktopFocal:'40% 36%', mobileFocal:'center 30%', song:'Choo Lo', artist:'The Local Train · Raman Negi', video:'sFMRqxCexDk', caption:'Mellow midnight acoustic chords for the chai stall crew who refuse to go home.', chaos:22 }
+  ];
+  // Merge full 20 songs per phase from window.BARAAT_DATA
+  if (window.BARAAT_DATA && Array.isArray(window.BARAAT_DATA.phases)) {
+    phases.forEach((p, idx) => {
+      const bPhase = window.BARAAT_DATA.phases[idx];
+      if (bPhase && Array.isArray(bPhase.songs) && bPhase.songs.length > 0) {
+        p.songs = bPhase.songs;
+      }
+    });
+  }
+
+  const $ = (id) => document.getElementById(id);
+  const app = $('app');
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramPhase = parseInt(urlParams.get('phase'), 10);
+  let currentIndex = (!isNaN(paramPhase) && paramPhase >= 0 && paramPhase < phases.length) ? paramPhase : 1;
+  let currentSongInPhase = 0;
+  let activeScene = $('sceneA');
+  let inactiveScene = $('sceneB');
+  let chaos = phases[currentIndex].chaos;
+  let uncles = 0, dholBoosts = 0, djUpgrades = 0;
+  let lightsLow = false;
+  let toastTimer = null;
+  const youtubeUrl = (id) => `https://www.youtube.com/watch?v=${id}`;
+
+  // In-Browser Audio Player & MediaSession State
+  let isPlaying = false;
+  let ytPlayer = null;
+  let ytReady = false;
+  let audioCtx = null;
+  let synthTimer = null;
+  let synthStep = 0;
+  let silentAudio = null;
+
+  function initAudioCtx() {
+    if (!audioCtx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) audioCtx = new AC();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    if (!silentAudio) {
+      try {
+        // Keeps iOS/Android MediaSession alive in background and recent apps
+        silentAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
+        silentAudio.loop = true;
+      } catch (e) {}
+    }
+  }
+
+  function playDholBeat(isBass = true, accent = false) {
+    if (!audioCtx) return;
+    try {
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      if (isBass) {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(accent ? 135 : 105, t);
+        osc.frequency.exponentialRampToValueAtTime(42, t + 0.22);
+        gain.gain.setValueAtTime(accent ? 0.7 : 0.5, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.24);
+      } else {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(accent ? 420 : 360, t);
+        osc.frequency.exponentialRampToValueAtTime(130, t + 0.1);
+        gain.gain.setValueAtTime(accent ? 0.3 : 0.18, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.11);
+      }
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(t);
+      osc.stop(t + 0.26);
+    } catch (e) {}
+  }
+
+  function startBaraatSynth() {
+    initAudioCtx();
+    if (synthTimer) clearInterval(synthTimer);
+    synthStep = 0;
+    const tempo = Math.max(140, 210 - Math.round(phases[currentIndex].chaos * 0.7));
+    synthTimer = setInterval(() => {
+      if (!isPlaying) {
+        clearInterval(synthTimer);
+        synthTimer = null;
+        return;
+      }
+      const s = synthStep % 8;
+      if (s === 0) playDholBeat(true, true);
+      else if (s === 2) playDholBeat(false, true);
+      else if (s === 3) playDholBeat(true, false);
+      else if (s === 5) playDholBeat(true, false);
+      else if (s === 6) playDholBeat(false, false);
+      synthStep++;
+    }, tempo);
+  }
+
+  function stopBaraatSynth() {
+    if (synthTimer) {
+      clearInterval(synthTimer);
+      synthTimer = null;
+    }
+  }
+
+  function getCurrentSong() {
+    const p = phases[currentIndex];
+    if (p && Array.isArray(p.songs) && p.songs.length > 0) {
+      if (currentSongInPhase < 0 || currentSongInPhase >= p.songs.length) {
+        currentSongInPhase = 0;
+      }
+      return p.songs[currentSongInPhase];
+    }
+    return {
+      titleHi: p.song,
+      titleEn: p.song,
+      artist: p.artist,
+      film: p.title,
+      duration: '4:00',
+      youtubeId: p.video,
+      thumbnail: p.image
+    };
+  }
+
+  function updateMusicUI(autoLoad = false) {
+    const p = phases[currentIndex];
+    const s = getCurrentSong();
+
+    // Pure English Track Title & Artist (No Hindi script, No pill)
+    const titleText = s.titleEn || s.titleHi || p.song;
+    const artistText = s.artist ? `${s.artist}${s.film ? ' · ' + s.film : ''}` : p.artist;
+    const captionText = `${p.title} Playlist · ${s.film ? s.film : 'Soundtrack'}`;
+
+    if ($('trackTitle')) $('trackTitle').textContent = titleText;
+    if ($('trackArtist')) $('trackArtist').textContent = artistText;
+    if ($('trackCaption')) $('trackCaption').textContent = captionText;
+
+    if ($('mTrackTitle')) $('mTrackTitle').textContent = titleText;
+    if ($('mPhaseMeta')) $('mPhaseMeta').textContent = artistText;
+
+    // Mobile Sheet Meta
+    if ($('sheetSongTitle')) $('sheetSongTitle').textContent = titleText;
+    if ($('sheetSongArtist')) $('sheetSongArtist').textContent = artistText;
+
+    // Video modal metadata
+    if ($('videoModalTitle')) $('videoModalTitle').textContent = `${titleText} · ${s.film || p.title}`;
+    if ($('youtubeLink')) $('youtubeLink').href = youtubeUrl(s.youtubeId);
+    if ($('videoModal') && $('videoModal').open && $('youtubeFrame')) {
+      $('youtubeFrame').src = `https://www.youtube-nocookie.com/embed/${s.youtubeId}?autoplay=1&rel=0&modestbranding=1`;
+    }
+
+    // Keep prev/next buttons active
+    if ($('prevTrack')) $('prevTrack').style.opacity = '1';
+    if ($('nextTrack')) $('nextTrack').style.opacity = '1';
+    if ($('mPrevTrack')) $('mPrevTrack').style.opacity = '1';
+    if ($('mNextTrack')) $('mNextTrack').style.opacity = '1';
+
+    // Auto load video if music is currently active or autoLoad is true
+    if (autoLoad || isPlaying) {
+      if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+        try {
+          ytPlayer.loadVideoById(s.youtubeId);
+        } catch (e) {
+          startBaraatSynth();
+        }
+      } else {
+        startBaraatSynth();
+      }
+    }
+
+    updateMediaSession();
+  }
+
+  function nextSong(userInitiated = true) {
+    const p = phases[currentIndex];
+    const total = (p.songs && p.songs.length) ? p.songs.length : 1;
+    currentSongInPhase = (currentSongInPhase + 1) % total;
+    updateMusicUI(isPlaying || userInitiated);
+    const s = getCurrentSong();
+    showToast(`♪ ${s.titleEn || s.titleHi || p.song}`);
+  }
+
+  function prevSong(userInitiated = true) {
+    const p = phases[currentIndex];
+    const total = (p.songs && p.songs.length) ? p.songs.length : 1;
+    currentSongInPhase = (currentSongInPhase - 1 + total) % total;
+    updateMusicUI(isPlaying || userInitiated);
+    const s = getCurrentSong();
+    showToast(`♪ ${s.titleEn || s.titleHi || p.song}`);
+  }
+
+  window.onYouTubeIframeAPIReady = function() {
+    try {
+      const s = getCurrentSong();
+      ytPlayer = new YT.Player('ytAudioFrame', {
+        height: '150',
+        width: '150',
+        videoId: s.youtubeId,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          rel: 0,
+          modestbranding: 1,
+          playsinline: 1
+        },
+        events: {
+          onReady: () => { ytReady = true; },
+          onStateChange: (event) => {
+            if (event.data === YT.PlayerState.PLAYING) {
+              setPlaybackState(true);
+              stopBaraatSynth();
+            } else if (event.data === YT.PlayerState.PAUSED) {
+              setPlaybackState(false);
+            } else if (event.data === YT.PlayerState.ENDED) {
+              nextSong(false); // Play next song in CURRENT PHASE! Do NOT change phase!
+            }
+          },
+          onError: () => {
+            if (isPlaying) startBaraatSynth();
+          }
+        }
+      });
+    } catch (e) {
+      console.warn('YT audio player init', e);
+    }
+  };
+
+  function setPlaybackState(playing) {
+    isPlaying = playing;
+    const playPath = 'M8 5v14l11-7z';
+    const pausePath = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';
+    const path = playing ? pausePath : playPath;
+    if ($('playIconSvg')) $('playIconSvg').querySelector('path').setAttribute('d', path);
+    if ($('mPlayIconSvg')) $('mPlayIconSvg').querySelector('path').setAttribute('d', path);
+    if ($('soundWave')) $('soundWave').classList.toggle('is-playing', playing);
+    if ($('mSoundWave')) $('mSoundWave').classList.toggle('is-playing', playing);
+    if ($('headerPlayBtn')) $('headerPlayBtn').classList.toggle('is-playing', playing);
+  }
+
+  function toggleMusic() {
+    initAudioCtx();
+    isPlaying = !isPlaying;
+    setPlaybackState(isPlaying);
+
+    const s = getCurrentSong();
+    if (isPlaying) {
+      if (silentAudio) {
+        try { silentAudio.play(); } catch (e) {}
+      }
+      let ytStarted = false;
+      if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        try {
+          ytPlayer.playVideo();
+          ytStarted = true;
+        } catch (e) {}
+      }
+      if (!ytStarted) startBaraatSynth();
+      updateMediaSession();
+      showToast(`Now playing: ${s.titleEn || p.song}`);
+    } else {
+      if (silentAudio) {
+        try { silentAudio.pause(); } catch (e) {}
+      }
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        try { ytPlayer.pauseVideo(); } catch (e) {}
+      }
+      stopBaraatSynth();
+      updateMediaSession();
+      showToast('Soundtrack paused');
+    }
+  }
+
+  function updateMediaSession() {
+    if ('mediaSession' in navigator) {
+      const p = phases[currentIndex];
+      const s = getCurrentSong();
+      try {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: s.titleEn || p.song,
+          artist: `${s.artist} · ${s.film || p.title}`,
+          album: `Shadi Ki Baraat · ${p.title}`,
+          artwork: [
+            { src: s.thumbnail || p.image, sizes: '512x512', type: 'image/jpeg' },
+            { src: p.image, sizes: '512x512', type: 'image/webp' }
+          ]
+        });
+        navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
+        navigator.mediaSession.setActionHandler('play', () => { if (!isPlaying) toggleMusic(); });
+        navigator.mediaSession.setActionHandler('pause', () => { if (isPlaying) toggleMusic(); });
+        navigator.mediaSession.setActionHandler('previoustrack', () => prevSong(true));
+        navigator.mediaSession.setActionHandler('nexttrack', () => nextSong(true));
+      } catch (e) {}
+    }
+  }
+
+  function buildTimeline() {
+    const root = $('timelineItems');
+    const dotsRoot = $('mobileDots');
+    const sheetRoot = $('sheetTimelineList');
+    if (root) root.innerHTML = '';
+    if (dotsRoot) dotsRoot.innerHTML = '';
+    if (sheetRoot) sheetRoot.innerHTML = '';
+
+    phases.forEach((phase, index) => {
+      // Desktop timeline stop
+      if (root) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'phase-stop' + (index === currentIndex ? ' is-active' : '');
+        button.setAttribute('role', 'tab');
+        button.setAttribute('aria-selected', index === currentIndex ? 'true' : 'false');
+        button.setAttribute('aria-controls', 'top');
+        button.setAttribute('aria-label', `${phase.time}, ${phase.title}`);
+        button.dataset.phase = String(index);
+        button.innerHTML = `<span class="stop-dot"></span><span class="phase-time">${phase.time}</span><span class="phase-name">${phase.title}</span>`;
+        button.addEventListener('click', () => setPhase(index));
+        root.appendChild(button);
+      }
+
+      // Mobile dot
+      if (dotsRoot) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'mobile-dot' + (index === currentIndex ? ' is-active' : '');
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', `Phase ${index + 1}: ${phase.title}`);
+        dot.addEventListener('click', () => setPhase(index));
+        dotsRoot.appendChild(dot);
+      }
+
+      // Mobile sheet item
+      if (sheetRoot) {
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'sheet-phase-item' + (index === currentIndex ? ' is-active' : '');
+        item.innerHTML = `<span><strong>${phase.title}</strong> <small style="color:rgba(255,255,255,.45);margin-left:6px">${phase.time}</small></span><span style="color:var(--gold);font-size:12px;font-family:var(--hindi)">${phase.hindi1} ${phase.hindi2}</span>`;
+        item.addEventListener('click', () => {
+          setPhase(index);
+          closeSheet();
+        });
+        sheetRoot.appendChild(item);
+      }
+    });
+  }
+
+  function getPhaseImage(phase) {
+    if (!phase) return '';
+    const isMobile = window.innerWidth <= 860;
+    return (isMobile && phase.mobileImage) ? phase.mobileImage : phase.image;
+  }
+
+  function getFocalPosition(phase) {
+    if (!phase) return 'center 36%';
+    const isMobile = window.innerWidth <= 860;
+    return isMobile ? (phase.mobileFocal || '50% 30%') : (phase.desktopFocal || '50% 36%');
+  }
+
+  function setPhase(index) {
+    if (index < 0 || index >= phases.length || index === currentIndex) return;
+    currentIndex = index;
+    const p = phases[index];
+    const incoming = inactiveScene;
+    const outgoing = activeScene;
+
+    const targetSrc = getPhaseImage(p);
+    incoming.style.objectPosition = getFocalPosition(p);
+    incoming.src = targetSrc;
+
+    const doMorph = () => {
+      incoming.onload = null;
+      // Keep outgoing visible underneath at z-index: 1 so screen never dips to dark
+      outgoing.classList.add('is-outgoing');
+      outgoing.classList.remove('is-active');
+
+      // Fade-morph incoming in on top at z-index: 2
+      incoming.classList.add('is-active');
+      incoming.classList.remove('is-outgoing');
+
+      activeScene = incoming;
+      inactiveScene = outgoing;
+
+      // Cleanly reset outgoing after morph completes
+      setTimeout(() => {
+        outgoing.classList.remove('is-outgoing');
+      }, 950);
+    };
+
+    if (incoming.complete && incoming.naturalWidth > 0 && incoming.src.includes(targetSrc)) {
+      doMorph();
+    } else {
+      incoming.onload = doMorph;
+    }
+
+    try {
+      const url = new URL(window.location);
+      url.searchParams.set('phase', index);
+      window.history.replaceState(null, '', url);
+    } catch (e) {}
+
+    // Narrative Text
+    $('phaseKicker').textContent = p.kicker;
+    $('phaseHeadline').textContent = p.headline;
+    $('phaseBody').textContent = p.body;
+    if ($('phaseNumber')) $('phaseNumber').textContent = String(index + 1).padStart(2, '0');
+    if ($('phaseQuip')) $('phaseQuip').textContent = p.quip;
+    if ($('phaseMicro')) $('phaseMicro').textContent = p.micro;
+
+    // Mobile Sheet Meta
+    if ($('sheetPhaseTag')) $('sheetPhaseTag').textContent = p.kicker;
+    if ($('sheetHeadline')) $('sheetHeadline').textContent = p.headline;
+    if ($('sheetBody')) $('sheetBody').textContent = p.body;
+
+    // Active state sync
+    document.querySelectorAll('.phase-stop').forEach((btn, i) => {
+      btn.classList.toggle('is-active', i === index);
+      btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
+    });
+    document.querySelectorAll('.mobile-dot').forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === index);
+    });
+    document.querySelectorAll('.sheet-phase-item').forEach((item, i) => {
+      item.classList.toggle('is-active', i === index);
+    });
+
+    chaos = Math.max(chaos, p.chaos);
+    updateScore();
+
+    // Reset to track 0 of the new phase
+    currentSongInPhase = 0;
+    updateMusicUI(isPlaying);
+  }
+
+  function updateScore() {
+    chaos = Math.max(0, Math.min(100, chaos));
+    $('scoreValue').textContent = String(chaos);
+    $('chaosLabel').textContent = `${chaos}% chaos`;
+    if ($('sheetScore')) $('sheetScore').textContent = String(chaos);
+    if ($('sheetChaosScore')) $('sheetChaosScore').textContent = String(chaos);
+    $('chaosToggle').setAttribute('aria-expanded', $('controlDrawer').classList.contains('is-open') ? 'true' : 'false');
+  }
+
+  function showToast(message) {
+    const toast = $('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2300);
+  }
+
+  function pulseDhol() {
+    app.classList.remove('dhol-pulse');
+    void app.offsetWidth;
+    app.classList.add('dhol-pulse');
+    setTimeout(() => app.classList.remove('dhol-pulse'), 700);
+  }
+
+  function makePetals(count = 36) {
+    const layer = $('petalLayer');
+    layer.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+      const petal = document.createElement('i');
+      petal.className = 'petal';
+      petal.style.left = `${Math.random() * 100}%`;
+      petal.style.setProperty('--drift', `${Math.round(Math.random() * 260 - 130)}px`);
+      petal.style.animationDuration = `${Math.random() * 3 + 3.5}s`;
+      petal.style.animationDelay = `${Math.random() * 1.4}s`;
+      layer.appendChild(petal);
+    }
+    setTimeout(() => { layer.innerHTML = ''; }, 9000);
+  }
+
+  function doAction(action) {
+    if (action === 'uncle') {
+      uncles += 1; chaos += 8;
+      $('uncleHint').textContent = `${uncles} uncle${uncles === 1 ? '' : 's'} now on the floor`;
+      showToast(uncles === 1 ? 'Uncle has entered the chat.' : `${uncles} uncles. One dance floor. No supervision.`);
+    } else if (action === 'dhol') {
+      dholBoosts += 1; chaos += 12; pulseDhol();
+      showToast('Dhol level increased. The windows are rattling.');
+    } else if (action === 'dj') {
+      djUpgrades += 1; chaos += 10; app.classList.add('dj-lit');
+      showToast('DJ upgraded. The power grid has been informed.');
+    } else if (action === 'bollywood') {
+      chaos = 100; djUpgrades += 1; dholBoosts += 1; makePetals(56); pulseDhol(); app.classList.add('dj-lit');
+      showToast('FULL BOLLYWOOD. Please keep your relatives inside the frame.');
+    }
+    updateScore();
+    $('controlDrawer').classList.add('is-open');
+    $('controlDrawer').setAttribute('aria-hidden', 'false');
+    $('chaosToggle').setAttribute('aria-expanded', 'true');
+  }
+
+  function openSheet() {
+    $('sheetBackdrop').classList.add('is-open');
+    $('storySheet').classList.add('is-open');
+    $('storySheet').setAttribute('aria-hidden', 'false');
+  }
+  function closeSheet() {
+    $('sheetBackdrop').classList.remove('is-open');
+    $('storySheet').classList.remove('is-open');
+    $('storySheet').setAttribute('aria-hidden', 'true');
+  }
+
+  function openVideo() {
+    const s = getCurrentSong();
+    const p = phases[currentIndex];
+    $('videoModalTitle').textContent = `${s.titleEn || p.song} · ${s.film || p.title}`;
+    $('youtubeLink').href = youtubeUrl(s.youtubeId);
+    $('youtubeFrame').src = `https://www.youtube-nocookie.com/embed/${s.youtubeId}?autoplay=1&rel=0&modestbranding=1`;
+    $('videoModal').showModal();
+  }
+
+  function openReport() {
+    $('reportScore').textContent = String(chaos);
+    $('reportUncles').textContent = String(uncles);
+    $('reportDhol').textContent = String(dholBoosts);
+    $('reportDJ').textContent = String(djUpgrades);
+    let headline = 'A respectable start. Suspiciously respectable.';
+    if (chaos >= 90) headline = 'The baraat is now a UNESCO-level incident.';
+    else if (chaos >= 70) headline = 'The DJ has assumed administrative control.';
+    else if (chaos >= 45) headline = 'Uncle Sharma is now the main character.';
+    else if (chaos >= 25) headline = 'The traffic police have started dancing.';
+    $('reportHeadline').textContent = headline;
+    const p = phases[currentIndex];
+    $('reportCopy').textContent = `Current stop: ${p.title} at ${p.time}. Chaos is at ${chaos}%. You deployed ${uncles} uncle${uncles === 1 ? '' : 's'}, ordered ${dholBoosts} dhol boost${dholBoosts === 1 ? '' : 's'}, and approved ${djUpgrades} DJ upgrade${djUpgrades === 1 ? '' : 's'}. The official explanation is “bas ek gaana aur.”`;
+    $('reportModal').showModal();
+  }
+
+  function reportText() {
+    return `SHADI KI BARAAT — OFFICIAL BARAAT REPORT\n\n${$('reportHeadline').textContent}\n${$('reportCopy').textContent}\n\nChaos: ${chaos}/100\nUncles deployed: ${uncles}\nDhol boosts: ${dholBoosts}\nDJ upgrades: ${djUpgrades}\n\nSent from Shadi Ki Baraat.`;
+  }
+
+  function closeAllDrawers() {
+    $('controlDrawer').classList.remove('is-open');
+    $('controlDrawer').setAttribute('aria-hidden', 'true');
+    $('chaosToggle').setAttribute('aria-expanded', 'false');
+    closeSheet();
+  }
+
+  buildTimeline();
+
+  // Set initial phase values
+  const initP = phases[currentIndex];
+  if (activeScene && initP) {
+    activeScene.src = getPhaseImage(initP);
+    activeScene.style.objectPosition = getFocalPosition(initP);
+  }
+  let lastWasMobile = window.innerWidth <= 860;
+  window.addEventListener('resize', () => {
+    if (activeScene && phases[currentIndex]) {
+      const isMobile = window.innerWidth <= 860;
+      if (isMobile !== lastWasMobile) {
+        lastWasMobile = isMobile;
+        activeScene.src = getPhaseImage(phases[currentIndex]);
+      }
+      activeScene.style.objectPosition = getFocalPosition(phases[currentIndex]);
+    }
+  });
+  $('phaseKicker').textContent = initP.kicker;
+  $('phaseHeadline').textContent = initP.headline;
+  $('phaseBody').textContent = initP.body;
+  if ($('phaseQuip')) $('phaseQuip').textContent = initP.quip;
+  if ($('phaseNumber')) $('phaseNumber').textContent = String(currentIndex + 1).padStart(2, '0');
+  if ($('phaseMicro')) $('phaseMicro').textContent = initP.micro;
+  // Initialize Live Clock
+  function updateLiveClock() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase();
+    const el = $('headerTime');
+    if (el) el.textContent = timeStr;
+  }
+  updateLiveClock();
+  setInterval(updateLiveClock, 1000);
+
+  updateMusicUI(false);
+  updateScore();
+
+  // Track navigation (cycles songs within current phase, DOES NOT change phase)
+  if ($('prevTrack')) $('prevTrack').addEventListener('click', (e) => { e.stopPropagation(); prevSong(true); });
+  if ($('nextTrack')) $('nextTrack').addEventListener('click', (e) => { e.stopPropagation(); nextSong(true); });
+  if ($('mPrevTrack')) $('mPrevTrack').addEventListener('click', (e) => { e.stopPropagation(); prevSong(true); });
+  if ($('mNextTrack')) $('mNextTrack').addEventListener('click', (e) => { e.stopPropagation(); nextSong(true); });
+  
+  // In-Browser Music Playback Handlers
+  if ($('playVideo')) $('playVideo').addEventListener('click', toggleMusic);
+  if ($('mPlayTrack')) $('mPlayTrack').addEventListener('click', toggleMusic);
+  if ($('headerPlayBtn')) $('headerPlayBtn').addEventListener('click', toggleMusic);
+  if ($('mTrackInfo')) $('mTrackInfo').addEventListener('click', toggleMusic);
+
+  // Optional Video Modal Handlers
+  if ($('watchYtBtn')) $('watchYtBtn').addEventListener('click', openVideo);
+  if ($('mWatchYtBtn')) $('mWatchYtBtn').addEventListener('click', (e) => { e.stopPropagation(); openVideo(); });
+  if ($('sheetYtBtn')) $('sheetYtBtn').addEventListener('click', openVideo);
+  if ($('quickResetBtn')) $('quickResetBtn').addEventListener('click', () => $('resetBtn').click());
+
+  // Preload all 7 phase artworks (desktop and mobile) for uncompromised master quality and zero transition lag
+  phases.forEach((phase) => {
+    const pre = new Image();
+    pre.src = phase.image;
+    if (phase.mobileImage) {
+      const preM = new Image();
+      preM.src = phase.mobileImage;
+    }
+  });
+
+  // Mobile Sheet open / close
+  if ($('sheetCloseBtn')) $('sheetCloseBtn').addEventListener('click', closeSheet);
+  if ($('sheetBackdrop')) $('sheetBackdrop').addEventListener('click', closeSheet);
+  if ($('sheetChaosBtn')) $('sheetChaosBtn').addEventListener('click', () => {
+    closeSheet();
+    doAction('uncle');
+  });
+
+  // Zen Mode Toggle
+  if ($('zenBtn')) {
+    $('zenBtn').addEventListener('click', () => {
+      const isZen = app.classList.toggle('zen-mode');
+      showToast(isZen ? 'Zen mode: full scene view' : 'Controls visible');
+    });
+  }
+
+  // Live Visitors Pill
+  if ($('livePill')) {
+    $('livePill').addEventListener('click', () => {
+      showToast(`${$('liveCount').textContent} visitors celebrating live in the baraat.`);
+    });
+  }
+  setInterval(() => {
+    if ($('liveCount')) {
+      const current = parseInt($('liveCount').textContent, 10) || 148;
+      const delta = (Math.random() > 0.48 ? 1 : -1) * Math.floor(Math.random() * 2);
+      $('liveCount').textContent = String(Math.max(140, Math.min(160, current + delta)));
+    }
+  }, 5000);
+
+  $('chaosToggle').addEventListener('click', () => {
+    const drawer = $('controlDrawer');
+    const open = !drawer.classList.contains('is-open');
+    drawer.classList.toggle('is-open', open);
+    drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    $('chaosToggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  $('controlDrawer').querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => doAction(button.dataset.action)));
+  $('moodBtn').addEventListener('click', () => {
+    lightsLow = !lightsLow;
+    app.classList.toggle('lights-low', lightsLow);
+    $('moodBtn').setAttribute('aria-pressed', lightsLow ? 'true' : 'false');
+    $('moodIcon').innerHTML = lightsLow
+      ? '<path d="M20.5 14.5A8.6 8.6 0 0 1 9.5 3.2 8.8 8.8 0 1 0 20.5 14.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>'
+      : '<circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+  });
+  $('reportBtn').addEventListener('click', openReport);
+  $('menuBtn').addEventListener('click', () => $('menuModal').showModal());
+  $('menuPhases').addEventListener('click', () => {
+    $('menuModal').close();
+    if (window.innerWidth <= 860) openSheet();
+    else $('timelineItems').scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+    showToast('Choose any stop along the timeline.');
+  });
+  $('menuReport').addEventListener('click', () => { $('menuModal').close(); openReport(); });
+  $('resetBtn').addEventListener('click', () => {
+    $('menuModal').close(); currentIndex = 0; chaos = phases[0].chaos; uncles = 0; dholBoosts = 0; djUpgrades = 0; app.classList.remove('dj-lit','lights-low'); lightsLow = false;
+    $('moodBtn').setAttribute('aria-pressed','false'); $('moodIcon').innerHTML = '<circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>'; $('uncleHint').textContent = 'One more has entered the frame';
+    currentIndex = 1; setPhase(0); closeAllDrawers(); updateScore(); showToast('Fresh sehra. Fresh start. Same family.');
+  });
+
+  document.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', () => {
+    const target = $(button.dataset.close);
+    target.close();
+    if (target.id === 'videoModal') $('youtubeFrame').src = 'about:blank';
+  }));
+  $('videoModal').addEventListener('close', () => $('youtubeFrame').src = 'about:blank');
+  $('copyReport').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(reportText()); showToast('Report copied. Send it to the family group.'); }
+    catch (e) { showToast('Clipboard unavailable here. Use Save as .txt instead.'); }
+  });
+  $('downloadReport').addEventListener('click', () => {
+    const blob = new Blob([reportText()], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob); const a = document.createElement('a');
+    a.href = url; a.download = 'shadi-ki-baraat-report.txt'; a.click(); URL.revokeObjectURL(url);
+  });
+  $('shareReport').addEventListener('click', async () => {
+    const data = {title:'My Shadi Ki Baraat Report', text:reportText(), url:location.href};
+    if (navigator.share) { try { await navigator.share(data); } catch (e) { /* user dismissed share sheet */ } }
+    else { try { await navigator.clipboard.writeText(reportText()); showToast('Share is not available here. Report copied instead.'); } catch (e) { showToast('Use Copy report to share your result.'); } }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+    if ($('videoModal').open || $('reportModal').open || $('menuModal').open) {
+      if (event.key === 'Escape') { $('videoModal').open && ($('youtubeFrame').src='about:blank'); }
+      return;
+    }
+    if (event.key === 'ArrowRight') nextSong(true);
+    if (event.key === 'ArrowLeft') prevSong(true);
+    if (event.key === 'ArrowUp') setPhase(Math.min(phases.length - 1, currentIndex + 1));
+    if (event.key === 'ArrowDown') setPhase(Math.max(0, currentIndex - 1));
+    if (event.key.toLowerCase() === 'z') {
+      const isZen = app.classList.toggle('zen-mode');
+      showToast(isZen ? 'Zen mode: full scene view' : 'Controls visible');
+    }
+    if (event.key === 'Escape') closeAllDrawers();
+  });
+})();
+</script>
+</body>
+</html>
