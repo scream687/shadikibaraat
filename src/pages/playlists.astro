@@ -19,13 +19,13 @@ const phaseTimes: Record<number, string> = {
 };
 
 const phaseImages: Record<number, string> = {
-  1: '/assets/01-baraat-wide.png',
-  2: '/assets/02-baraat-wide.png',
-  3: '/assets/03-baraat-wide.png',
-  4: '/assets/04-baraat-wide.png',
-  5: '/assets/05-baraat-wide.png',
-  6: '/assets/06-baraat-wide.png',
-  7: '/assets/07-baraat-wide.png'
+  1: '/assets/phase-sehra.webp',
+  2: '/assets/phase-nikli.webp',
+  3: '/assets/phase-gali.webp',
+  4: '/assets/phase-uncle.webp',
+  5: '/assets/phase-dj.webp',
+  6: '/assets/phase-entry.webp',
+  7: '/assets/phase-last-song.webp'
 };
 
 const jsonLd = {
@@ -51,7 +51,7 @@ const jsonLd = {
 >
   <!-- Background -->
   <div class="backdrop-container" aria-hidden="true">
-    <img id="pageBackdrop" class="backdrop-img" src="/assets/02-baraat-wide.png" alt="" />
+    <img id="pageBackdrop" class="backdrop-img" src="/assets/phase-nikli.webp" alt="" />
     <div class="backdrop-wash"></div>
     <div class="saloon-vignette"></div>
   </div>
@@ -73,7 +73,7 @@ const jsonLd = {
     <div class="playlist-grid" id="playlistGrid">
       {allPhases.map((phase) => {
         const timeStr = phaseTimes[phase.phase] || 'Night';
-        const imgPath = phaseImages[phase.phase] || '/assets/02-baraat-wide.png';
+        const imgPath = phaseImages[phase.phase] || '/assets/phase-nikli.webp';
         const sampleSongs = phase.songs.slice(0, 3);
 
         return (
@@ -165,24 +165,30 @@ const jsonLd = {
   </div>
 </BaseLayout>
 
-<script is:inline src="https://www.youtube.com/iframe_api"></script>
+<script is:inline>
+  // ponytail: load the YouTube API after first paint instead of blocking it
+  window.addEventListener('load', () => {
+    const load = () => { const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s); };
+    'requestIdleCallback' in window ? requestIdleCallback(load, { timeout: 2000 }) : setTimeout(load, 1);
+  });
+</script>
 
 <script define:vars={{ allSongs }}>
   (() => {
     'use strict';
 
     const phaseImages = {
-      1: '/assets/01-baraat-wide.png',
-      2: '/assets/02-baraat-wide.png',
-      3: '/assets/03-baraat-wide.png',
-      4: '/assets/04-baraat-wide.png',
-      5: '/assets/05-baraat-wide.png',
-      6: '/assets/06-baraat-wide.png',
-      7: '/assets/07-baraat-wide.png'
+      1: '/assets/phase-sehra.webp',
+      2: '/assets/phase-nikli.webp',
+      3: '/assets/phase-gali.webp',
+      4: '/assets/phase-uncle.webp',
+      5: '/assets/phase-dj.webp',
+      6: '/assets/phase-entry.webp',
+      7: '/assets/phase-last-song.webp'
     };
 
     function getPhaseImage(phaseNum) {
-      return phaseImages[phaseNum] || '/assets/02-baraat-wide.png';
+      return phaseImages[phaseNum] || '/assets/phase-nikli.webp';
     }
 
     const pageBackdrop = document.getElementById('pageBackdrop');
@@ -762,6 +768,10 @@ const jsonLd = {
     cursor: pointer;
     outline: none;
   }
+  .saloon-range:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 6px;
+  }
   .saloon-range::-webkit-slider-thumb {
     appearance: none;
     -webkit-appearance: none;
@@ -838,5 +848,9 @@ const jsonLd = {
     opacity: 0.001;
     pointer-events: none;
     z-index: -9999;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .player-art-img.spinning { animation: none; }
   }
 </style>

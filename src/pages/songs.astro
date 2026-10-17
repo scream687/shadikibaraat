@@ -31,7 +31,7 @@ const jsonLd = {
 >
   <!-- Background -->
   <div class="backdrop-container" aria-hidden="true">
-    <img id="pageBackdrop" class="backdrop-img" src="/assets/02-baraat-wide.png" alt="" />
+    <img id="pageBackdrop" class="backdrop-img" src="/assets/phase-nikli.webp" alt="" />
     <div class="backdrop-wash"></div>
     <div class="saloon-vignette"></div>
   </div>
@@ -56,7 +56,8 @@ const jsonLd = {
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="searchInput" class="search-input" placeholder="Search by song name, singer, film, or phase..." autocomplete="off" spellcheck="false" />
+        <label for="searchInput" class="sr-only">Search songs</label>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search songs, singers, films…" autocomplete="off" spellcheck="false" />
         <button id="searchClear" class="search-clear" aria-label="Clear search">✕</button>
       </div>
 
@@ -210,24 +211,30 @@ const jsonLd = {
   </dialog>
 </BaseLayout>
 
-<script is:inline src="https://www.youtube.com/iframe_api"></script>
+<script is:inline>
+  // ponytail: load the YouTube API after first paint instead of blocking it
+  window.addEventListener('load', () => {
+    const load = () => { const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s); };
+    'requestIdleCallback' in window ? requestIdleCallback(load, { timeout: 2000 }) : setTimeout(load, 1);
+  });
+</script>
 
 <script define:vars={{ allSongs }}>
   (() => {
     'use strict';
 
     const phaseBackdrops = {
-      1: '/assets/01-baraat-wide.png',
-      2: '/assets/02-baraat-wide.png',
-      3: '/assets/03-baraat-wide.png',
-      4: '/assets/04-baraat-wide.png',
-      5: '/assets/05-baraat-wide.png',
-      6: '/assets/06-baraat-wide.png',
-      7: '/assets/07-baraat-wide.png'
+      1: '/assets/phase-sehra.webp',
+      2: '/assets/phase-nikli.webp',
+      3: '/assets/phase-gali.webp',
+      4: '/assets/phase-uncle.webp',
+      5: '/assets/phase-dj.webp',
+      6: '/assets/phase-entry.webp',
+      7: '/assets/phase-last-song.webp'
     };
 
     function getPhaseBackdrop(phaseNum) {
-      return phaseBackdrops[phaseNum] || '/assets/02-baraat-wide.png';
+      return phaseBackdrops[phaseNum] || '/assets/phase-nikli.webp';
     }
 
     let currentSongIndex = 0;
@@ -1051,6 +1058,10 @@ const jsonLd = {
     cursor: pointer;
     outline: none;
   }
+  .saloon-range:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 6px;
+  }
   .saloon-range::-webkit-slider-thumb {
     appearance: none;
     -webkit-appearance: none;
@@ -1200,5 +1211,9 @@ const jsonLd = {
     font-size: 12px;
     color: var(--sand-50);
     margin-top: 12px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .player-art-img.spinning, .song-eq span { animation: none; }
   }
 </style>

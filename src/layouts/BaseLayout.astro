@@ -15,7 +15,7 @@ const {
   title,
   description = "The definitive Indian wedding baraat archive, curated 7-phase procession playlists, 140 hand-picked tracks, and cultural guide.",
   canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://shadikibaraat.com').href,
-  ogImage = '/og/og-home.png',
+  ogImage = '/og/og-home.jpg',
   jsonLd,
   bodyClass = '',
 } = Astro.props;
@@ -49,13 +49,12 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="theme-color" content="#FF5A00" />
 
-    <!-- Fonts (Satoshi font family) -->
+    <!-- Fonts: Satoshi is self-hosted (global.css); Rozha One for Devanagari display -->
+    <link rel="preload" href="/assets/fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Rozha+One&display=swap" rel="stylesheet" />
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet" />
 
     {jsonLd && (
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
