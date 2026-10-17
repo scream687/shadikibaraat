@@ -132,14 +132,14 @@ const jsonLd = {
 
         <div class="player-center">
           <div class="player-title-row">
-            <span id="playerTrackTitle" class="player-track-title">Dulhe Ka Sehra</span>
+            <span id="playerTrackTitle" class="player-track-title">{allSongs[0].titleEn}</span>
             <span id="playerPhaseTag" class="phase-badge-pill">Phase 01</span>
           </div>
-          <p id="playerTrackArtist" class="player-track-artist">Nusrat Fateh Ali Khan · Dhadkan</p>
+          <p id="playerTrackArtist" class="player-track-artist">{allSongs[0].artist} · {allSongs[0].film}</p>
           
           <div class="scrub-wrap">
             <input type="range" id="seekSlider" class="saloon-range" min="0" max="100" value="0" aria-label="Seek track" />
-            <span id="playerTime" class="player-time">0:00 / 8:33</span>
+            <span id="playerTime" class="player-time">0:00 / {allSongs[0].duration}</span>
           </div>
         </div>
 

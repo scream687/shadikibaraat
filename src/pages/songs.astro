@@ -145,14 +145,14 @@ const jsonLd = {
         <!-- Center Metadata & Scrubber -->
         <div class="player-center">
           <div class="player-title-row">
-            <span id="playerTrackTitle" class="player-track-title">Dulhe Ka Sehra</span>
+            <span id="playerTrackTitle" class="player-track-title">{allSongs[0].titleEn}</span>
             <span id="playerPhaseTag" class="phase-badge-pill">Phase 01</span>
           </div>
-          <p id="playerTrackArtist" class="player-track-artist">Nusrat Fateh Ali Khan · Dhadkan</p>
+          <p id="playerTrackArtist" class="player-track-artist">{allSongs[0].artist} · {allSongs[0].film}</p>
           
           <div class="scrub-wrap">
             <input type="range" id="seekSlider" class="saloon-range" min="0" max="100" value="0" aria-label="Seek track" />
-            <span id="playerTime" class="player-time">0:00 / 8:33</span>
+            <span id="playerTime" class="player-time">0:00 / {allSongs[0].duration}</span>
           </div>
         </div>
 
@@ -195,7 +195,7 @@ const jsonLd = {
   <dialog id="videoDialog" class="video-dialog">
     <div class="dialog-header">
       <div>
-        <div id="dialogTitle" class="dialog-title">Dulhe Ka Sehra</div>
+        <div id="dialogTitle" class="dialog-title">{allSongs[0].titleEn}</div>
         <div id="dialogSubtitle" class="dialog-subtitle">Official YouTube Video</div>
       </div>
       <button id="dialogCloseBtn" class="dialog-close" type="button" aria-label="Close video">×</button>
