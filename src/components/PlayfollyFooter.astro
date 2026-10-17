@@ -9,18 +9,9 @@ const isHome = currentPath === '/' || currentPath === '';
 ---
 
 <footer class="playfolly-footer" id="baraatFooter" aria-label="Footer and cultural archive">
-  <!-- Warm Ambient Backlight & Centered Procession Scene -->
+  <!-- Warm ambient backlight -->
   <div class="footer-backdrop" aria-hidden="true">
     <div class="footer-ambient-radial"></div>
-    <div class="footer-center-scene">
-      <img
-        src="/assets/phase-nikli.webp"
-        alt="Baraat celebration illustration"
-        class="footer-center-img"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
   </div>
 
   <!-- Top Region: Action Pills, SEO Narrative & Quick Directory -->
@@ -53,15 +44,14 @@ const isHome = currentPath === '/' || currentPath === '';
         <button
           type="button"
           class="footer-pill footer-pill-dark"
-          id="footerReportBtn"
-          aria-label="View Baraat Report"
+          id="footerShareBtn"
         >
-          <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <line x1="4" y1="6" x2="20" y2="6"></line>
-            <line x1="4" y1="12" x2="20" y2="12"></line>
-            <line x1="4" y1="18" x2="20" y2="18"></line>
+          <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"></path>
+            <path d="M12 3v12"></path>
+            <path d="m7 8 5-5 5 5"></path>
           </svg>
-          <span>Baraat report</span>
+          <span id="footerShareLabel" aria-live="polite">Share</span>
         </button>
       </div>
 
@@ -102,6 +92,19 @@ const isHome = currentPath === '/' || currentPath === '';
     </div>
   </div>
 
+  <!-- Procession art, feathered into the glow, between the text and the title -->
+  <div class="footer-center-scene" aria-hidden="true">
+    <img
+      src="/assets/phase-nikli.webp"
+      alt=""
+      class="footer-center-img"
+      width="1672"
+      height="941"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+
   <!-- Bottom Monumental Typography -->
   <div class="footer-bottom-strap">
     <h2 class="footer-huge-title">Shadi ki baraat</h2>
@@ -126,22 +129,29 @@ const isHome = currentPath === '/' || currentPath === '';
     });
   }
 
-  // Handle Baraat Report action
-  const reportBtn = document.getElementById('footerReportBtn');
-  if (reportBtn) {
-    reportBtn.addEventListener('click', () => {
-      const reportModal = document.getElementById('reportModal') as any;
-      if (reportModal && typeof reportModal.showModal === 'function') {
-        reportModal.showModal();
-      } else {
-        window.location.href = '/#report';
-      }
-    });
-  }
+  // Share: native share sheet on phones, copy-link fallback elsewhere.
+  const shareBtn = document.getElementById('footerShareBtn');
+  const shareLabel = document.getElementById('footerShareLabel');
+  let shareTimer: ReturnType<typeof setTimeout> | undefined;
+  shareBtn?.addEventListener('click', async () => {
+    const url = location.href;
+    if (navigator.share) {
+      try { await navigator.share({ title: document.title, url }); } catch { /* dismissed */ }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      if (!shareLabel) return;
+      shareLabel.textContent = 'Link copied';
+      clearTimeout(shareTimer);
+      shareTimer = setTimeout(() => { shareLabel.textContent = 'Share'; }, 2000);
+    } catch { /* clipboard blocked: leave the button as is */ }
+  });
 </script>
 
 <style>
   .playfolly-footer {
+    --ink: #f7efd8;
     position: relative;
     width: 100%;
     margin-top: 0;
@@ -149,12 +159,10 @@ const isHome = currentPath === '/' || currentPath === '';
     box-sizing: border-box;
     background: #140704;
     overflow: hidden;
-    color: #ffffff;
+    color: var(--ink);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    min-height: clamp(440px, 64vh, 660px);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(247, 239, 216, 0.08);
   }
 
   /* Backdrop: Ambient Radial Glow & Centered Celebration Artwork */
@@ -165,46 +173,36 @@ const isHome = currentPath === '/' || currentPath === '';
     overflow: hidden;
   }
 
+  /* Warm glow, weighted right of centre so the art sits in the light, as in the reference. */
   .footer-ambient-radial {
     position: absolute;
-    left: 50%;
-    top: 44%;
-    width: 1300px;
-    height: 750px;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(
-      ellipse at center,
-      rgba(255, 90, 0, 0.38) 0%,
-      rgba(212, 60, 16, 0.22) 42%,
-      rgba(20, 7, 4, 0.85) 75%
-    );
-    filter: blur(48px);
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 60% at 62% 42%, rgba(255, 110, 30, 0.42) 0%, rgba(212, 70, 16, 0.2) 45%, transparent 80%),
+      radial-gradient(ellipse 80% 70% at 30% 20%, rgba(150, 60, 20, 0.28) 0%, transparent 70%),
+      linear-gradient(180deg, rgba(20, 7, 4, 0) 55%, #140704 100%);
   }
 
+  /* In flow between the text and the title, so it never sits under either. Every edge dissolves into the glow. */
   .footer-center-scene {
-    position: absolute;
-    left: 50%;
-    top: 52%;
-    transform: translate(-50%, -48%);
-    width: min(840px, 86vw);
-    height: min(460px, 54vh);
+    position: relative;
     z-index: 1;
+    align-self: center;
+    width: min(1040px, 72vw);
+    aspect-ratio: 16 / 9;
+    margin-top: clamp(-120px, -8vw, -40px);
     pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    mask-image: radial-gradient(ellipse 72% 64% at 50% 50%, black 28%, transparent 90%);
-    -webkit-mask-image: radial-gradient(ellipse 72% 64% at 50% 50%, black 28%, transparent 90%);
+    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 45%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 45%, transparent 100%);
   }
 
   .footer-center-img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 55%;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: high-quality;
-    opacity: 0.95;
+    object-position: center 60%;
+    filter: saturate(0.78) sepia(0.12) contrast(1.05) brightness(0.94);
   }
 
   /* Top Content Layout: 2 Columns Across Desktop */
@@ -254,7 +252,7 @@ const isHome = currentPath === '/' || currentPath === '';
   }
 
   .footer-pill-white {
-    background: #ffffff;
+    background: var(--ink);
     color: #120703;
   }
 
@@ -263,13 +261,13 @@ const isHome = currentPath === '/' || currentPath === '';
   }
 
   .footer-pill-dark {
-    background: rgba(255, 255, 255, 0.16);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.32);
+    background: rgba(247, 239, 216, 0.16);
+    color: var(--ink);
+    border: 1px solid rgba(247, 239, 216, 0.32);
   }
 
   .footer-pill-dark:hover {
-    background: rgba(255, 255, 255, 0.24);
+    background: rgba(247, 239, 216, 0.24);
   }
 
   .pill-icon {
@@ -298,7 +296,7 @@ const isHome = currentPath === '/' || currentPath === '';
     font-family: 'Satoshi', sans-serif;
     font-size: 13px;
     line-height: 1.55;
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(247, 239, 216, 0.88);
     margin: 0;
   }
 
@@ -310,7 +308,7 @@ const isHome = currentPath === '/' || currentPath === '';
   }
 
   .footer-statement a:hover {
-    color: #ffffff;
+    color: var(--ink);
   }
 
   /* Right Column: Return to Baraat & Clean 2-Row Directory */
@@ -327,9 +325,9 @@ const isHome = currentPath === '/' || currentPath === '';
     align-items: center;
     padding: 10px 22px;
     border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.16);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.32);
+    background: rgba(247, 239, 216, 0.16);
+    color: var(--ink);
+    border: 1px solid rgba(247, 239, 216, 0.32);
     font-family: 'Satoshi', sans-serif;
     font-size: 13px;
     font-weight: 600;
@@ -339,7 +337,7 @@ const isHome = currentPath === '/' || currentPath === '';
   }
 
   .footer-return-btn:hover {
-    background: rgba(255, 255, 255, 0.26);
+    background: rgba(247, 239, 216, 0.26);
     transform: translateY(-2px);
   }
 
@@ -362,14 +360,14 @@ const isHome = currentPath === '/' || currentPath === '';
     font-family: 'Satoshi', sans-serif;
     font-size: 13px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(247, 239, 216, 0.82);
     text-decoration: none;
     white-space: nowrap;
     transition: color 0.18s ease;
   }
 
   .directory-link:hover {
-    color: #ffffff;
+    color: var(--ink);
     text-decoration: underline;
   }
 
@@ -378,7 +376,7 @@ const isHome = currentPath === '/' || currentPath === '';
     position: relative;
     z-index: 3;
     width: 100%;
-    margin: 28px 0 0;
+    margin: clamp(-90px, -6vw, -24px) 0 0;
     padding: 0;
     overflow: visible;
     line-height: 0.95;
@@ -393,27 +391,39 @@ const isHome = currentPath === '/' || currentPath === '';
     font-family: 'Satoshi', var(--font-display);
     font-weight: 900;
     font-size: clamp(48px, 13.8vw, 220px);
-    line-height: 0.95;
+    line-height: 0.8;
     letter-spacing: -0.04em;
     text-transform: none;
-    color: #ffffff;
+    color: var(--ink);
     margin: 0;
-    padding: 0 0 10px;
+    padding: 0;
+    /* Baseline sits on the footer's bottom edge. */
+    transform: translateY(0.02em);
     white-space: nowrap;
     display: block;
-    transform: none;
-    text-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
     width: 100%;
     text-align: center;
   }
 
+  /* Pages with a fixed bottom player (/songs, /playlists): keep the title clear of it. */
+  :global(body:has(.player-dock-wrap)) .playfolly-footer {
+    padding-bottom: var(--dock-clearance, 128px);
+  }
+
   /* Mobile Responsive Refinements */
   @media (max-width: 860px) {
     .playfolly-footer {
-      padding: 32px 18px max(32px, env(safe-area-inset-bottom, 32px));
-      min-height: auto;
-      gap: 28px;
+      padding: 32px 18px env(safe-area-inset-bottom, 0px);
+    }
+
+    .footer-center-scene {
+      width: calc(100% + 36px);
+      margin: 8px -18px 0;
+      aspect-ratio: 4 / 3;
+      align-self: stretch;
+      mask-image: radial-gradient(ellipse 55% 50% at 50% 50%, #000 40%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 55% 50% at 50% 50%, #000 40%, transparent 100%);
     }
 
     .footer-top-row {
@@ -444,14 +454,12 @@ const isHome = currentPath === '/' || currentPath === '';
     }
 
     .footer-bottom-strap {
-      margin-top: 20px;
+      margin-top: -10vw;
     }
 
     .footer-huge-title {
-      font-size: clamp(34px, 11vw, 68px);
-      line-height: 1.05;
-      padding-bottom: 8px;
-      letter-spacing: -0.03em;
+      font-size: 12.8vw;
+      letter-spacing: -0.035em;
     }
   }
 </style>

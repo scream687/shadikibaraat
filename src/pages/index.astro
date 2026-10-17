@@ -60,6 +60,7 @@ const jsonLd = {
 
     <!-- Deluxe Saloon Top Header -->
     <header class="site-header">
+      <time class="header-time" id="headerTime"></time>
       <div class="header-actions">
         <button class="icon-button" id="zenBtn" type="button" aria-label="Toggle scene view" title="Toggle scene view">
           <svg class="mini-icon" viewBox="0 0 24 24" fill="none"><path d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -73,6 +74,7 @@ const jsonLd = {
     <main id="top">
       <!-- Centered Brand Logo (Shadi Ki Baraat) -->
       <div class="hero-logo-wrap">
+        <svg width="0" height="0" aria-hidden="true" style="position:absolute"><filter id="inkCream" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0.969  0 0 0 0 0.937  0 0 0 0 0.847  0 0 0 1 0"/></filter></svg>
         <img src="/assets/logo-white.webp" alt="शादी Ki बारात" class="hero-logo-img" width="923" height="603" fetchpriority="high" />
       </div>
 
@@ -80,7 +82,6 @@ const jsonLd = {
       <div class="bottom-left-dock">
         <section class="story-block" aria-live="polite" aria-atomic="true">
           <h1 class="sr-only">Your Baraat Playlist, From Groom Entry to Afterparty</h1>
-          <p class="kicker" id="phaseKicker">PHASE 02 · DUSK · 6:30 PM</p>
           <p class="story-headline" id="phaseHeadline">Baraat nikli.</p>
           <p class="story-body" id="phaseBody">The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.</p>
         </section>
@@ -139,16 +140,12 @@ const jsonLd = {
           </nav>
         </div>
         <div class="timeline">
-          <div class="timeline-topline"><span>THE NIGHT, IN SEVEN STOPS</span><span>Pick a moment</span></div>
           <div class="timeline-items" id="timelineItems" role="tablist" aria-label="Baraat phases"></div>
         </div>
       </div>
 
       <!-- Mobile Low-Density Floating Dock -->
       <div class="mobile-dock" id="mobileDock">
-        <div class="mobile-timeline-bar" id="mobileTimelineBar">
-          <div class="mobile-timeline-track" id="mobileDots" role="tablist" aria-label="Baraat phases"></div>
-        </div>
         <div class="mobile-bar" id="mobileBar">
           <!-- Mobile Spinning Vinyl Cover -->
           <div class="vinyl-wrap mobile-vinyl" id="mVinylWrap" title="Click to view full video">
@@ -185,6 +182,9 @@ const jsonLd = {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.5 2.5 0 0 0-1.76-1.77C18.26 5 12 5 12 5s-6.26 0-7.82.42A2.5 2.5 0 0 0 2.42 7.19 26.07 26.07 0 0 0 2 12a26.07 26.07 0 0 0 .42 4.81 2.5 2.5 0 0 0 1.76 1.77C5.74 19 12 19 12 19s6.26 0 7.82-.42a2.5 2.5 0 0 0 1.76-1.77A26.07 26.07 0 0 0 22 12a26.07 26.07 0 0 0-.42-4.81zM9.75 15.02V8.98L15 12l-5.25 3.02z"/></svg>
             </button>
           </div>
+        </div>
+        <div class="mobile-timeline-bar" id="mobileTimelineBar">
+          <div class="mobile-timeline-track" id="mobileDots" role="tablist" aria-label="Baraat phases"></div>
         </div>
       </div>
 
@@ -245,13 +245,13 @@ const jsonLd = {
 (() => {
   'use strict';
   const phases = [
-    { time:'5:30 PM', title:'Sehra Bandi', kicker:'PHASE 01 · EARLY EVENING · 5:30 PM', headline:'The groom is almost ready.', body:'A sehra is being adjusted for the fourth time. Someone is looking for the car keys. Phupaji has taken charge of the entire operation.', image:'/assets/phase-sehra.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Ainvayi Ainvayi', artist:'Salim-Sulaiman · Sunidhi Chauhan', video:'uvf0bsywl4A', chaos:8, songs: [] },
-    { time:'6:30 PM', title:'Baraat Nikli', kicker:'PHASE 02 · DUSK · 6:30 PM', headline:'Baraat nikli.', body:'The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.', image:'/assets/phase-nikli.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Gallan Goodiyaan', artist:'Shankar Mahadevan · Sukhwinder Singh · Yashita Sharma', video:'jCEdTq3j-0U', chaos:18, songs: [] },
-    { time:'7:30 PM', title:'Pehli Gali', kicker:'PHASE 03 · TWILIGHT · 7:30 PM', headline:'The road is now the dance floor.', body:'The lane is narrow, the baraat is 400 metres wide, and a scooter has become an honorary member of the procession.', image:'/assets/phase-gali.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'London Thumakda', artist:'Labh Janjua · Sonu Kakkar · Neha Kakkar', video:'udra3Mfw2oo', chaos:35, songs: [] },
-    { time:'8:30 PM', title:'Uncle Era', kicker:'PHASE 04 · PRIME TIME · 8:30 PM', headline:'The uncle has taken over.', body:'He removed his jacket. He loosened one button. He has made eye contact with the DJ. There is no stopping what comes next.', image:'/assets/phase-uncle.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Kala Chashma', artist:'Amar Arshi · Badshah · Neha Kakkar', video:'k4yXQkG2s1E', chaos:54, songs: [] },
-    { time:'9:30 PM', title:'DJ Ka Pralay', kicker:'PHASE 05 · NIGHT · 9:30 PM', headline:'The DJ has lost all restraint.', body:'The bass is negotiating with the power grid. Pink lights everywhere. Three cousins are doing the same move with three different levels of confidence.', image:'/assets/phase-dj.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Sauda Khara Khara', artist:'Diljit Dosanjh · Sukhbir', video:'LYEqeUr-158', chaos:76, songs: [] },
-    { time:'10:30 PM', title:'Dulhe Ki Entry', kicker:'PHASE 06 · LATE NIGHT · 10:30 PM', headline:'Everybody remember the groom?', body:'Phones go up. The parasol is perfectly positioned. For twelve seconds the entire family coordinates like a world-class production crew.', image:'/assets/phase-entry.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Tenu Leke', artist:'Sonu Nigam · Mahalakshmi Iyer', video:'Cu3QpWEfqgg', chaos:68, songs: [] },
-    { time:'12:00 AM', title:'Bas Ek Gaana Aur', kicker:'PHASE 07 · AFTER MIDNIGHT · 12:00 AM', headline:'The stove is still lit.', body:'The dhol is resting. The chai is not. A small group has discovered one more song, and the DJ has accepted the challenge personally.', image:'/assets/phase-last-song.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Choo Lo', artist:'The Local Train · Raman Negi', video:'sFMRqxCexDk', chaos:22, songs: [] }
+    { time:'5:30 PM', title:'Sehra Bandi', headline:'The groom is almost ready.', body:'A sehra is being adjusted for the fourth time. Someone is looking for the car keys. Phupaji has taken charge of the entire operation.', image:'/assets/phase-sehra.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Ainvayi Ainvayi', artist:'Salim-Sulaiman · Sunidhi Chauhan', video:'uvf0bsywl4A', chaos:8, songs: [] },
+    { time:'6:30 PM', title:'Baraat Nikli', headline:'Baraat nikli.', body:'The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.', image:'/assets/phase-nikli.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Gallan Goodiyaan', artist:'Shankar Mahadevan · Sukhwinder Singh · Yashita Sharma', video:'jCEdTq3j-0U', chaos:18, songs: [] },
+    { time:'7:30 PM', title:'Pehli Gali', headline:'The road is now the dance floor.', body:'The lane is narrow, the baraat is 400 metres wide, and a scooter has become an honorary member of the procession.', image:'/assets/phase-gali.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'London Thumakda', artist:'Labh Janjua · Sonu Kakkar · Neha Kakkar', video:'udra3Mfw2oo', chaos:35, songs: [] },
+    { time:'8:30 PM', title:'Uncle Era', headline:'The uncle has taken over.', body:'He removed his jacket. He loosened one button. He has made eye contact with the DJ. There is no stopping what comes next.', image:'/assets/phase-uncle.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Kala Chashma', artist:'Amar Arshi · Badshah · Neha Kakkar', video:'k4yXQkG2s1E', chaos:54, songs: [] },
+    { time:'9:30 PM', title:'DJ Ka Pralay', headline:'The DJ has lost all restraint.', body:'The bass is negotiating with the power grid. Pink lights everywhere. Three cousins are doing the same move with three different levels of confidence.', image:'/assets/phase-dj.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Sauda Khara Khara', artist:'Diljit Dosanjh · Sukhbir', video:'LYEqeUr-158', chaos:76, songs: [] },
+    { time:'10:30 PM', title:'Dulhe Ki Entry', headline:'Everybody remember the groom?', body:'Phones go up. The parasol is perfectly positioned. For twelve seconds the entire family coordinates like a world-class production crew.', image:'/assets/phase-entry.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Tenu Leke', artist:'Sonu Nigam · Mahalakshmi Iyer', video:'Cu3QpWEfqgg', chaos:68, songs: [] },
+    { time:'12:00 AM', title:'Bas Ek Gaana Aur', headline:'The stove is still lit.', body:'The dhol is resting. The chai is not. A small group has discovered one more song, and the DJ has accepted the challenge personally.', image:'/assets/phase-last-song.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Choo Lo', artist:'The Local Train · Raman Negi', video:'sFMRqxCexDk', chaos:22, songs: [] }
   ];
 
   // Merge full 20 songs per phase from window.BARAAT_DATA
@@ -613,11 +613,14 @@ const jsonLd = {
     }
   }
 
+  // '6:30 PM' -> '6:30pm', '12:00 AM' -> '12am'
+  const shortTime = (t: string) => t.replace(/:00/, '').replace(/\s*(AM|PM)/i, (_, m) => m.toLowerCase());
+
   function buildTimeline() {
     const root = $('timelineItems');
     const dotsRoot = $('mobileDots');
-    if (root) root.innerHTML = '';
-    if (dotsRoot) dotsRoot.innerHTML = '';
+    if (root) root.innerHTML = '<span class="rail-fill" aria-hidden="true"></span>';
+    if (dotsRoot) dotsRoot.innerHTML = '<span class="rail-fill" aria-hidden="true"></span>';
 
     phases.forEach((phase, index) => {
       if (root) {
@@ -629,7 +632,7 @@ const jsonLd = {
         button.setAttribute('aria-controls', 'top');
         button.setAttribute('aria-label', `${phase.time}, ${phase.title}`);
         button.dataset.phase = String(index);
-        button.innerHTML = `<span class="stop-dot"></span><span class="phase-time">${phase.time}</span><span class="phase-name">${phase.title}</span>`;
+        button.innerHTML = `<span class="stop-dot"></span><span class="phase-time">${shortTime(phase.time)}</span>`;
         button.addEventListener('click', () => setPhase(index));
         root.appendChild(button);
       }
@@ -641,14 +644,34 @@ const jsonLd = {
         stopBtn.setAttribute('role', 'tab');
         stopBtn.setAttribute('aria-selected', index === currentIndex ? 'true' : 'false');
         stopBtn.setAttribute('aria-label', `${phase.title} at ${phase.time}`);
-        const shortTime = phase.time.replace(/\s*PM/i, 'p').replace(/\s*AM/i, 'a').replace(/:00/g, '').toLowerCase();
         stopBtn.innerHTML = `
           <span class="mobile-timeline-dot"></span>
-          <span class="mobile-timeline-time">${shortTime}</span>
+          <span class="mobile-timeline-time">${shortTime(phase.time)}</span>
         `;
         stopBtn.addEventListener('click', () => setPhase(index));
         dotsRoot.appendChild(stopBtn);
       }
+    });
+  }
+
+  // Marks active/past stops, updates the counter, and fills each rail up to the active dot.
+  function syncTimeline() {
+    ['.phase-stop', '.mobile-timeline-stop'].forEach((sel) => {
+      document.querySelectorAll(sel).forEach((btn, i) => {
+        btn.classList.toggle('is-active', i === currentIndex);
+        btn.classList.toggle('is-past', i < currentIndex);
+        btn.setAttribute('aria-selected', i === currentIndex ? 'true' : 'false');
+      });
+    });
+    [['timelineItems', '.stop-dot'], ['mobileDots', '.mobile-timeline-dot']].forEach(([id, dotSel]) => {
+      const track = $(id);
+      const dot = track?.querySelector(`.is-active ${dotSel}`);
+      if (!track || !dot || !track.offsetWidth) return;
+      const inset = parseFloat(getComputedStyle(track).getPropertyValue('--rail-inset')) || 0;
+      const t = track.getBoundingClientRect();
+      const d = dot.getBoundingClientRect();
+      const ratio = (d.left + d.width / 2 - t.left - inset) / (t.width - inset * 2);
+      track.style.setProperty('--progress', String(Math.max(0, Math.min(1, ratio))));
     });
   }
 
@@ -698,18 +721,10 @@ const jsonLd = {
       window.history.replaceState(null, '', url);
     } catch (e) {}
 
-    if ($('phaseKicker')) $('phaseKicker')!.textContent = p.kicker;
     if ($('phaseHeadline')) $('phaseHeadline')!.textContent = p.headline;
     if ($('phaseBody')) $('phaseBody')!.textContent = p.body;
 
-    document.querySelectorAll('.phase-stop').forEach((btn, i) => {
-      btn.classList.toggle('is-active', i === index);
-      btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
-    });
-    document.querySelectorAll('.mobile-timeline-stop').forEach((btn, i) => {
-      btn.classList.toggle('is-active', i === index);
-      btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
-    });
+    syncTimeline();
 
     currentSongInPhase = 0;
     updateMusicUI(isPlaying);
@@ -741,7 +756,20 @@ const jsonLd = {
     ($('videoModal') as any)?.showModal();
   }
 
+  function updateClock() {
+    const el = $('headerTime');
+    if (!el) return;
+    const now = new Date();
+    el.textContent = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase().replace(/\s/g, ' ');
+    el.setAttribute('datetime', now.toISOString());
+  }
+  updateClock();
+  setInterval(updateClock, 15000);
+
   buildTimeline();
+  syncTimeline();
+  // Webfont swap shifts the columns; re-measure once everything has loaded.
+  window.addEventListener('load', syncTimeline);
   syncSceneSources();
 
   phases.forEach((_, i) => {
@@ -754,6 +782,7 @@ const jsonLd = {
 
   let lastWasMobile = window.innerWidth <= 860;
   window.addEventListener('resize', () => {
+    syncTimeline();
     const isMobile = window.innerWidth <= 860;
     if (isMobile !== lastWasMobile) {
       lastWasMobile = isMobile;
@@ -762,7 +791,6 @@ const jsonLd = {
   });
 
   const initP = phases[currentIndex];
-  if ($('phaseKicker')) $('phaseKicker')!.textContent = initP.kicker;
   if ($('phaseHeadline')) $('phaseHeadline')!.textContent = initP.headline;
   if ($('phaseBody')) $('phaseBody')!.textContent = initP.body;
 
@@ -892,7 +920,7 @@ const jsonLd = {
     margin-top: 0 !important;
   }
 
-  /* Ultra-delicate Analog Film Grain (Preserves 100% original master sharpness & detail) */
+  /* Film grain over the art, under the UI. Raster tile: an SVG turbulence filter re-renders and reads synthetic. */
   .grain {
     position: absolute;
     inset: 0;
@@ -900,11 +928,11 @@ const jsonLd = {
     height: 100%;
     z-index: -1;
     pointer-events: none;
-    background-image: var(--noise-pattern);
+    background-image: url('/assets/grain.webp');
     background-repeat: repeat;
-    background-size: 140px 140px;
+    background-size: 180px 180px;
     mix-blend-mode: overlay;
-    opacity: 0.08;
+    opacity: 0.22;
   }
 
   .scene-stack, .scene-image, .scene-wash, .vignette {
@@ -914,10 +942,12 @@ const jsonLd = {
     height: 100%;
   }
 
+  /* Muted, printed grade: the scenes read as a dusty poster, not a phone photo. */
   .scene-stack {
     z-index: -4;
     overflow: hidden;
     background: #0c1017;
+    filter: saturate(0.78) sepia(0.12) contrast(1.05) brightness(0.94);
   }
 
   @keyframes scene-in {
@@ -954,9 +984,11 @@ const jsonLd = {
   .scene-wash {
     z-index: -3;
     pointer-events: none;
+    /* Night settles from the bottom-left so the story and docks read without text shadows. */
     background:
       linear-gradient(180deg, rgba(5, 7, 10, 0.18) 0%, transparent 12%),
-      linear-gradient(0deg, rgba(5, 7, 10, 0.22) 0%, transparent 16%);
+      radial-gradient(ellipse 55% 60% at 0% 100%, rgba(10, 5, 3, 0.72) 0%, rgba(10, 5, 3, 0.45) 45%, transparent 75%),
+      linear-gradient(0deg, rgba(10, 5, 3, 0.88) 0%, rgba(10, 5, 3, 0.66) 24%, rgba(10, 5, 3, 0) 55%);
     transition: background 400ms ease;
   }
 
@@ -981,6 +1013,14 @@ const jsonLd = {
     box-sizing: border-box;
   }
 
+  .header-time {
+    justify-self: start;
+    font-size: 13px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: rgba(247, 239, 216, 0.85);
+  }
+
   .header-actions {
     justify-self: end;
     display: flex;
@@ -997,7 +1037,7 @@ const jsonLd = {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 8px 24px rgba(0,0,0,.2);
-    color: #ffffff;
+    color: var(--ink);
     display: grid;
     place-items: center;
     padding: 0;
@@ -1035,7 +1075,7 @@ const jsonLd = {
     display: block;
     user-select: none;
     pointer-events: auto;
-    filter: drop-shadow(0 6px 28px rgba(0, 0, 0, 0.45));
+    filter: url(#inkCream) drop-shadow(0 6px 28px rgba(0, 0, 0, 0.45));
     transition: transform 0.3s ease;
   }
 
@@ -1066,34 +1106,11 @@ const jsonLd = {
     animation: riseIn .45s ease both;
   }
 
-  /* Local scrim so the story text stays readable over any scene. */
-  .story-block::before {
-    content: '';
-    position: absolute;
-    inset: -48px -72px -32px -48px;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(ellipse at 30% 60%, rgba(13, 7, 5, 0.62) 0%, rgba(13, 7, 5, 0.38) 45%, rgba(13, 7, 5, 0) 75%);
-  }
-
   @keyframes riseIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .kicker {
-    font-family: var(--ui);
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin: 0 0 8px;
-    display: block;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.85);
-    opacity: 0.95;
-  }
 
   .story-headline {
     font-family: var(--display);
@@ -1103,8 +1120,7 @@ const jsonLd = {
     letter-spacing: -.02em;
     margin: 0 0 8px;
     max-width: 440px;
-    color: #ffffff;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.9);
+    color: var(--ink);
   }
 
   .story-body {
@@ -1112,10 +1128,9 @@ const jsonLd = {
     font-weight: 400;
     font-size: 14px;
     line-height: 1.5;
-    color: rgba(255, 255, 255, 0.92);
+    color: rgba(247, 239, 216, 0.92);
     margin: 0;
     max-width: 420px;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.85);
   }
 
   /* Music Capsule */
@@ -1202,11 +1217,10 @@ const jsonLd = {
     font-size: 15px;
     font-weight: 600;
     line-height: 1.25;
-    color: #ffffff;
+    color: var(--ink);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
     letter-spacing: -0.01em;
   }
 
@@ -1215,7 +1229,7 @@ const jsonLd = {
     font-size: 13px;
     font-weight: 400;
     line-height: 1.3;
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(247, 239, 216, 0.72);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1244,7 +1258,7 @@ const jsonLd = {
   .progress-fill {
     height: 100%;
     width: 100%;
-    background: #ffffff;
+    background: var(--ink);
     border-radius: 9999px;
     transform: scaleX(0);
     transform-origin: left center;
@@ -1259,7 +1273,7 @@ const jsonLd = {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: #ffffff;
+    background: var(--ink);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
     opacity: 0;
     transition: opacity 0.15s;
@@ -1281,7 +1295,7 @@ const jsonLd = {
     font-family: var(--ui);
     font-size: 12px;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(247, 239, 216, 0.65);
     font-variant-numeric: tabular-nums;
     margin-top: 2px;
     text-align: left;
@@ -1301,7 +1315,7 @@ const jsonLd = {
     border-radius: 50%;
     border: none;
     background: transparent;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(247, 239, 216, 0.85);
     display: grid;
     place-items: center;
     cursor: pointer;
@@ -1311,7 +1325,7 @@ const jsonLd = {
 
   .player-ctrl-btn:hover {
     background: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
+    color: var(--ink);
   }
 
   .player-ctrl-btn:active {
@@ -1323,7 +1337,7 @@ const jsonLd = {
     height: 44px;
     border-radius: 50%;
     border: none;
-    background: #ffffff;
+    background: var(--ink);
     color: #000000;
     display: grid;
     place-items: center;
@@ -1335,7 +1349,7 @@ const jsonLd = {
 
   .player-play-btn:hover {
     transform: scale(1.06);
-    background: #ffffff;
+    background: var(--ink);
   }
 
   .player-play-btn:active {
@@ -1351,7 +1365,7 @@ const jsonLd = {
     border-radius: 9999px;
     border: 1px solid rgba(255, 255, 255, 0.25);
     background: rgba(255, 255, 255, 0.12);
-    color: #ffffff;
+    color: var(--ink);
     font-family: var(--ui);
     font-size: 12px;
     font-weight: 600;
@@ -1385,7 +1399,7 @@ const jsonLd = {
     flex-direction: column;
     align-items: flex-end;
     gap: 10px;
-    width: min(520px, calc(50vw - 36px));
+    width: auto;
     box-sizing: border-box;
     transition: opacity .3s, transform .3s;
   }
@@ -1394,7 +1408,7 @@ const jsonLd = {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 10px;
     box-sizing: border-box;
   }
@@ -1424,7 +1438,7 @@ const jsonLd = {
   }
 
   .dock-chip.active {
-    background: #ffffff;
+    background: var(--ink);
     color: #111111;
     font-weight: 600;
     border: 1px solid #ffffff;
@@ -1434,7 +1448,7 @@ const jsonLd = {
 
   .dock-chip:not(.active) {
     background: rgba(36, 20, 16, 0.65);
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(247, 239, 216, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.22);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -1443,76 +1457,58 @@ const jsonLd = {
 
   .dock-chip:not(.active):hover {
     background: rgba(75, 36, 28, 0.85);
-    color: #ffffff;
+    color: var(--ink);
     border-color: rgba(255, 255, 255, 0.38);
     transform: translateY(-1px);
   }
 
-  .timeline {
-    position: relative;
-    width: 100%;
-    min-height: 86px;
-    padding: 10px 20px 12px;
-    border-radius: 28px;
-    background: linear-gradient(90deg, rgba(62, 38, 30, 0.88) 0%, rgba(98, 48, 36, 0.85) 55%, rgba(126, 46, 32, 0.82) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(28px) saturate(160%);
-    -webkit-backdrop-filter: blur(28px) saturate(160%);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    box-sizing: border-box;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+  /* Timeline: a bare row of stops on the art, the rail filling up to the active one. */
+  .app { --rail-accent: #ff6e30; --ink: #f7efd8; }
 
-  .timeline-topline {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 12px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.75);
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    margin: 0 0 6px;
-    line-height: 1;
+  .timeline {
+    --rail-inset: 31px;
+    width: auto;
   }
 
   .timeline-items {
     position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 4px;
-    align-items: flex-start;
+    display: flex;
   }
 
-  .timeline-items:before {
+  .timeline-items::before,
+  .rail-fill {
     content: '';
     position: absolute;
-    left: 10px;
-    right: 10px;
-    top: 8px;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.22);
-    z-index: 0;
+    left: var(--rail-inset);
+    right: var(--rail-inset);
+    top: 9px;
+    height: 2px;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .timeline-items::before { background: rgba(247, 239, 216, 0.28); }
+
+  .rail-fill {
+    background: linear-gradient(90deg, rgba(255, 110, 48, 0.5), var(--rail-accent));
+    transform-origin: left center;
+    transform: scaleX(var(--progress, 0));
+    transition: transform 400ms cubic-bezier(.16, 1, .3, 1);
   }
 
   .phase-stop {
+    position: relative;
     z-index: 1;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    min-width: 0;
-    text-align: left;
+    width: 62px;
+    min-height: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 0 0;
     background: transparent;
     border: 0;
-    color: rgba(255, 255, 255, 0.65);
-    padding: 0 4px;
-    gap: 3px;
+    border-radius: 8px;
     cursor: pointer;
     outline: none;
     -webkit-appearance: none;
@@ -1520,64 +1516,47 @@ const jsonLd = {
   }
 
   .phase-stop:focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--rail-accent);
     outline-offset: 2px;
-    border-radius: 4px;
   }
 
   .stop-dot {
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    background: rgba(45, 22, 16, 0.85);
-    margin: 4px 0 3px 4px;
-    transition: all .25s;
-    display: block;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(247, 239, 216, 0.7);
+    background: rgb(26, 14, 9);
+    transition: transform .25s cubic-bezier(.16, 1, .3, 1), background-color .25s, border-color .25s, box-shadow .25s;
+  }
+
+  .phase-stop.is-past .stop-dot {
+    background: var(--rail-accent);
+    border-color: var(--rail-accent);
   }
 
   .phase-time {
     font-size: 12px;
     font-weight: 500;
     white-space: nowrap;
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(247, 239, 216, 0.66);
     font-variant-numeric: tabular-nums;
-    line-height: 1.1;
-    display: block;
-    margin-bottom: 2px;
-  }
-
-  .phase-name {
-    font-size: 12px;
-    font-weight: 600;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-    max-width: 100%;
-    text-wrap: balance;
-    color: rgba(255, 255, 255, 0.88);
-    line-height: 1.15;
+    line-height: 1;
     transition: color .2s;
   }
 
-  .phase-stop:hover .stop-dot {
-    border-color: #ffffff;
-    transform: scale(1.2);
-  }
+  .phase-stop:hover .phase-time { color: var(--ink); }
+  .phase-stop:hover .stop-dot { border-color: var(--ink); transform: scale(1.15); }
 
   .phase-stop.is-active .stop-dot {
-    width: 12px;
-    height: 12px;
-    margin: 2px 0 1px 2px;
-    background: #ffffff;
-    border-color: #e5b061;
-    box-shadow: 0 0 0 3px rgba(229, 176, 97, 0.35), 0 0 14px rgba(229, 176, 97, 0.6);
+    background: var(--ink);
+    border: 3px solid var(--rail-accent);
+    transform: scale(1.25);
+    box-shadow: 0 0 0 4px rgba(255, 110, 48, 0.25), 0 0 14px rgba(255, 110, 48, 0.55);
   }
 
-  .phase-stop.is-active .phase-time,
-  .phase-stop.is-active .phase-name {
-    color: #ffffff;
+  .phase-stop.is-active .phase-time {
+    color: var(--ink);
     font-weight: 700;
   }
 
@@ -1600,7 +1579,7 @@ const jsonLd = {
     border: 1px solid var(--line);
     border-radius: 24px;
     padding: 0;
-    color: #ffffff;
+    color: var(--ink);
     background: rgba(14,15,18,.95);
     backdrop-filter: blur(28px);
     box-shadow: 0 25px 120px rgba(0,0,0,.65);
@@ -1609,7 +1588,7 @@ const jsonLd = {
   .modal-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-bottom: 1px solid var(--line); }
   .modal-title { font-family: var(--display); font-size: 24px; font-weight: 700; line-height: 1; }
   .modal-subtitle { color: var(--dim); font-size: 12px; margin-top: 4px; }
-  .close-button { border: 1px solid var(--line); background: rgba(255,255,255,.05); color: #ffffff; height: 36px; width: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; cursor: pointer; }
+  .close-button { border: 1px solid var(--line); background: rgba(255,255,255,.05); color: var(--ink); height: 36px; width: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; cursor: pointer; }
   .video-frame { aspect-ratio: 16 / 9; width: 100%; background: #050505; overflow: hidden; }
   .video-frame iframe { border: 0; width: 100%; height: 100%; display: block; }
   .modal-foot { padding: 16px 24px; display: flex; align-items: center; justify-content: flex-end; gap: 12px; font-size: 12px; color: var(--dim); }
@@ -1629,7 +1608,7 @@ const jsonLd = {
     left: 50%;
     transform: translate(-50%, 10px);
     padding: 10px 20px;
-    color: #ffffff;
+    color: var(--ink);
     background: rgba(14,15,18,.92);
     border: 1px solid var(--line);
     border-radius: 9999px;
@@ -1650,13 +1629,39 @@ const jsonLd = {
     .hero-logo-wrap { top: clamp(54px, 7.5vh, 84px); }
     .hero-logo-img { width: clamp(280px, 26vw, 380px); }
     .bottom-left-dock { left: 20px; bottom: 20px; width: calc(50vw - 28px); max-width: 440px; gap: 12px; }
-    .bottom-right-dock { right: 20px; bottom: 20px; width: calc(50vw - 28px); max-width: 440px; }
+    .bottom-right-dock { right: 20px; bottom: 20px; }
   }
 
   /* Mobile Layout */
   @media (max-width: 860px) {
-    .app { min-height: 100svh; height: 100svh; position: relative; }
+    /* Art takes the top of the screen; the story sits below it on the night's ground, never on the art. */
+    /* Two rows: the art takes whatever height the story and player leave, so the screen is always full. */
+    .app {
+      display: grid;
+      grid-template-rows: minmax(48svh, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr);
+      height: auto;
+      min-height: 100svh;
+      position: relative;
+      background: #140704;
+    }
+    .scene-stack, .scene-wash, .vignette { grid-row: 1 / 2; grid-column: 1; inset: 0; height: auto; }
     .scene-image { object-position: center 30%; }
+    .scene-wash {
+      background:
+        linear-gradient(180deg, rgba(5, 7, 10, 0.18) 0%, transparent 12%),
+        linear-gradient(0deg, #140704 0%, rgba(20, 7, 4, 0.7) 16%, rgba(20, 7, 4, 0) 42%);
+    }
+    /* Static, so the logo still positions against .app (the art), not this row. */
+    main {
+      grid-row: 2;
+      position: static;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: -48px;
+      padding: 0 16px max(24px, env(safe-area-inset-bottom, 24px));
+    }
     .site-header { padding: 16px; }
     .header-actions { gap: 6px; min-width: auto; }
     #zenBtn { display: none !important; }
@@ -1665,17 +1670,14 @@ const jsonLd = {
     .hero-logo-img { width: clamp(190px, 48vw, 260px); }
 
     .bottom-left-dock {
-      position: absolute;
-      left: 16px;
-      right: 16px;
+      position: relative;
+      inset: auto;
       width: auto;
-      max-width: min(400px, calc(100vw - 32px));
-      bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 144px);
+      max-width: none;
       z-index: 10;
       display: flex !important;
       flex-direction: column;
       gap: 0;
-      pointer-events: none;
     }
     .bottom-left-dock .story-block {
       pointer-events: auto;
@@ -1687,27 +1689,16 @@ const jsonLd = {
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
     }
-    .bottom-left-dock .kicker {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: .16em;
-      margin-bottom: 6px;
-      color: var(--gold);
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
-      opacity: 0.95;
-    }
     .bottom-left-dock .story-headline {
       font-size: clamp(24px, 6.2vw, 30px);
       margin: 0 0 6px;
-      color: #ffffff;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.95);
+      color: var(--ink);
     }
     .bottom-left-dock .story-body {
       font-size: 14px;
       line-height: 1.45;
       margin: 0;
-      color: rgba(255, 255, 255, 0.92);
-      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+      color: rgba(247, 239, 216, 0.92);
     }
     .bottom-left-dock .music-card {
       display: none !important;
@@ -1718,10 +1709,8 @@ const jsonLd = {
     }
 
     .mobile-dock {
-      position: absolute;
-      bottom: max(16px, env(safe-area-inset-bottom, 16px));
-      left: 16px;
-      right: 16px;
+      position: relative;
+      inset: auto;
       z-index: 10;
       display: flex;
       flex-direction: column;
@@ -1736,17 +1725,12 @@ const jsonLd = {
       width: 100%;
       max-width: 100%;
       position: relative;
-      padding: 8px 14px 7px;
-      background: linear-gradient(90deg, rgba(48, 28, 22, 0.88) 0%, rgba(76, 36, 28, 0.85) 55%, rgba(98, 36, 26, 0.82) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 9999px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      padding: 6px 0;
       pointer-events: auto;
       box-sizing: border-box;
     }
     .mobile-timeline-track {
+      --rail-inset: 17px;
       position: relative;
       width: 100%;
       display: flex;
@@ -1756,13 +1740,14 @@ const jsonLd = {
     .mobile-timeline-track::before {
       content: '';
       position: absolute;
-      left: 14px;
-      right: 14px;
-      top: 6px;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.22);
+      left: var(--rail-inset);
+      right: var(--rail-inset);
+      top: 4px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.18);
       z-index: 0;
     }
+    .mobile-timeline-track .rail-fill { top: 4px; z-index: 0; }
     .mobile-timeline-stop {
       position: relative;
       z-index: 1;
@@ -1797,12 +1782,12 @@ const jsonLd = {
     }
     .mobile-timeline-time {
       font-family: var(--ui);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.65);
+      color: rgba(247, 239, 216, 0.65);
       font-variant-numeric: tabular-nums;
       line-height: 1;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.03em;
       transition: color 0.18s;
       white-space: nowrap;
     }
@@ -1810,15 +1795,18 @@ const jsonLd = {
       border-color: #ffffff;
       transform: scale(1.15);
     }
+    .mobile-timeline-stop.is-past .mobile-timeline-dot {
+      background: var(--rail-accent);
+      border-color: var(--rail-accent);
+    }
     .mobile-timeline-stop.is-active .mobile-timeline-dot {
-      width: 12px;
-      height: 12px;
-      background: #ff6e30;
-      border: 2px solid #ffffff;
-      box-shadow: 0 0 0 3px rgba(255, 110, 48, 0.35), 0 0 14px rgba(255, 110, 48, 0.6);
+      background: var(--ink);
+      border: 2.5px solid var(--rail-accent);
+      transform: scale(1.3);
+      box-shadow: 0 0 0 3px rgba(255, 110, 48, 0.3), 0 0 14px rgba(255, 110, 48, 0.6);
     }
     .mobile-timeline-stop.is-active .mobile-timeline-time {
-      color: #ffffff;
+      color: var(--ink);
       font-weight: 700;
     }
 
@@ -1866,18 +1854,17 @@ const jsonLd = {
       font-size: 13px;
       font-weight: 600;
       line-height: 1.25;
-      color: #ffffff;
+      color: var(--ink);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     .mobile-phase-meta {
       font-family: var(--ui);
       font-size: 12px;
       font-weight: 400;
       line-height: 1.25;
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(247, 239, 216, 0.7);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1894,7 +1881,7 @@ const jsonLd = {
     }
     .mobile-time {
       font-size: 12px;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(247, 239, 216, 0.6);
       margin-top: 1px;
     }
     .mobile-player-controls {
@@ -1910,7 +1897,7 @@ const jsonLd = {
       border-radius: 50%;
       border: none;
       background: transparent;
-      color: rgba(255, 255, 255, 0.85);
+      color: rgba(247, 239, 216, 0.85);
       display: grid;
       place-items: center;
       cursor: pointer;
@@ -1922,7 +1909,7 @@ const jsonLd = {
       height: 44px;
       border-radius: 50%;
       border: none;
-      background: #ffffff;
+      background: var(--ink);
       color: #000000;
       display: grid;
       place-items: center;
@@ -1933,7 +1920,7 @@ const jsonLd = {
     }
     .mobile-play-btn:active { transform: scale(0.92); }
 
-    .toast { bottom: 90px; }
+    .toast { position: fixed; bottom: max(24px, env(safe-area-inset-bottom, 24px)); }
   }
 
   @media (max-width: 480px) {
@@ -1944,6 +1931,7 @@ const jsonLd = {
   /* Reduced motion: no spinning, falling or sliding; crossfades and colour changes stay. */
   @media (prefers-reduced-motion: reduce) {
     .vinyl-disc { animation: none; }
+    .rail-fill, .stop-dot, .mobile-timeline-dot { transition: none; }
     .story-block { animation-name: fadeIn; }
     .app.zen-mode .bottom-left-dock,
     .app.zen-mode .bottom-right-dock,
