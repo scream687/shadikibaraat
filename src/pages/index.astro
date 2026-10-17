@@ -201,34 +201,6 @@ const jsonLd = {
         <div id="ytAudioFrame"></div>
       </div>
 
-      <!-- Mobile Slide-Up Story Sheet -->
-      <div class="story-sheet-backdrop" id="sheetBackdrop"></div>
-      <div class="story-sheet" id="storySheet" aria-hidden="true">
-        <div class="sheet-handle-bar"><span class="sheet-handle"></span></div>
-        <div class="sheet-header">
-          <div class="sheet-phase-tag" id="sheetPhaseTag">DUSK · 6:30 PM</div>
-          <button class="sheet-close" id="sheetCloseBtn" type="button" aria-label="Close story sheet">×</button>
-        </div>
-        <h2 class="sheet-headline" id="sheetHeadline">Baraat nikli.</h2>
-        <p class="sheet-body" id="sheetBody">The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.</p>
-        
-        <div class="sheet-music-box">
-          <div class="sheet-song-row">
-            <div>
-              <strong id="sheetSongTitle">Gallan Goodiyaan</strong>
-              <span id="sheetSongArtist">Official video · T-Series</span>
-            </div>
-            <button class="sheet-yt-btn" id="sheetYtBtn" type="button">Watch Video</button>
-          </div>
-        </div>
-
-        <div class="sheet-timeline-label">SEVEN PHASES OF THE BARAAT</div>
-        <div class="sheet-timeline-list" id="sheetTimelineList"></div>
-
-        <div class="sheet-actions">
-          <button class="sheet-chaos-btn" id="sheetChaosBtn" type="button">+ Deploy Uncle / Boost Dhol (<span id="sheetChaosScore">18</span>% chaos)</button>
-        </div>
-      </div>
     </main>
 
     <div class="petal-layer" id="petalLayer" aria-hidden="true"></div>
@@ -517,11 +489,6 @@ const jsonLd = {
 
     const durStr = s.duration || '4:00';
     paintProgress(0, `0:00 / ${durStr}`);
-    if ($('trackTimeDisplay')) $('trackTimeDisplay')!.textContent = `0:00 / ${durStr}`;
-    if ($('mTrackTimeDisplay')) $('mTrackTimeDisplay')!.textContent = `0:00 / ${durStr}`;
-
-    if ($('sheetSongTitle')) $('sheetSongTitle')!.textContent = titleText;
-    if ($('sheetSongArtist')) $('sheetSongArtist')!.textContent = artistText;
 
     if ($('videoModalTitle')) $('videoModalTitle')!.textContent = `${titleText} · ${s.film || p.title}`;
     if ($('youtubeLink')) ($('youtubeLink') as HTMLAnchorElement).href = youtubeUrl(s.youtubeId);
@@ -690,10 +657,8 @@ const jsonLd = {
   function buildTimeline() {
     const root = $('timelineItems');
     const dotsRoot = $('mobileDots');
-    const sheetRoot = $('sheetTimelineList');
     if (root) root.innerHTML = '';
     if (dotsRoot) dotsRoot.innerHTML = '';
-    if (sheetRoot) sheetRoot.innerHTML = '';
 
     phases.forEach((phase, index) => {
       if (root) {
@@ -724,18 +689,6 @@ const jsonLd = {
         `;
         stopBtn.addEventListener('click', () => setPhase(index));
         dotsRoot.appendChild(stopBtn);
-      }
-
-      if (sheetRoot) {
-        const item = document.createElement('button');
-        item.type = 'button';
-        item.className = 'sheet-phase-item' + (index === currentIndex ? ' is-active' : '');
-        item.innerHTML = `<span><strong>${phase.title}</strong> <small style="color:rgba(255,255,255,.45);margin-left:6px">${phase.time}</small></span><span style="color:var(--gold);font-size:12px;font-family:var(--hindi)">${phase.hindi1} ${phase.hindi2}</span>`;
-        item.addEventListener('click', () => {
-          setPhase(index);
-          closeSheet();
-        });
-        sheetRoot.appendChild(item);
       }
     });
   }
@@ -790,10 +743,6 @@ const jsonLd = {
     if ($('phaseHeadline')) $('phaseHeadline')!.textContent = p.headline;
     if ($('phaseBody')) $('phaseBody')!.textContent = p.body;
 
-    if ($('sheetPhaseTag')) $('sheetPhaseTag')!.textContent = p.kicker;
-    if ($('sheetHeadline')) $('sheetHeadline')!.textContent = p.headline;
-    if ($('sheetBody')) $('sheetBody')!.textContent = p.body;
-
     document.querySelectorAll('.phase-stop').forEach((btn, i) => {
       btn.classList.toggle('is-active', i === index);
       btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
@@ -801,9 +750,6 @@ const jsonLd = {
     document.querySelectorAll('.mobile-timeline-stop').forEach((btn, i) => {
       btn.classList.toggle('is-active', i === index);
       btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
-    });
-    document.querySelectorAll('.sheet-phase-item').forEach((item, i) => {
-      item.classList.toggle('is-active', i === index);
     });
 
     chaos = Math.max(chaos, p.chaos);
@@ -816,7 +762,6 @@ const jsonLd = {
   function updateScore() {
     chaos = Math.max(0, Math.min(100, chaos));
     if ($('chaosLabel')) $('chaosLabel')!.textContent = `${chaos}% chaos`;
-    if ($('sheetChaosScore')) $('sheetChaosScore')!.textContent = String(chaos);
   }
 
   function showToast(message: string) {
@@ -869,16 +814,6 @@ const jsonLd = {
     updateScore();
   }
 
-  function openSheet() {
-    $('sheetBackdrop')?.classList.add('is-open');
-    $('storySheet')?.classList.add('is-open');
-    $('storySheet')?.setAttribute('aria-hidden', 'false');
-  }
-  function closeSheet() {
-    $('sheetBackdrop')?.classList.remove('is-open');
-    $('storySheet')?.classList.remove('is-open');
-    $('storySheet')?.setAttribute('aria-hidden', 'true');
-  }
 
   function openVideo() {
     if (isPlaying) {
@@ -968,7 +903,6 @@ const jsonLd = {
   $('mWatchYtBtn')?.addEventListener('click', (e) => { e.stopPropagation(); openVideo(); });
   $('vinylWrap')?.addEventListener('click', openVideo);
   $('mVinylWrap')?.addEventListener('click', openVideo);
-  $('sheetYtBtn')?.addEventListener('click', openVideo);
   $('quickResetBtn')?.addEventListener('click', () => $('resetBtn')?.click());
 
   function getTrackDuration() {
@@ -1010,12 +944,6 @@ const jsonLd = {
   setupSeek('progressWrap');
   setupSeek('mProgressWrap');
 
-  $('sheetCloseBtn')?.addEventListener('click', closeSheet);
-  $('sheetBackdrop')?.addEventListener('click', closeSheet);
-  $('sheetChaosBtn')?.addEventListener('click', () => {
-    closeSheet();
-    doAction('uncle');
-  });
 
   $('zenBtn')?.addEventListener('click', () => {
     const isZen = app?.classList.toggle('zen-mode');
@@ -1049,7 +977,6 @@ const jsonLd = {
     if (icon) icon.innerHTML = '<circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
     currentIndex = 1;
     setPhase(0);
-    closeSheet();
     updateScore();
     showToast('Fresh sehra. Fresh start. Same family.');
   });
@@ -1104,13 +1031,10 @@ const jsonLd = {
     }
     if (event.key === 'ArrowRight') nextSong(true);
     if (event.key === 'ArrowLeft') prevSong(true);
-    if (event.key === 'ArrowUp') setPhase(Math.min(phases.length - 1, currentIndex + 1));
-    if (event.key === 'ArrowDown') setPhase(Math.max(0, currentIndex - 1));
     if (event.key.toLowerCase() === 'z') {
       const isZen = app?.classList.toggle('zen-mode');
       showToast(isZen ? 'Zen mode: full scene view' : 'Controls visible');
     }
-    if (event.key === 'Escape') closeSheet();
   });
 
   const dockAboutChip = $('dockAboutChip');
@@ -1253,7 +1177,8 @@ const jsonLd = {
     background: linear-gradient(180deg, rgba(7,3,10,.42) 0%, rgba(10,5,10,.1) 35%, rgba(7,3,11,.06) 65%, rgba(4,4,8,.55) 100%);
   }
 
-  .app.dhol-pulse {
+  /* Filter only the artwork, not the whole UI layer. */
+  .app.dhol-pulse .scene-stack {
     animation: lowPulse .62s ease-out;
   }
 
@@ -1926,7 +1851,6 @@ const jsonLd = {
   }
 
   .mobile-dock { display: none; }
-  .story-sheet-backdrop, .story-sheet { display: none; }
 
   .petal-layer { position: absolute; inset: 0; z-index: 7; pointer-events: none; overflow: hidden; }
   .petal { position: absolute; top: -35px; width: 9px; height: 13px; border-radius: 70% 20% 70% 20%; background: #efb65d; opacity: .9; animation: fall linear forwards; filter: drop-shadow(0 2px 3px rgba(0,0,0,.16)); }
@@ -2287,194 +2211,6 @@ const jsonLd = {
       transition: transform .15s;
     }
     .mobile-play-btn:active { transform: scale(0.92); }
-
-    /* Mobile Story Sheet */
-    .story-sheet-backdrop {
-      display: block;
-      position: fixed;
-      inset: 0;
-      z-index: 30;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .3s ease;
-    }
-    .story-sheet-backdrop.is-open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .story-sheet {
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 35;
-      max-height: 84svh;
-      padding: 14px 20px max(24px, env(safe-area-inset-bottom, 24px));
-      background: rgba(14, 16, 22, 0.95);
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 24px 24px 0 0;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 -16px 48px rgba(0, 0, 0, 0.6);
-      transform: translateY(105%);
-      transition: transform .35s cubic-bezier(0.16, 1, 0.3, 1);
-      box-sizing: border-box;
-      overflow-y: auto;
-    }
-    .story-sheet.is-open {
-      transform: translateY(0);
-    }
-
-    .sheet-handle-bar {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 12px;
-    }
-    .sheet-handle {
-      width: 36px;
-      height: 4px;
-      border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.28);
-    }
-
-    .sheet-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .sheet-phase-tag {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .sheet-close {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.06);
-      color: #ffffff;
-      display: grid;
-      place-items: center;
-      font-size: 18px;
-      cursor: pointer;
-      padding: 0;
-    }
-
-    .sheet-headline {
-      font-family: var(--display);
-      font-size: 24px;
-      font-weight: 600;
-      color: #ffffff;
-      margin: 0 0 8px;
-      line-height: 1.2;
-    }
-    .sheet-body {
-      font-size: 14px;
-      line-height: 1.55;
-      color: rgba(255, 255, 255, 0.75);
-      margin: 0 0 16px;
-    }
-
-    .sheet-music-box {
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      margin-bottom: 16px;
-    }
-    .sheet-song-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .sheet-song-row strong {
-      display: block;
-      font-size: 14px;
-      color: #ffffff;
-    }
-    .sheet-song-row span {
-      display: block;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.5);
-      margin-top: 2px;
-    }
-    .sheet-yt-btn {
-      height: 32px;
-      padding: 0 12px;
-      border-radius: 9999px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      background: rgba(255, 255, 255, 0.08);
-      color: #ffffff;
-      font-family: var(--ui);
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .sheet-timeline-label {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .15em;
-      color: rgba(255, 255, 255, 0.45);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .sheet-timeline-list {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-bottom: 16px;
-    }
-    .sheet-phase-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid transparent;
-      background: transparent;
-      color: rgba(255, 255, 255, 0.7);
-      font-family: var(--ui);
-      font-size: 13px;
-      text-align: left;
-      cursor: pointer;
-      transition: all .18s;
-    }
-    .sheet-phase-item.is-active {
-      background: rgba(229, 176, 97, 0.12);
-      border-color: rgba(229, 176, 97, 0.3);
-      color: #ffffff;
-      font-weight: 600;
-    }
-
-    .sheet-actions {
-      display: flex;
-      gap: 10px;
-    }
-    .sheet-chaos-btn {
-      width: 100%;
-      height: 42px;
-      border-radius: 9999px;
-      border: 1px solid rgba(229, 176, 97, 0.35);
-      background: rgba(229, 176, 97, 0.1);
-      color: var(--gold);
-      font-family: var(--ui);
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-    }
 
     .toast { bottom: 90px; }
   }
