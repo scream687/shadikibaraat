@@ -87,6 +87,7 @@ const isHome = currentPath === '/' || currentPath === '';
         <div class="directory-row">
           <a href="/baraat-songs-for-wedding-video/" class="directory-link">Wedding Video</a>
           <a href="/baraat-meaning/" class="directory-link">Baraat Meaning</a>
+          <button type="button" class="directory-link directory-link--button" data-consent-open>Cookie choices</button>
         </div>
       </nav>
     </div>
@@ -369,6 +370,13 @@ const isHome = currentPath === '/' || currentPath === '';
   .directory-link:hover {
     color: var(--ink);
     text-decoration: underline;
+  }
+
+  .directory-link--button {
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
   }
 
   /* Monumental Base Strap */

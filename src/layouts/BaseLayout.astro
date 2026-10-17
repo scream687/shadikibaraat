@@ -1,6 +1,7 @@
 ---
 // src/layouts/BaseLayout.astro
 import '../styles/global.css';
+import ConsentBanner from '../components/ConsentBanner.astro';
 
 interface Props {
   title: string;
@@ -29,6 +30,18 @@ const {
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      // Consent Mode v2: nothing is stored until the visitor allows it (see ConsentBanner)
+      gtag('consent', 'default', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+      });
+      try {
+        if (localStorage.getItem('sb-consent') === 'granted') {
+          gtag('consent', 'update', { analytics_storage: 'granted' });
+        }
+      } catch (e) {}
       gtag('js', new Date());
 
       gtag('config', 'G-2XVN91SRFK');
@@ -73,6 +86,7 @@ const {
   </head>
   <body class={bodyClass}>
     <slot />
+    <ConsentBanner />
 
     <!-- Lenis Smooth Scrolling Client Script -->
     <script>

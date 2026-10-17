@@ -1,0 +1,192 @@
+---
+// src/components/ConsentBanner.astro
+// Pairs with the Consent Mode defaults in BaseLayout: analytics stays denied until "Allow".
+// Any element with [data-consent-open] reopens the banner.
+---
+
+<aside class="consent" id="consentBanner" role="region" aria-labelledby="consentTitle" hidden>
+  <p class="consent-mark" lang="hi" aria-hidden="true">इजाज़त?</p>
+  <div class="consent-body">
+    <h2 class="consent-title" id="consentTitle">Can we count your visit?</h2>
+    <p class="consent-copy">
+      Google Analytics tells us which songs get the baraat dancing. No ads, nothing sold. Change your mind anytime from the footer.
+    </p>
+  </div>
+  <div class="consent-actions">
+    <button type="button" class="consent-btn consent-btn--deny" data-consent="denied">No thanks</button>
+    <button type="button" class="consent-btn consent-btn--allow" data-consent="granted">Allow</button>
+  </div>
+</aside>
+
+<script>
+  const KEY = 'sb-consent';
+  const banner = document.getElementById('consentBanner');
+
+  function read() {
+    try { return localStorage.getItem(KEY); } catch { return null; }
+  }
+
+  function show() {
+    if (!banner) return;
+    banner.hidden = false;
+    requestAnimationFrame(() => banner.classList.add('is-in'));
+  }
+
+  function hide() {
+    if (!banner) return;
+    banner.classList.remove('is-in');
+    // ponytail: fixed delay matches the CSS exit; transitionend misfires when motion is reduced
+    setTimeout(() => { banner.hidden = true; }, 260);
+  }
+
+  function choose(value: 'granted' | 'denied') {
+    try { localStorage.setItem(KEY, value); } catch {}
+    const gtag = (window as any).gtag;
+    if (typeof gtag === 'function') gtag('consent', 'update', { analytics_storage: value });
+    hide();
+  }
+
+  banner?.querySelectorAll<HTMLButtonElement>('[data-consent]').forEach((btn) => {
+    btn.addEventListener('click', () => choose(btn.dataset.consent as 'granted' | 'denied'));
+  });
+
+  document.addEventListener('click', (e) => {
+    const trigger = (e.target as Element | null)?.closest('[data-consent-open]');
+    if (!trigger) return;
+    e.preventDefault();
+    show();
+    banner?.querySelector<HTMLButtonElement>('.consent-btn--allow')?.focus({ preventScroll: true });
+  });
+
+  if (!read()) show();
+</script>
+
+<style>
+  .consent {
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    position: fixed;
+    z-index: 60;
+    left: 50%;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    width: min(560px, calc(100vw - 32px));
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'mark body'
+      'actions actions';
+    column-gap: 18px;
+    row-gap: 16px;
+    padding: 20px 20px 18px 22px;
+    background: rgba(18, 9, 6, 0.94);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    color: var(--sand);
+    font-family: var(--font-ui);
+    opacity: 0;
+    transform: translate(-50%, 16px);
+    transition: opacity 0.26s ease, transform 0.42s var(--ease-out-expo);
+  }
+
+  .consent.is-in {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .consent-mark {
+    grid-area: mark;
+    margin: 0;
+    padding-top: 2px;
+    font-family: var(--font-hindi);
+    font-size: 1.9rem;
+    line-height: 1;
+    color: var(--gold);
+    text-shadow: 0 2px 18px var(--gold-glow);
+  }
+
+  .consent-body {
+    grid-area: body;
+    min-width: 0;
+  }
+
+  .consent-title {
+    margin: 0 0 6px;
+    font-size: 1.02rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+
+  .consent-copy {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--sand-80);
+    text-wrap: pretty;
+  }
+
+  .consent-actions {
+    grid-area: actions;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .consent-btn {
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 9999px;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s var(--ease-out-expo);
+  }
+
+  .consent-btn:active { transform: scale(0.97); }
+
+  .consent-btn:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  .consent-btn--deny {
+    background: transparent;
+    border: 1px solid rgba(245, 237, 224, 0.22);
+    color: var(--sand);
+  }
+
+  .consent-btn--deny:hover {
+    border-color: rgba(229, 176, 97, 0.5);
+    background: rgba(245, 237, 224, 0.05);
+  }
+
+  .consent-btn--allow {
+    background: var(--gold);
+    border: 1px solid var(--gold);
+    color: #120703;
+  }
+
+  .consent-btn--allow:hover {
+    background: #eebd74;
+    border-color: #eebd74;
+  }
+
+  @media (max-width: 420px) {
+    .consent {
+      column-gap: 14px;
+      padding: 18px 16px 16px;
+    }
+    .consent-mark { font-size: 1.55rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .consent,
+    .consent.is-in { transform: translate(-50%, 0); }
+    .consent-btn:active { transform: none; }
+  }
+</style>
