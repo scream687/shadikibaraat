@@ -126,7 +126,7 @@ const jsonLd = {
     <div class="player-dock-inner">
       <div class="saloon-glass">
         <div class="player-art-wrap">
-          <img id="playerArt" class="player-art-img" src="https://i.ytimg.com/vi/8uUhxTs3UUQ/hqdefault.jpg" alt="" />
+          <img id="playerArt" class="player-art-img" src={allSongs[0].thumbnail} alt="" />
           <div class="player-art-center"></div>
         </div>
 
@@ -230,7 +230,7 @@ const jsonLd = {
         ytPlayer = new window.YT.Player('ytAudioPlayer', {
           height: '160',
           width: '160',
-          videoId: allSongs[0]?.youtubeId || '8uUhxTs3UUQ',
+          videoId: allSongs[0]?.youtubeId,
           playerVars: { autoplay: 0, controls: 0, disablekb: 1 },
           events: {
             onReady: () => {
