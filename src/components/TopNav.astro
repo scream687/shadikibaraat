@@ -11,10 +11,10 @@ const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 <nav class="top-nav" aria-label="Main Navigation">
   <div class="nav-links">
     <a href="/" class:list={['saloon-chip', { active: pathname === '/' }]}>Baraat</a>
-    <a href="/playlists" class:list={['saloon-chip', { active: pathname === '/playlists' }]}>Playlists</a>
-    <a href="/songs" class:list={['saloon-chip', { active: pathname === '/songs' }]}>Songs</a>
-    <a href="/baraat-meaning" class:list={['saloon-chip', { active: pathname === '/baraat-meaning' }]}>Meaning</a>
-    <a href="/baraat-entry-songs-for-groom" class:list={['saloon-chip', { active: pathname === '/baraat-entry-songs-for-groom' }]}>Groom Entry</a>
+    <a href="/playlists/" class:list={['saloon-chip', { active: pathname === '/playlists' }]}>Playlists</a>
+    <a href="/songs/" class:list={['saloon-chip', { active: pathname === '/songs' }]}>Songs</a>
+    <a href="/baraat-meaning/" class:list={['saloon-chip', { active: pathname === '/baraat-meaning' }]}>Meaning</a>
+    <a href="/baraat-entry-songs-for-groom/" class:list={['saloon-chip', { active: pathname === '/baraat-entry-songs-for-groom' }]}>Groom Entry</a>
   </div>
   {badge && (
     <div class="saloon-chip nav-badge">

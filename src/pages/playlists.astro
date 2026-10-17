@@ -31,9 +31,9 @@ const phaseImages: Record<number, string> = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "Baraat Playlist Hindi: 7 Curated Wedding Music Rotations",
+  "name": "Hindi Baraat Songs List: 7 Playlists for the Procession",
   "description": "Ready-to-use Hindi baraat playlists for Indian weddings across seven distinct chapters, from sehra bandi to afterparty.",
-  "url": "https://shadikibaraat.com/playlists",
+  "url": "https://shadikibaraat.com/playlists/",
   "isPartOf": {
     "@type": "WebSite",
     "name": "Shadi Ki Baraat",
@@ -43,9 +43,8 @@ const jsonLd = {
 ---
 
 <BaseLayout
-  title="Baraat Playlist Hindi: 7 Curated Wedding Music Rotations | Shadi Ki Baraat"
-  description="Find ready-to-use Hindi baraat playlists for your wedding procession. 7 curated phases from groom entry to the midnight afterparty in an ad-free interface."
-  canonicalURL="https://shadikibaraat.com/playlists"
+  title="Baraat Songs List Hindi: 7 Playlists for the Procession | Shadi Ki Baraat"
+  description="Discover Hindi baraat songs for the groom's procession: Bollywood favourites, classic tracks and high-energy dhol picks in 7 ready-to-play playlists, from groom entry to afterparty."
   ogImage="/og/og-playlists.jpg"
   jsonLd={jsonLd}
 >
@@ -62,10 +61,10 @@ const jsonLd = {
     <!-- Page Header -->
     <header class="page-header">
       <p class="header-badge">Ad-Free Baraat Playlists · 7 Phases · 140 Songs</p>
-      <h1 class="header-title-hi">फेज रोटेशन और बारात प्लेलिस्ट</h1>
-      <p class="header-subtitle-en">Baraat Playlist Hindi: 7 Curated Wedding Music Rotations</p>
+      <p class="header-title-hi" lang="hi">फेज रोटेशन और बारात प्लेलिस्ट</p>
+      <h1 class="header-subtitle-en">Hindi Baraat Songs List for the Wedding Procession</h1>
       <p class="header-desc">
-        The night unfolds in seven distinct chapters. Find the cleanest ready-to-use Hindi baraat playlists without advertisements cluttering your celebration. Looking for specific wedding moments? You can <a href="/baraat-entry-songs-for-groom" style="color:var(--gold);text-decoration:underline;">find songs for the groom's entry</a>, <a href="/old-hindi-baraat-songs" style="color:var(--gold);text-decoration:underline;">explore old Hindi baraat songs</a>, <a href="/songs" style="color:var(--gold);text-decoration:underline;">browse the baraat songs list</a>, or understand <a href="/baraat-meaning" style="color:var(--gold);text-decoration:underline;">what is a baraat</a>.
+        The night unfolds in seven distinct chapters. Find the cleanest ready-to-use Hindi baraat songs list and playlists without advertisements cluttering your celebration. Looking for specific wedding moments? You can <a href="/baraat-entry-songs-for-groom/" style="color:var(--gold);text-decoration:underline;">find songs for the groom's entry</a>, <a href="/old-hindi-baraat-songs/" style="color:var(--gold);text-decoration:underline;">explore old Hindi baraat songs</a>, <a href="/songs/" style="color:var(--gold);text-decoration:underline;">explore the Hindi shadi songs list</a>, or understand <a href="/baraat-meaning/" style="color:var(--gold);text-decoration:underline;">what is a baraat</a>.
       </p>
     </header>
 
@@ -102,7 +101,7 @@ const jsonLd = {
                   </svg>
                   Play Phase
                 </button>
-                <a href={`/songs?phase=${phase.phase}`} class="btn-view-phase">View 20 Songs</a>
+                <a href={`/songs/?phase=${phase.phase}`} class="btn-view-phase">View 20 Songs</a>
                 <a
                   href={`https://music.youtube.com/playlist?list=${phase.playlistId}`}
                   target="_blank"
