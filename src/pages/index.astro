@@ -60,14 +60,7 @@ const jsonLd = {
 
     <!-- Deluxe Saloon Top Header -->
     <header class="site-header">
-      <div class="header-time" id="headerTime">--:--</div>
       <div class="header-actions">
-        <button class="icon-button" id="headerPlayBtn" type="button" aria-label="Play soundtrack" title="Play soundtrack">
-          <svg class="mini-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-        </button>
-        <button class="icon-button" id="moodBtn" type="button" aria-pressed="false" aria-label="Toggle lights" title="Toggle lights">
-          <svg class="mini-icon" id="moodIcon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </button>
         <button class="icon-button" id="zenBtn" type="button" aria-label="Toggle scene view" title="Toggle scene view">
           <svg class="mini-icon" viewBox="0 0 24 24" fill="none"><path d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
@@ -144,7 +137,6 @@ const jsonLd = {
             <a href="/baraat-meaning" class="dock-chip">Meaning</a>
             <a href="#baraatFooter" class="dock-chip" id="dockAboutChip">About</a>
           </nav>
-          <button class="reset-pill-inline" id="quickResetBtn" type="button" title="Restart experience">↻ Start Over</button>
         </div>
         <div class="timeline">
           <div class="timeline-topline"><span>THE NIGHT, IN SEVEN STOPS</span><span>Pick a moment</span></div>
@@ -203,7 +195,6 @@ const jsonLd = {
 
     </main>
 
-    <div class="petal-layer" id="petalLayer" aria-hidden="true"></div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <dialog class="modal" id="videoModal" aria-labelledby="videoModalTitle">
@@ -218,33 +209,7 @@ const jsonLd = {
         <iframe id="youtubeFrame" title="Baraat soundtrack YouTube video" src="about:blank" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
       <div class="modal-foot">
-        <span>Playback starts only when you press play.</span>
         <a class="plain-link" id="youtubeLink" href="https://www.youtube.com/watch?v=jCEdTq3j-0U" target="_blank" rel="noopener noreferrer">Open on YouTube</a>
-      </div>
-    </dialog>
-
-    <dialog class="modal" id="reportModal" aria-labelledby="reportModalTitle">
-      <div class="modal-header">
-        <div>
-          <div class="modal-title" id="reportModalTitle">Official Baraat Report</div>
-          <div class="modal-subtitle">Filed under: “it got out of hand”</div>
-        </div>
-        <button class="close-button" data-close="reportModal" aria-label="Close report" type="button">×</button>
-      </div>
-      <div class="report-body">
-        <div class="report-score"><span id="reportScore">18</span><small> / 100 chaos</small></div>
-        <div class="report-headline" id="reportHeadline">A respectable start. Suspiciously respectable.</div>
-        <p class="report-copy" id="reportCopy">The band has started, people are smiling, and the DJ still believes this will finish on time.</p>
-        <div class="report-stats">
-          <div class="report-stat"><strong id="reportUncles">0</strong><span>Uncles deployed</span></div>
-          <div class="report-stat"><strong id="reportDhol">0</strong><span>Dhol boosts</span></div>
-          <div class="report-stat"><strong id="reportDJ">0</strong><span>DJ upgrades</span></div>
-        </div>
-        <div class="report-actions">
-          <button class="action-primary" id="copyReport" type="button">Copy report</button>
-          <button class="action-secondary" id="downloadReport" type="button">Save as .txt</button>
-          <button class="action-secondary" id="shareReport" type="button">Share report</button>
-        </div>
       </div>
     </dialog>
 
@@ -263,8 +228,6 @@ const jsonLd = {
         <a class="menu-row" href="/old-hindi-baraat-songs" style="text-decoration:none;display:flex;"><span>Old Hindi Baraat Classics<small>Golden era & 90s procession anthems</small></span></a>
         <a class="menu-row" href="/baraat-songs-for-wedding-video" style="text-decoration:none;display:flex;"><span>Wedding Video Baraat Tracks<small>Cinematic teasers and highlight songs</small></span></a>
         <a class="menu-row" href="/baraat-meaning" style="text-decoration:none;display:flex;"><span>What is a Baraat?<small>Rituals, customs, and procession history</small></span></a>
-        <button class="menu-row" id="menuReport" type="button"><span>Generate your Baraat Report<small>For the group chat and the family archive</small></span></button>
-        <button class="menu-row" id="resetBtn" type="button"><span>Start the baraat over<small>Everyone gets one last chance to behave</small></span><span class="menu-arrow">↻</span></button>
         <a class="menu-row" href="#baraatFooter" id="menuAboutRow" style="text-decoration:none;display:flex;"><span>About & Colophon<small>Design, story, rights & credits</small></span></a>
       </div>
     </dialog>
@@ -282,13 +245,13 @@ const jsonLd = {
 (() => {
   'use strict';
   const phases = [
-    { time:'5:30 PM', title:'Sehra Bandi', hindi1:'सेहरा', hindi2:'बंदी', kicker:'PHASE 01 · EARLY EVENING · 5:30 PM', headline:'The groom is almost ready.', body:'A sehra is being adjusted for the fourth time. Someone is looking for the car keys. Phupaji has taken charge of the entire operation.', quip:'“Photo achhi aani chahiye.” Nobody is allowed to blink.', micro:'EVERYONE IS A MANAGER', image:'/assets/phase-sehra.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Ainvayi Ainvayi', artist:'Salim-Sulaiman · Sunidhi Chauhan', video:'uvf0bsywl4A', caption:'Warm-up acoustic beats and family banter before the chaos starts.', chaos:8, songs: [] },
-    { time:'6:30 PM', title:'Baraat Nikli', hindi1:'बारात', hindi2:'निकली', kicker:'PHASE 02 · DUSK · 6:30 PM', headline:'Baraat nikli.', body:'The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.', quip:'“Bas, ab seedha venue.” Famous last words.', micro:'THE PROCESSION BEGINS', image:'/assets/phase-nikli.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Gallan Goodiyaan', artist:'Shankar Mahadevan · Sukhwinder Singh · Yashita Sharma', video:'jCEdTq3j-0U', caption:'The official procession anthem; brass horns, rolling dhol, and unrestrained joy.', chaos:18, songs: [] },
-    { time:'7:30 PM', title:'Pehli Gali', hindi1:'पहली', hindi2:'गली', kicker:'PHASE 03 · TWILIGHT · 7:30 PM', headline:'The road is now the dance floor.', body:'The lane is narrow, the baraat is 400 metres wide, and a scooter has become an honorary member of the procession.', quip:'“Gaadi side mein karo!” yelled by the man blocking the road.', micro:'TRAFFIC HAS JOINED THE PARTY', image:'/assets/phase-gali.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'London Thumakda', artist:'Labh Janjua · Sonu Kakkar · Neha Kakkar', video:'udra3Mfw2oo', caption:'Narrow street anthem; heavy percussions that bring every balcony to life.', chaos:35, songs: [] },
-    { time:'8:30 PM', title:'Uncle Era', hindi1:'अंकल का', hindi2:'जलवा', kicker:'PHASE 04 · PRIME TIME · 8:30 PM', headline:'The uncle has taken over.', body:'He removed his jacket. He loosened one button. He has made eye contact with the DJ. There is no stopping what comes next.', quip:'The knees are 52. The confidence is 19.', micro:'CAMERAS OUT. IMMEDIATELY.', image:'/assets/phase-uncle.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Kala Chashma', artist:'Amar Arshi · Badshah · Neha Kakkar', video:'k4yXQkG2s1E', caption:'High-voltage Punjabi groove for the uncle who just loosened his tie.', chaos:54, songs: [] },
-    { time:'9:30 PM', title:'DJ Ka Pralay', hindi1:'डीजे का', hindi2:'प्रलय', kicker:'PHASE 05 · NIGHT · 9:30 PM', headline:'The DJ has lost all restraint.', body:'The bass is negotiating with the power grid. Pink lights everywhere. Three cousins are doing the same move with three different levels of confidence.', quip:'“Volume aur badhao!” said from directly beside the speaker.', micro:'THE NEIGHBOURHOOD KNOWS', image:'/assets/phase-dj.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Sauda Khara Khara', artist:'Diljit Dosanjh · Sukhbir', video:'LYEqeUr-158', caption:'Earth-shattering bass and synthesizers; volume levels decided by family consensus.', chaos:76, songs: [] },
-    { time:'10:30 PM', title:'Dulhe Ki Entry', hindi1:'दूल्हे की', hindi2:'एंट्री', kicker:'PHASE 06 · LATE NIGHT · 10:30 PM', headline:'Everybody remember the groom?', body:'Phones go up. The parasol is perfectly positioned. For twelve seconds the entire family coordinates like a world-class production crew.', quip:'One cousin is still asking for the Wi-Fi password.', micro:'ALL EYES ON THE DULHA', image:'/assets/phase-entry.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Tenu Leke', artist:'Sonu Nigam · Mahalakshmi Iyer', video:'Cu3QpWEfqgg', caption:'Triumphant entry chorus as the parasol rises and phone flashlights turn on.', chaos:68, songs: [] },
-    { time:'12:00 AM', title:'Bas Ek Gaana Aur', hindi1:'बस एक गाना', hindi2:'और', kicker:'PHASE 07 · AFTER MIDNIGHT · 12:00 AM', headline:'The stove is still lit.', body:'The dhol is resting. The chai is not. A small group has discovered one more song, and the DJ has accepted the challenge personally.', quip:'“Last song pakka.” The eleventh last song.', micro:'THE NIGHT REFUSES TO END', image:'/assets/phase-last-song.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Choo Lo', artist:'The Local Train · Raman Negi', video:'sFMRqxCexDk', caption:'Mellow midnight acoustic chords for the chai stall crew who refuse to go home.', chaos:22, songs: [] }
+    { time:'5:30 PM', title:'Sehra Bandi', kicker:'PHASE 01 · EARLY EVENING · 5:30 PM', headline:'The groom is almost ready.', body:'A sehra is being adjusted for the fourth time. Someone is looking for the car keys. Phupaji has taken charge of the entire operation.', image:'/assets/phase-sehra.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Ainvayi Ainvayi', artist:'Salim-Sulaiman · Sunidhi Chauhan', video:'uvf0bsywl4A', chaos:8, songs: [] },
+    { time:'6:30 PM', title:'Baraat Nikli', kicker:'PHASE 02 · DUSK · 6:30 PM', headline:'Baraat nikli.', body:'The gate opens, the band strikes up, and a 12-minute journey immediately becomes a matter of family honour.', image:'/assets/phase-nikli.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Gallan Goodiyaan', artist:'Shankar Mahadevan · Sukhwinder Singh · Yashita Sharma', video:'jCEdTq3j-0U', chaos:18, songs: [] },
+    { time:'7:30 PM', title:'Pehli Gali', kicker:'PHASE 03 · TWILIGHT · 7:30 PM', headline:'The road is now the dance floor.', body:'The lane is narrow, the baraat is 400 metres wide, and a scooter has become an honorary member of the procession.', image:'/assets/phase-gali.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'London Thumakda', artist:'Labh Janjua · Sonu Kakkar · Neha Kakkar', video:'udra3Mfw2oo', chaos:35, songs: [] },
+    { time:'8:30 PM', title:'Uncle Era', kicker:'PHASE 04 · PRIME TIME · 8:30 PM', headline:'The uncle has taken over.', body:'He removed his jacket. He loosened one button. He has made eye contact with the DJ. There is no stopping what comes next.', image:'/assets/phase-uncle.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Kala Chashma', artist:'Amar Arshi · Badshah · Neha Kakkar', video:'k4yXQkG2s1E', chaos:54, songs: [] },
+    { time:'9:30 PM', title:'DJ Ka Pralay', kicker:'PHASE 05 · NIGHT · 9:30 PM', headline:'The DJ has lost all restraint.', body:'The bass is negotiating with the power grid. Pink lights everywhere. Three cousins are doing the same move with three different levels of confidence.', image:'/assets/phase-dj.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Sauda Khara Khara', artist:'Diljit Dosanjh · Sukhbir', video:'LYEqeUr-158', chaos:76, songs: [] },
+    { time:'10:30 PM', title:'Dulhe Ki Entry', kicker:'PHASE 06 · LATE NIGHT · 10:30 PM', headline:'Everybody remember the groom?', body:'Phones go up. The parasol is perfectly positioned. For twelve seconds the entire family coordinates like a world-class production crew.', image:'/assets/phase-entry.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Tenu Leke', artist:'Sonu Nigam · Mahalakshmi Iyer', video:'Cu3QpWEfqgg', chaos:68, songs: [] },
+    { time:'12:00 AM', title:'Bas Ek Gaana Aur', kicker:'PHASE 07 · AFTER MIDNIGHT · 12:00 AM', headline:'The stove is still lit.', body:'The dhol is resting. The chai is not. A small group has discovered one more song, and the DJ has accepted the challenge personally.', image:'/assets/phase-last-song.webp', desktopFocal:'center 36%', mobileFocal:'center 30%', song:'Choo Lo', artist:'The Local Train · Raman Negi', video:'sFMRqxCexDk', chaos:22, songs: [] }
   ];
 
   // Merge full 20 songs per phase from window.BARAAT_DATA
@@ -327,9 +290,6 @@ const jsonLd = {
     });
   }
 
-  let chaos = phases[currentIndex].chaos;
-  let uncles = 0, dholBoosts = 0, djUpgrades = 0;
-  let lightsLow = false;
   let toastTimer: any = null;
   const youtubeUrl = (id: string) => `https://www.youtube.com/watch?v=${id}`;
 
@@ -587,7 +547,6 @@ const jsonLd = {
     if ($('mPlayIconSvg')) $('mPlayIconSvg')!.querySelector('path')!.setAttribute('d', path);
     if ($('vinylDisc')) $('vinylDisc')!.classList.toggle('is-spinning', playing);
     if ($('mVinylDisc')) $('mVinylDisc')!.classList.toggle('is-spinning', playing);
-    if ($('headerPlayBtn')) $('headerPlayBtn')!.classList.toggle('is-playing', playing);
     if (playing) {
       startProgressTracking();
     } else {
@@ -752,16 +711,8 @@ const jsonLd = {
       btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
     });
 
-    chaos = Math.max(chaos, p.chaos);
-    updateScore();
-
     currentSongInPhase = 0;
     updateMusicUI(isPlaying);
-  }
-
-  function updateScore() {
-    chaos = Math.max(0, Math.min(100, chaos));
-    if ($('chaosLabel')) $('chaosLabel')!.textContent = `${chaos}% chaos`;
   }
 
   function showToast(message: string) {
@@ -772,48 +723,6 @@ const jsonLd = {
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toast.classList.remove('show'), 2300);
   }
-
-  function pulseDhol() {
-    if (!app) return;
-    app.classList.remove('dhol-pulse');
-    void app.offsetWidth;
-    app.classList.add('dhol-pulse');
-    setTimeout(() => app.classList.remove('dhol-pulse'), 700);
-  }
-
-  function makePetals(count = 36) {
-    const layer = $('petalLayer');
-    if (!layer) return;
-    layer.innerHTML = '';
-    for (let i = 0; i < count; i++) {
-      const petal = document.createElement('i');
-      petal.className = 'petal';
-      petal.style.left = `${Math.random() * 100}%`;
-      petal.style.setProperty('--drift', `${Math.round(Math.random() * 260 - 130)}px`);
-      petal.style.animationDuration = `${Math.random() * 3 + 3.5}s`;
-      petal.style.animationDelay = `${Math.random() * 1.4}s`;
-      layer.appendChild(petal);
-    }
-    setTimeout(() => { layer.innerHTML = ''; }, 9000);
-  }
-
-  function doAction(action: string) {
-    if (action === 'uncle') {
-      uncles += 1; chaos += 8;
-      showToast(uncles === 1 ? 'Uncle has entered the dance floor.' : `${uncles} uncles. One dance floor. No supervision.`);
-    } else if (action === 'dhol') {
-      dholBoosts += 1; chaos += 12; pulseDhol();
-      showToast('Dhol level increased. The windows are rattling.');
-    } else if (action === 'dj') {
-      djUpgrades += 1; chaos += 10; app?.classList.add('dj-lit');
-      showToast('DJ upgraded. The power grid has been informed.');
-    } else if (action === 'bollywood') {
-      chaos = 100; djUpgrades += 1; dholBoosts += 1; makePetals(56); pulseDhol(); app?.classList.add('dj-lit');
-      showToast('FULL BOLLYWOOD. Please keep your relatives inside the frame.');
-    }
-    updateScore();
-  }
-
 
   function openVideo() {
     if (isPlaying) {
@@ -830,26 +739,6 @@ const jsonLd = {
     if ($('youtubeLink')) ($('youtubeLink') as HTMLAnchorElement).href = youtubeUrl(s.youtubeId);
     if ($('youtubeFrame')) ($('youtubeFrame') as HTMLIFrameElement).src = `https://www.youtube-nocookie.com/embed/${s.youtubeId}?autoplay=1&rel=0&modestbranding=1`;
     ($('videoModal') as any)?.showModal();
-  }
-
-  function openReport() {
-    if ($('reportScore')) $('reportScore')!.textContent = String(chaos);
-    if ($('reportUncles')) $('reportUncles')!.textContent = String(uncles);
-    if ($('reportDhol')) $('reportDhol')!.textContent = String(dholBoosts);
-    if ($('reportDJ')) $('reportDJ')!.textContent = String(djUpgrades);
-    let headline = 'A respectable start. Suspiciously respectable.';
-    if (chaos >= 90) headline = 'The baraat is now a UNESCO-level incident.';
-    else if (chaos >= 70) headline = 'The DJ has assumed administrative control.';
-    else if (chaos >= 45) headline = 'Uncle Sharma is now the main character.';
-    else if (chaos >= 25) headline = 'The traffic police have started dancing.';
-    if ($('reportHeadline')) $('reportHeadline')!.textContent = headline;
-    const p = phases[currentIndex];
-    if ($('reportCopy')) $('reportCopy')!.textContent = `Current stop: ${p.title} at ${p.time}. Chaos is at ${chaos}%. You deployed ${uncles} uncle${uncles === 1 ? '' : 's'}, ordered ${dholBoosts} dhol boost${dholBoosts === 1 ? '' : 's'}, and approved ${djUpgrades} DJ upgrade${djUpgrades === 1 ? '' : 's'}. The official explanation is “bas ek gaana aur.”`;
-    ($('reportModal') as any)?.showModal();
-  }
-
-  function reportText() {
-    return `SHADI KI BARAAT — OFFICIAL BARAAT REPORT\n\n${$('reportHeadline')?.textContent || ''}\n${$('reportCopy')?.textContent || ''}\n\nChaos: ${chaos}/100\nUncles deployed: ${uncles}\nDhol boosts: ${dholBoosts}\nDJ upgrades: ${djUpgrades}\n\nSent from Shadi Ki Baraat.`;
   }
 
   buildTimeline();
@@ -877,17 +766,7 @@ const jsonLd = {
   if ($('phaseHeadline')) $('phaseHeadline')!.textContent = initP.headline;
   if ($('phaseBody')) $('phaseBody')!.textContent = initP.body;
 
-  function updateLiveClock() {
-    const now = new Date();
-    const timeStr = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase();
-    const el = $('headerTime');
-    if (el) el.textContent = timeStr;
-  }
-  updateLiveClock();
-  setInterval(updateLiveClock, 1000);
-
   updateMusicUI(false);
-  updateScore();
 
   $('prevTrack')?.addEventListener('click', (e) => { e.stopPropagation(); prevSong(true); });
   $('nextTrack')?.addEventListener('click', (e) => { e.stopPropagation(); nextSong(true); });
@@ -896,14 +775,12 @@ const jsonLd = {
   
   $('playVideo')?.addEventListener('click', toggleMusic);
   $('mPlayTrack')?.addEventListener('click', toggleMusic);
-  $('headerPlayBtn')?.addEventListener('click', toggleMusic);
   $('mTrackInfo')?.addEventListener('click', toggleMusic);
 
   $('watchYtBtn')?.addEventListener('click', openVideo);
   $('mWatchYtBtn')?.addEventListener('click', (e) => { e.stopPropagation(); openVideo(); });
   $('vinylWrap')?.addEventListener('click', openVideo);
   $('mVinylWrap')?.addEventListener('click', openVideo);
-  $('quickResetBtn')?.addEventListener('click', () => $('resetBtn')?.click());
 
   function getTrackDuration() {
     const live = ytPlayer && typeof ytPlayer.getDuration === 'function' ? ytPlayer.getDuration() || 0 : 0;
@@ -950,36 +827,7 @@ const jsonLd = {
     showToast(isZen ? 'Zen mode: full scene view' : 'Controls visible');
   });
 
-  $('moodBtn')?.addEventListener('click', () => {
-    lightsLow = !lightsLow;
-    app?.classList.toggle('lights-low', lightsLow);
-    $('moodBtn')?.setAttribute('aria-pressed', lightsLow ? 'true' : 'false');
-    const icon = $('moodIcon');
-    if (icon) {
-      icon.innerHTML = lightsLow
-        ? '<path d="M20.5 14.5A8.6 8.6 0 0 1 9.5 3.2 8.8 8.8 0 1 0 20.5 14.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>'
-        : '<circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
-    }
-  });
-
   $('menuBtn')?.addEventListener('click', () => ($('menuModal') as any)?.showModal());
-  $('menuReport')?.addEventListener('click', () => {
-    ($('menuModal') as any)?.close();
-    openReport();
-  });
-  $('resetBtn')?.addEventListener('click', () => {
-    ($('menuModal') as any)?.close();
-    currentIndex = 0; chaos = phases[0].chaos; uncles = 0; dholBoosts = 0; djUpgrades = 0;
-    app?.classList.remove('dj-lit','lights-low');
-    lightsLow = false;
-    $('moodBtn')?.setAttribute('aria-pressed','false');
-    const icon = $('moodIcon');
-    if (icon) icon.innerHTML = '<circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
-    currentIndex = 1;
-    setPhase(0);
-    updateScore();
-    showToast('Fresh sehra. Fresh start. Same family.');
-  });
 
   document.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', () => {
     const target = $((button as HTMLElement).dataset.close || '') as any;
@@ -990,40 +838,9 @@ const jsonLd = {
     if ($('youtubeFrame')) ($('youtubeFrame') as HTMLIFrameElement).src = 'about:blank';
   });
 
-  $('copyReport')?.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(reportText());
-      showToast('Report copied. Send it to the family group.');
-    } catch (e) {
-      showToast('Clipboard unavailable. Use Save as .txt instead.');
-    }
-  });
-  $('downloadReport')?.addEventListener('click', () => {
-    const blob = new Blob([reportText()], {type:'text/plain;charset=utf-8'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'shadi-ki-baraat-report.txt';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-  $('shareReport')?.addEventListener('click', async () => {
-    const data = {title:'My Shadi Ki Baraat Report', text:reportText(), url:location.href};
-    if (navigator.share) {
-      try { await navigator.share(data); } catch (e) {}
-    } else {
-      try {
-        await navigator.clipboard.writeText(reportText());
-        showToast('Share not available. Report copied instead.');
-      } catch (e) {
-        showToast('Use Copy report to share your result.');
-      }
-    }
-  });
-
   document.addEventListener('keydown', (event) => {
     if (['INPUT','TEXTAREA'].includes((document.activeElement as HTMLElement)?.tagName || '')) return;
-    if (($('videoModal') as any)?.open || ($('reportModal') as any)?.open || ($('menuModal') as any)?.open) {
+    if (($('videoModal') as any)?.open || ($('menuModal') as any)?.open) {
       if (event.key === 'Escape' && ($('videoModal') as any)?.open) {
         if ($('youtubeFrame')) ($('youtubeFrame') as HTMLIFrameElement).src = 'about:blank';
       }
@@ -1037,35 +854,15 @@ const jsonLd = {
     }
   });
 
-  const dockAboutChip = $('dockAboutChip');
-  if (dockAboutChip) {
-    dockAboutChip.addEventListener('click', (e) => {
-      e.preventDefault();
-      const footer = $('baraatFooter');
-      if (footer) {
-        if ((window as any).__lenis) {
-          (window as any).__lenis.scrollTo(footer, { duration: 1.4 });
-        } else {
-          footer.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    });
-  }
-  const menuAboutRow = $('menuAboutRow');
-  if (menuAboutRow) {
-    menuAboutRow.addEventListener('click', (e) => {
-      e.preventDefault();
-      ($('menuModal') as any)?.close();
-      const footer = $('baraatFooter');
-      if (footer) {
-        if ((window as any).__lenis) {
-          (window as any).__lenis.scrollTo(footer, { duration: 1.4 });
-        } else {
-          footer.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    });
-  }
+  // Both "About" links scroll to the footer, through Lenis when it is running.
+  document.querySelectorAll('a[href="#baraatFooter"]').forEach((link) => link.addEventListener('click', (e) => {
+    e.preventDefault();
+    ($('menuModal') as any)?.close();
+    const footer = $('baraatFooter');
+    if (!footer) return;
+    if ((window as any).__lenis) (window as any).__lenis.scrollTo(footer, { duration: 1.4 });
+    else footer.scrollIntoView({ behavior: 'smooth' });
+  }));
 })();
 </script>
 
@@ -1169,25 +966,6 @@ const jsonLd = {
     box-shadow: none;
   }
 
-  .app.lights-low .scene-wash {
-    background: linear-gradient(180deg, rgba(3,4,8,.52) 0%, rgba(3,4,8,.08) 22%, rgba(3,4,8,.12) 65%, rgba(3,4,8,.68) 100%);
-  }
-
-  .app.dj-lit .scene-wash {
-    background: linear-gradient(180deg, rgba(7,3,10,.42) 0%, rgba(10,5,10,.1) 35%, rgba(7,3,11,.06) 65%, rgba(4,4,8,.55) 100%);
-  }
-
-  /* Filter only the artwork, not the whole UI layer. */
-  .app.dhol-pulse .scene-stack {
-    animation: lowPulse .62s ease-out;
-  }
-
-  @keyframes lowPulse {
-    0% { filter: saturate(1); }
-    35% { filter: saturate(1.35) brightness(1.08); }
-    100% { filter: saturate(1); }
-  }
-
   /* Header */
   .site-header {
     position: absolute;
@@ -1201,15 +979,6 @@ const jsonLd = {
     align-items: center;
     gap: 16px;
     box-sizing: border-box;
-  }
-
-  .header-time {
-    font-family: var(--ui);
-    font-size: 14px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.92);
-    letter-spacing: -0.01em;
-    justify-self: start;
   }
 
   .header-actions {
@@ -1679,35 +1448,6 @@ const jsonLd = {
     transform: translateY(-1px);
   }
 
-  .reset-pill-inline {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 26px;
-    padding: 0 12px;
-    border-radius: 9999px;
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    background: rgba(36, 20, 16, 0.65);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    color: rgba(255, 255, 255, 0.85);
-    font-family: var(--ui);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    cursor: pointer;
-    transition: all 0.18s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    white-space: nowrap;
-  }
-
-  .reset-pill-inline:hover {
-    background: rgba(75, 36, 28, 0.85);
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.38);
-    transform: translateY(-1px);
-  }
-
   .timeline {
     position: relative;
     width: 100%;
@@ -1852,15 +1592,11 @@ const jsonLd = {
 
   .mobile-dock { display: none; }
 
-  .petal-layer { position: absolute; inset: 0; z-index: 7; pointer-events: none; overflow: hidden; }
-  .petal { position: absolute; top: -35px; width: 9px; height: 13px; border-radius: 70% 20% 70% 20%; background: #efb65d; opacity: .9; animation: fall linear forwards; filter: drop-shadow(0 2px 3px rgba(0,0,0,.16)); }
-  .petal:nth-child(3n) { background: #d65c63; width: 7px; height: 11px; }
-  .petal:nth-child(4n) { background: #fff0c8; width: 5px; height: 8px; }
-  @keyframes fall { to { transform: translate3d(var(--drift), 112vh, 0) rotate(740deg); opacity: .1; } }
 
   .modal {
     width: min(860px, calc(100vw - 32px));
     max-width: none;
+    margin: auto; /* Tailwind preflight zeroes dialog margin, which pins it top-left */
     border: 1px solid var(--line);
     border-radius: 24px;
     padding: 0;
@@ -1876,29 +1612,15 @@ const jsonLd = {
   .close-button { border: 1px solid var(--line); background: rgba(255,255,255,.05); color: #ffffff; height: 36px; width: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; cursor: pointer; }
   .video-frame { aspect-ratio: 16 / 9; width: 100%; background: #050505; overflow: hidden; }
   .video-frame iframe { border: 0; width: 100%; height: 100%; display: block; }
-  .modal-foot { padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--dim); }
+  .modal-foot { padding: 16px 24px; display: flex; align-items: center; justify-content: flex-end; gap: 12px; font-size: 12px; color: var(--dim); }
   .plain-link { color: var(--gold); text-decoration: none; }
 
-  .report-body { padding: 24px; }
-  .report-score { font-family: var(--display); font-size: clamp(48px, 6vw, 72px); font-weight: 700; line-height: .9; color: var(--gold); }
-  .report-score small { font-family: var(--ui); font-size: 12px; font-weight: 600; letter-spacing: .15em; color: var(--dim); text-transform: uppercase; }
-  .report-headline { font-family: var(--display); font-size: 28px; font-weight: 600; line-height: 1.15; margin: 16px 0 8px; }
-  .report-copy { color: var(--muted); font-size: 13px; line-height: 1.6; max-width: 650px; }
-  .report-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 24px; }
-  .report-stat { border: 1px solid var(--line); border-radius: 16px; padding: 16px; background: rgba(255,255,255,.03); }
-  .report-stat strong { display: block; font-family: var(--display); font-size: 24px; font-weight: 700; color: #ffffff; }
-  .report-stat span { display: block; font-size: 12px; font-weight: 500; color: var(--dim); text-transform: uppercase; letter-spacing: .1em; margin-top: 4px; }
-  .report-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-  .action-primary { border: none; background: var(--gold); color: #17120c; font-weight: 600; }
-  .action-secondary { border: 1px solid var(--line); background: rgba(255,255,255,.05); color: #ffffff; }
-  .report-actions button { border-radius: 9999px; padding: 10px 18px; font-size: 12px; font-weight: 600; font-family: var(--ui); cursor: pointer; }
 
   .menu-body { padding: 16px; }
   .menu-row { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-radius: 14px; border: 1px solid transparent; background: transparent; width: 100%; text-align: left; cursor: pointer; }
   .menu-row:hover { background: rgba(255,255,255,.05); border-color: var(--line); }
   .menu-row span:first-child { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; }
   .menu-row small { color: var(--dim); font-size: 12px; font-weight: 400; }
-  .menu-arrow { color: var(--gold); font-size: 16px; }
 
   .toast {
     position: absolute;
@@ -1936,9 +1658,8 @@ const jsonLd = {
     .app { min-height: 100svh; height: 100svh; position: relative; }
     .scene-image { object-position: center 30%; }
     .site-header { padding: 16px; }
-    .header-time { font-size: 13px; font-weight: 600; min-width: auto; }
     .header-actions { gap: 6px; min-width: auto; }
-    #headerPlayBtn, #zenBtn { display: none !important; }
+    #zenBtn { display: none !important; }
     
     .hero-logo-wrap { top: clamp(64px, 10vh, 90px); padding: 0 16px; }
     .hero-logo-img { width: clamp(190px, 48vw, 260px); }
@@ -2223,7 +1944,6 @@ const jsonLd = {
   /* Reduced motion: no spinning, falling or sliding; crossfades and colour changes stay. */
   @media (prefers-reduced-motion: reduce) {
     .vinyl-disc { animation: none; }
-    .petal-layer { display: none; }
     .story-block { animation-name: fadeIn; }
     .app.zen-mode .bottom-left-dock,
     .app.zen-mode .bottom-right-dock,
