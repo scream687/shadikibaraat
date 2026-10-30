@@ -278,9 +278,8 @@ const jsonLd = {
     const dialogYtLink = document.getElementById('dialogYtLink');
     const dialogCloseBtn = document.getElementById('dialogCloseBtn');
 
-    // Read URL params e.g. /songs?phase=4
-    const urlParams = new URLSearchParams(window.location.search);
-    const phaseParam = urlParams.get('phase');
+    // Read phase from the hash, e.g. /songs/#phase=4 (?phase is legacy)
+    const phaseParam = new URLSearchParams(window.location.hash.slice(1)).get('phase') || new URLSearchParams(window.location.search).get('phase');
     if (phaseParam && ['1','2','3','4','5','6','7'].includes(phaseParam)) {
       activePhaseFilter = phaseParam;
       document.querySelectorAll('.phase-pill').forEach((btn) => {
@@ -521,7 +520,7 @@ const jsonLd = {
     });
 
     searchInput?.addEventListener('input', (e) => {
-      searchQuery = (e.target as HTMLInputElement).value.trim();
+      searchQuery = e.target.value.trim();
       if (searchClear) searchClear.style.display = searchQuery ? 'block' : 'none';
       applyFilters();
     });
@@ -535,7 +534,7 @@ const jsonLd = {
     });
 
     phasePills?.addEventListener('click', (e) => {
-      const btn = (e.target as HTMLElement).closest('.phase-pill') as HTMLElement | null;
+      const btn = e.target.closest('.phase-pill');
       if (!btn) return;
       document.querySelectorAll('.phase-pill').forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
@@ -555,7 +554,7 @@ const jsonLd = {
     });
 
     playFilteredBtn?.addEventListener('click', () => {
-      const visibleRow = document.querySelector('.song-row[style*="display: flex"]') as HTMLElement | null;
+      const visibleRow = document.querySelector('.song-row[style*="display: flex"]');
       if (visibleRow) {
         const idx = parseInt(visibleRow.getAttribute('data-index') || '1', 10);
         const globalIdx = allSongs.findIndex((s) => s.index === idx);

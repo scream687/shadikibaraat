@@ -267,8 +267,8 @@ const jsonLd = {
 
   const $ = (id: string) => document.getElementById(id);
   const app = $('app');
-  const urlParams = new URLSearchParams(window.location.search);
-  const paramPhase = parseInt(urlParams.get('phase') || '', 10);
+  // Phase lives in the hash (#phase=N) so it never creates a crawlable duplicate URL; ?phase is legacy.
+  const paramPhase = parseInt(new URLSearchParams(window.location.hash.slice(1)).get('phase') || new URLSearchParams(window.location.search).get('phase') || '', 10);
   let currentIndex = (!isNaN(paramPhase) && paramPhase >= 0 && paramPhase < phases.length) ? paramPhase : 1;
   let currentSongInPhase = 0;
 
@@ -717,7 +717,8 @@ const jsonLd = {
 
     try {
       const url = new URL(window.location.href);
-      url.searchParams.set('phase', String(index));
+      url.searchParams.delete('phase');
+      url.hash = 'phase=' + index;
       window.history.replaceState(null, '', url);
     } catch (e) {}
 
